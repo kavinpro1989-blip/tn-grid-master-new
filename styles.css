@@ -109,7 +109,7 @@ body.theme-night {
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: var(--font-family);
   background-color: var(--bg-body);
   color: var(--text-main);
@@ -124,7 +124,8 @@ html, body {
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* Header & Gamified Telemetry Badges */
@@ -2231,3 +2232,668 @@ input[type="range"]#timeRange::-webkit-slider-thumb:hover {
   .step-badge { flex-direction: row; gap: 10px; min-width: auto; }
   .prompter-hero { flex-direction: column; align-items: flex-start; }
 }
+
+/* ==========================================================================
+   MILESTONES M2 & M3: MOBILE FIRST GRID HERO & IN-BOOTH QR BRIDGE
+   ========================================================================== */
+
+/* Mode Switcher Navigation Bar */
+.mode-switcher-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 24px;
+  background: rgba(13, 19, 33, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-glass-bright);
+  z-index: 25;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mode-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(2, 6, 23, 0.6);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--border-glass);
+}
+
+.mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  min-height: 48px;
+  font-family: var(--font-family);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mode-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mode-btn.active {
+  color: #0d1322;
+  background: linear-gradient(135deg, #38bdf8, #00e5ff);
+  box-shadow: 0 4px 14px rgba(0, 229, 255, 0.35);
+  font-weight: 700;
+}
+
+.mode-aux-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aux-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  min-height: 48px;
+  font-family: var(--font-family);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.aux-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.aux-btn:active {
+  transform: scale(0.97);
+}
+
+.aux-btn.qr-btn {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15));
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+.aux-btn.qr-btn:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25));
+}
+
+/* Mobile "Grid Hero" Stage */
+.mobile-quiz-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 12px 16px 20px;
+  z-index: 20;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.quiz-card {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(13, 19, 33, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quiz-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quiz-progress-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quiz-round-pill {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  letter-spacing: 0.05em;
+}
+
+.quiz-score-pill {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #facc15;
+  background: rgba(250, 204, 21, 0.12);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(250, 204, 21, 0.25);
+}
+
+.quiz-badge-pill {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f8fafc;
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(56, 189, 248, 0.2));
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.quiz-dilemma-body {
+  padding: 4px 0;
+}
+
+.quiz-question {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.quiz-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option-btn {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  min-height: 56px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid var(--border-glass-bright);
+  border-radius: 12px;
+  color: var(--text-main);
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.quiz-option-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(56, 189, 248, 0.5);
+  transform: translateY(-1px);
+}
+
+.quiz-option-btn:active {
+  transform: scale(0.98);
+  filter: brightness(1.15);
+}
+
+.quiz-option-btn.correct {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: #10b981 !important;
+  color: #6ee7b7 !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+}
+
+.quiz-option-btn.incorrect {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.35);
+}
+
+.quiz-feedback-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+  animation: feedbackSlideIn 0.25s ease-out;
+}
+
+@keyframes feedbackSlideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quiz-feedback-box.correct {
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #4ade80;
+  background: rgba(6, 78, 59, 0.35);
+}
+
+.quiz-feedback-box.incorrect {
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+  background: rgba(127, 29, 29, 0.35);
+}
+
+/* In-Booth Desktop QR Bridge Modal */
+.qr-card {
+  max-width: 480px;
+  text-align: center;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(56, 189, 248, 0.2);
+}
+
+.qr-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+}
+
+.qr-instruction {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--text-main);
+  max-width: 400px;
+}
+
+.qr-svg-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  margin: 4px 0;
+}
+
+.qr-svg {
+  display: block;
+  width: 220px;
+  height: 220px;
+}
+
+.qr-url-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(2, 6, 23, 0.7);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 10px;
+}
+
+.url-text {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: #38bdf8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy-url-btn {
+  padding: 6px 12px;
+  min-height: 38px;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.copy-url-btn:hover {
+  background: rgba(56, 189, 248, 0.35);
+}
+
+/* "Grid Master" Digital Reward Pass / Certificate Modal */
+.reward-pass-card {
+  max-width: 540px;
+  border: 2px solid #f59e0b;
+  box-shadow: 0 0 45px rgba(245, 158, 11, 0.35), 0 25px 60px rgba(0, 0, 0, 0.85);
+  background: linear-gradient(180deg, #0d1322 0%, #070b14 100%);
+  padding: 0;
+  overflow: hidden;
+}
+
+.reward-pass-frame {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.reward-stamp {
+  display: inline-block;
+  align-self: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #facc15;
+  background: rgba(250, 204, 21, 0.15);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  margin-bottom: 4px;
+}
+
+.reward-header h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.reward-tamil-title {
+  font-size: 0.95rem;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.reward-score-banner {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reward-score-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.reward-score-val {
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #facc15;
+  text-shadow: 0 0 14px rgba(250, 204, 21, 0.4);
+}
+
+.reward-rank-badge {
+  display: inline-block;
+  align-self: center;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.15);
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  margin-top: 4px;
+}
+
+.reward-badges-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.reward-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 10px;
+  padding: 10px 6px;
+}
+
+.reward-badge-item .badge-icon {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+}
+
+.reward-badge-item .badge-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.reward-badge-item .badge-desc {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.reward-booth-callout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(245, 158, 11, 0.15));
+  border: 1.5px dashed rgba(245, 158, 11, 0.6);
+  border-radius: 12px;
+  padding: 12px 16px;
+  text-align: left;
+  animation: borderGlow 2.5s infinite alternate;
+}
+
+@keyframes borderGlow {
+  from { border-color: rgba(245, 158, 11, 0.4); box-shadow: 0 0 10px rgba(245, 158, 11, 0.1); }
+  to { border-color: rgba(56, 189, 248, 0.7); box-shadow: 0 0 20px rgba(56, 189, 248, 0.25); }
+}
+
+.reward-booth-callout .callout-sparkle {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.reward-booth-callout .callout-text {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.reward-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.reward-btn {
+  flex: 1;
+  padding: 12px 16px;
+  min-height: 48px;
+  font-family: var(--font-family);
+  font-size: 0.92rem;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reward-btn.btn-restart {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-glass-bright);
+  color: var(--text-main);
+}
+
+.reward-btn.btn-restart:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.reward-btn.btn-pro {
+  background: linear-gradient(135deg, #0284c7, #10b981);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+}
+
+.reward-btn.btn-pro:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Mode State Rules */
+body.mode-quiz #tuningDeck,
+body.mode-quiz .dispatcher-tuning-deck,
+#tuningDeck.hidden-in-quiz {
+  display: none !important;
+}
+
+body.mode-quiz .mobile-quiz-stage {
+  display: flex;
+}
+
+body.mode-pro .mobile-quiz-stage {
+  display: none !important;
+}
+
+body.mode-quiz .stage-tip {
+  display: none;
+}
+
+body.mode-quiz .challenge-alert {
+  display: none;
+}
+
+/* Mobile & Touch Ergonomics Overrides */
+@media (max-width: 768px) {
+  html, body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 100%;
+  }
+
+  .game-wrapper {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+    overflow-x: hidden;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .game-header {
+    padding: 8px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .brand-title {
+    font-size: 1.05rem;
+  }
+
+  .brand-tagline {
+    font-size: 0.72rem;
+  }
+
+  .hud-badges {
+    width: 100%;
+    justify-content: space-between;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .mode-switcher-bar {
+    padding: 6px 12px;
+  }
+
+  .mode-btn {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    min-height: 48px;
+  }
+
+  .aux-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    min-height: 48px;
+  }
+
+  body.mode-quiz .canvas-stage {
+    height: 220px;
+    min-height: 200px;
+    max-height: 240px;
+    flex: none;
+  }
+
+  .quiz-card {
+    padding: 14px;
+  }
+
+  .quiz-question {
+    font-size: 0.96rem;
+  }
+
+  .quiz-option-btn {
+    min-height: 56px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+  }
+
+  .reward-pass-frame {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .reward-actions {
+    flex-direction: column;
+  }
+
+  .reward-btn {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mode-btn .btn-text {
+    font-size: 0.78rem;
+  }
+
+  .reward-badges-group {
+    grid-template-columns: 1fr;
+  }
+}
+

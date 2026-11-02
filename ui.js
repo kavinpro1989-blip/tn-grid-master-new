@@ -88,24 +88,258 @@ const elements = {
   reportVerdictText: document.getElementById('reportVerdictText'),
   reportExitBtn: document.getElementById('reportExitBtn'),
   reportCloseBtn: document.getElementById('reportCloseBtn'),
-  reportResetBtn: document.getElementById('reportResetBtn')
+  reportResetBtn: document.getElementById('reportResetBtn'),
+
+  // Milestone M2 & M3 Elements
+  modeQuizBtn: document.getElementById('modeQuizBtn'),
+  modeProBtn: document.getElementById('modeProBtn'),
+  soundToggleBtn: document.getElementById('soundToggleBtn'),
+  audioIcon: document.getElementById('audioIcon'),
+  audioLabel: document.getElementById('audioLabel'),
+  qrModalTriggerBtn: document.getElementById('qrModalTriggerBtn'),
+  mobileQuizStage: document.getElementById('mobileQuizStage'),
+  quizCard: document.getElementById('quizCard'),
+  quizRoundPill: document.getElementById('quizRoundPill'),
+  quizScorePill: document.getElementById('quizScorePill'),
+  quizBadgePill: document.getElementById('quizBadgePill'),
+  quizQuestion: document.getElementById('quizQuestion'),
+  quizOptionsGrid: document.getElementById('quizOptionsGrid'),
+  quizFeedbackBox: document.getElementById('quizFeedbackBox'),
+  feedbackIcon: document.getElementById('feedbackIcon'),
+  feedbackText: document.getElementById('feedbackText'),
+  qrModal: document.getElementById('qrModal'),
+  qrCloseBtn: document.getElementById('qrCloseBtn'),
+  qrDismissBtn: document.getElementById('qrDismissBtn'),
+  copyUrlBtn: document.getElementById('copyUrlBtn'),
+  qrUrlText: document.getElementById('qrUrlText'),
+  gridMasterPassModal: document.getElementById('gridMasterPassModal'),
+  rewardScoreVal: document.getElementById('rewardScoreVal'),
+  rewardRankBadge: document.getElementById('rewardRankBadge'),
+  quizPlayAgainBtn: document.getElementById('quizPlayAgainBtn'),
+  quizExploreProBtn: document.getElementById('quizExploreProBtn'),
+  tuningDeck: document.getElementById('tuningDeck')
 };
 
-// Web Audio Sound Synthesizer (Permanently Silenced per User Request)
-class SoundFX {
+// Procedural Web Audio API Synthesizer (Milestone M2)
+class ProceduralAudioEngine {
   constructor() {
     this.ctx = null;
-    this.muted = true;
+    this.masterGain = null;
+    this.muted = false;
+
+    if (typeof localStorage !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('tn_grid_muted');
+        if (saved !== null) {
+          this.muted = saved === 'true' || saved === '1';
+        }
+      } catch (e) {}
+    }
   }
 
-  init() {}
-  toggle() { return false; }
-  playSolarChime() {}
-  playCoalRumble() {}
-  playPop() {}
+  init() {
+    if (!this.ctx && typeof window !== 'undefined') {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        this.ctx = new AudioCtx();
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.gain.setValueAtTime(this.muted ? 0 : 0.3, this.ctx.currentTime);
+        this.masterGain.connect(this.ctx.destination);
+      }
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume().catch(() => {});
+    }
+  }
+
+  toggleMute() {
+    this.muted = !this.muted;
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.setValueAtTime(this.muted ? 0 : 0.3, this.ctx.currentTime);
+    }
+    if (typeof localStorage !== 'undefined') {
+      try {
+        localStorage.setItem('tn_grid_muted', this.muted ? '1' : '0');
+      } catch (e) {}
+    }
+    this.updateUI();
+    return this.muted;
+  }
+
+  toggle() {
+    return this.toggleMute();
+  }
+
+  updateUI() {
+    const audioIcon = document.getElementById('audioIcon');
+    const audioLabel = document.getElementById('audioLabel');
+    if (audioIcon) {
+      audioIcon.textContent = this.muted ? '🔇' : '🔊';
+    }
+    if (audioLabel) {
+      audioLabel.textContent = this.muted ? 'Muted' : 'Sound ON';
+    }
+  }
+
+  playDing() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    // Two-tone sine wave chime (880Hz -> 1320Hz)
+    const osc1 = this.ctx.createOscillator();
+    const gain1 = this.ctx.createGain();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(880, now);
+    gain1.gain.setValueAtTime(0.25, now);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+    osc1.connect(gain1);
+    gain1.connect(this.masterGain || this.ctx.destination);
+    osc1.start(now);
+    osc1.stop(now + 0.35);
+
+    const osc2 = this.ctx.createOscillator();
+    const gain2 = this.ctx.createGain();
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(1320, now + 0.08);
+    gain2.gain.setValueAtTime(0, now);
+    gain2.gain.setValueAtTime(0.28, now + 0.08);
+    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+    osc2.connect(gain2);
+    gain2.connect(this.masterGain || this.ctx.destination);
+    osc2.start(now + 0.08);
+    osc2.stop(now + 0.5);
+  }
+
+  playSolarChime() {
+    this.playDing();
+  }
+
+  playBuzzer() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    // Filtered sawtooth buzzer (180Hz -> 140Hz)
+    const osc = this.ctx.createOscillator();
+    const filter = this.ctx.createBiquadFilter();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.linearRampToValueAtTime(140, now + 0.25);
+
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(450, now);
+
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.28);
+  }
+
+  playPowerSurge() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    // Ascending frequency sweep (150Hz -> 600Hz)
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(150, now);
+    osc.frequency.exponentialRampToValueAtTime(600, now + 0.45);
+
+    gain.gain.setValueAtTime(0.05, now);
+    gain.gain.linearRampToValueAtTime(0.22, now + 0.2);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.5);
+  }
+
+  playCoalRumble() {
+    this.playPowerSurge();
+  }
+
+  playVictory() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    // 4-note brass fanfare arpeggio (C5 -> E5 -> G5 -> C6)
+    const notes = [
+      { freq: 523.25, time: 0.00, dur: 0.15 }, // C5
+      { freq: 659.25, time: 0.14, dur: 0.15 }, // E5
+      { freq: 783.99, time: 0.28, dur: 0.18 }, // G5
+      { freq: 1046.5, time: 0.45, dur: 0.80 }  // C6
+    ];
+
+    notes.forEach(n => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(n.freq, now + n.time);
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.setValueAtTime(0.25, now + n.time);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + n.time + n.dur);
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      osc.start(now + n.time);
+      osc.stop(now + n.time + n.dur);
+    });
+  }
+
+  playPop() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(400, now);
+    osc.frequency.exponentialRampToValueAtTime(100, now + 0.04);
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.04);
+  }
 }
 
-const sfx = new SoundFX();
+class SoundFX extends ProceduralAudioEngine {}
+const sfx = new ProceduralAudioEngine();
+if (typeof window !== 'undefined') {
+  window.sfx = sfx;
+  window.SoundFX = SoundFX;
+  window.ProceduralAudioEngine = ProceduralAudioEngine;
+}
+
+// Haptic Vibration Helper (Milestone M2)
+function triggerHaptic(pattern = 40) {
+  if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+    try {
+      navigator.vibrate(pattern);
+    } catch (e) {}
+  }
+}
+if (typeof window !== 'undefined') {
+  window.triggerHaptic = triggerHaptic;
+}
+
 const engine = new PowerGridEngine(elements.canvas, handleTelemetry);
 if (typeof window !== 'undefined') {
   window.engine = engine;
@@ -612,7 +846,88 @@ function initEvents() {
       engine.setSlider('gridTie', val);
     });
   }
+
+  // Mode Switcher Buttons (Milestone M3)
+  if (elements.modeQuizBtn) {
+    elements.modeQuizBtn.addEventListener('click', () => {
+      sfx.playPop();
+      setSimulationMode('quiz');
+    });
+  }
+  if (elements.modeProBtn) {
+    elements.modeProBtn.addEventListener('click', () => {
+      sfx.playPop();
+      setSimulationMode('pro');
+    });
+  }
+
+  // Audio Toggle Button (Milestone M2)
+  if (elements.soundToggleBtn) {
+    elements.soundToggleBtn.addEventListener('click', () => {
+      sfx.toggleMute();
+    });
+  }
+
+  // In-Booth QR Bridge Modal (Milestone M2)
+  if (elements.qrModalTriggerBtn) {
+    elements.qrModalTriggerBtn.addEventListener('click', openQrModal);
+  }
+  if (elements.qrCloseBtn) {
+    elements.qrCloseBtn.addEventListener('click', closeQrModal);
+  }
+  if (elements.qrDismissBtn) {
+    elements.qrDismissBtn.addEventListener('click', closeQrModal);
+  }
+  if (elements.qrModal) {
+    elements.qrModal.addEventListener('click', (e) => {
+      if (e.target === elements.qrModal) closeQrModal();
+    });
+  }
+  if (elements.copyUrlBtn) {
+    elements.copyUrlBtn.addEventListener('click', copyQrUrl);
+  }
+
+  // Grid Master Reward Pass Actions (Milestone M3)
+  if (elements.quizPlayAgainBtn) {
+    elements.quizPlayAgainBtn.addEventListener('click', () => {
+      sfx.playPop();
+      closeRewardPassModal();
+      startQuizHero();
+    });
+  }
+  if (elements.quizExploreProBtn) {
+    elements.quizExploreProBtn.addEventListener('click', () => {
+      sfx.playPop();
+      closeRewardPassModal();
+      setSimulationMode('pro');
+    });
+  }
+
+  // Keyboard Shortcuts: Q to toggle QR modal, ESC to close modals
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'q' || e.key === 'Q') {
+      const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      if (activeTag !== 'input' && activeTag !== 'textarea') {
+        if (elements.qrModal && !elements.qrModal.classList.contains('hidden')) {
+          closeQrModal();
+        } else {
+          openQrModal();
+        }
+      }
+    } else if (e.key === 'Escape') {
+      closeQrModal();
+      closeRewardPassModal();
+    }
+  });
+
+  // Autoplay Audio Unlock on first user gesture
+  const unlockAudio = () => {
+    sfx.init();
+  };
+  document.addEventListener('pointerdown', unlockAudio, { once: true });
+  document.addEventListener('click', unlockAudio, { once: true });
 }
+
 
 function startChallenge() {
   if (challengeRunning) return;
@@ -932,12 +1247,547 @@ function resetToDefaultBooth() {
   updateClock(720);
 }
 
+// ============================================================================
+// MILESTONE M3: MOBILE FIRST "GRID HERO" CHALLENGE & MODE ROUTING
+// ============================================================================
+
+let currentMode = 'pro';
+
+function detectInitialMode() {
+  if (typeof window === 'undefined') return 'pro';
+
+  // 1. URL search param check (?mode=quiz or ?mode=pro)
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const modeParam = urlParams.get('mode');
+    if (modeParam === 'quiz' || modeParam === 'pro') {
+      return modeParam;
+    }
+  } catch (e) {}
+
+  // 2. Session storage preference
+  try {
+    const savedMode = sessionStorage.getItem('tn_grid_mode');
+    if (savedMode === 'quiz' || savedMode === 'pro') {
+      return savedMode;
+    }
+  } catch (e) {}
+
+  // 3. Viewport <= 768px or touch device capability
+  const isSmallScreen = typeof window.innerWidth !== 'undefined' && window.innerWidth <= 768;
+  const isTouchDevice = (typeof window.matchMedia === 'function' && window.matchMedia('(hover: none) and (pointer: coarse)').matches) ||
+                        (typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0) ||
+                        (typeof window !== 'undefined' && 'ontouchstart' in window);
+
+  if (isSmallScreen || isTouchDevice) {
+    return 'quiz';
+  }
+  return 'pro';
+}
+
+function setSimulationMode(mode, persist = true) {
+  currentMode = mode;
+  if (persist) {
+    try {
+      sessionStorage.setItem('tn_grid_mode', mode);
+    } catch (e) {}
+  }
+
+  const body = document.body;
+  if (mode === 'quiz') {
+    if (body) {
+      body.classList.add('mode-quiz');
+      body.classList.remove('mode-pro');
+    }
+    if (elements.modeQuizBtn) {
+      elements.modeQuizBtn.classList.add('active');
+      elements.modeQuizBtn.setAttribute('aria-pressed', 'true');
+    }
+    if (elements.modeProBtn) {
+      elements.modeProBtn.classList.remove('active');
+      elements.modeProBtn.setAttribute('aria-pressed', 'false');
+    }
+    if (elements.mobileQuizStage) elements.mobileQuizStage.classList.remove('hidden');
+    if (elements.tuningDeck) elements.tuningDeck.classList.add('hidden-in-quiz');
+
+    // Launch or resume Grid Hero challenge
+    if (!quizState.active) {
+      startQuizHero();
+    }
+  } else {
+    if (body) {
+      body.classList.add('mode-pro');
+      body.classList.remove('mode-quiz');
+    }
+    if (elements.modeQuizBtn) {
+      elements.modeQuizBtn.classList.remove('active');
+      elements.modeQuizBtn.setAttribute('aria-pressed', 'false');
+    }
+    if (elements.modeProBtn) {
+      elements.modeProBtn.classList.add('active');
+      elements.modeProBtn.setAttribute('aria-pressed', 'true');
+    }
+    if (elements.mobileQuizStage) elements.mobileQuizStage.classList.add('hidden');
+    if (elements.tuningDeck) elements.tuningDeck.classList.remove('hidden-in-quiz');
+  }
+
+  if (window.engine) {
+    if (typeof window.engine.setupDpr === 'function') window.engine.setupDpr();
+    if (typeof window.engine.repositionNodes === 'function') window.engine.repositionNodes();
+  }
+}
+
+// Mobile "Grid Hero" Dilemmas Data Matrix
+const QUIZ_ROUNDS = [
+  {
+    roundNumber: 1,
+    id: 'solar_noon',
+    badge: '☀️ 12:00 PM • NOON SOLAR FLOOD',
+    question: '648 MW of clean solar energy is flooding Kamuthi! What should we do with the massive surplus?',
+    options: [
+      {
+        text: '🔋 Charge our 485 MWh BESS Battery!',
+        isCorrect: true,
+        score: 500,
+        badgeEarned: '485 MWh BESS',
+        feedback: '⚡ Boom! Clean solar stored in 485 MWh BESS! Zero waste, zero pollution!',
+        onSelect: (eng) => {
+          eng.setTime(720); // 12:00 PM
+          eng.setSlider('sunshine', 100);
+          eng.setSlider('storage', 485);
+          eng.setSlider('coalFire', 0);
+          eng.setSlider('townLoad', 2);
+          eng.setSlider('voltage', 230);
+          if (typeof eng.triggerVisualReaction === 'function') {
+            eng.triggerVisualReaction('solar_flood');
+          }
+          if (eng.popTexts) {
+            eng.popTexts.push({
+              x: eng.canvas.width / (2 * eng.dpr),
+              y: 90,
+              text: '🔋 +485 MWh Clean Solar Stored in BESS!',
+              color: '#4ade80',
+              alpha: 1.0,
+              life: 0,
+              maxLife: 2.5
+            });
+          }
+        }
+      },
+      {
+        text: '🏭 Burn more coal at Mettur',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Toxic soot blanketed the town while free solar was wasted!',
+        onSelect: (eng) => {
+          eng.setSlider('coalFire', 100);
+          eng.setSlider('scrubber', 0);
+        }
+      },
+      {
+        text: '🗑️ Just throw away and curtail the solar',
+        isCorrect: false,
+        score: -50,
+        feedback: '⚠️ Clean renewable solar was curtailed and wasted!',
+        onSelect: (eng) => {
+          eng.setSlider('sunshine', 10);
+        }
+      }
+    ]
+  },
+  {
+    roundNumber: 2,
+    id: 'agri_pumps',
+    badge: '🌾 02:00 PM • AGRI-PUMPS SCHEDULING',
+    question: 'Tamil Nadu farmers need irrigation water for delta fields! When should thousands of agricultural pumps run?',
+    options: [
+      {
+        text: '☀️ Run pumps right now on sunny afternoon solar',
+        isCorrect: true,
+        score: 500,
+        badgeEarned: 'Solar Agri',
+        feedback: '🌾 Brilliant dispatching! Free Kamuthi solar powers irrigation zero-carbon!',
+        onSelect: (eng) => {
+          eng.setTime(840); // 14:00 PM
+          eng.setSlider('sunshine', 90);
+          eng.setSlider('agriPumps', 100);
+          eng.setSlider('voltage', 230);
+          if (typeof eng.triggerVisualReaction === 'function') {
+            eng.triggerVisualReaction('agri_pumps');
+          }
+          if (eng.popTexts) {
+            eng.popTexts.push({
+              x: eng.canvas.width / (2 * eng.dpr),
+              y: 90,
+              text: '🌾 Irrigation Pumps Running on 100% Solar!',
+              color: '#38bdf8',
+              alpha: 1.0,
+              life: 0,
+              maxLife: 2.5
+            });
+          }
+        }
+      },
+      {
+        text: '🌙 Turn on all pumps at 7:00 PM evening peak',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Overload! Pumping water during evening peak triggers substation brownouts!',
+        onSelect: (eng) => {
+          eng.setTime(1140);
+          eng.setSlider('agriPumps', 100);
+        }
+      },
+      {
+        text: '🔌 Ban farm pumps completely',
+        isCorrect: false,
+        score: -50,
+        feedback: '⚠️ Farming yields collapsed without irrigation water!',
+        onSelect: (eng) => {
+          eng.setSlider('agriPumps', 0);
+        }
+      }
+    ]
+  },
+  {
+    roundNumber: 3,
+    id: 'duck_curve',
+    badge: '🌇 06:30 PM • SUNSET DUCK CURVE CRISIS',
+    question: 'The sun set, solar dropped to 0 MW, and 80 million people turned on lights and ACs! Frequency dips to 49.2 Hz! What saves the grid?',
+    options: [
+      {
+        text: '⚡ Discharge 485 MWh BESS Battery in 20 milliseconds!',
+        isCorrect: true,
+        score: 500,
+        badgeEarned: '50.00 Hz Lock',
+        feedback: '⚡ Master stroke! 20ms BESS burst locks frequency at exactly 50.00 Hz!',
+        onSelect: (eng) => {
+          eng.setTime(1110); // 18:30 PM
+          eng.setSlider('sunshine', 0);
+          eng.setSlider('storage', 485);
+          eng.setSlider('townLoad', 3);
+          eng.setSlider('voltage', 230);
+          if (typeof eng.triggerVisualReaction === 'function') {
+            eng.triggerVisualReaction('duck_curve_sunset');
+          }
+          if (eng.popTexts) {
+            eng.popTexts.push({
+              x: eng.canvas.width / (2 * eng.dpr),
+              y: 90,
+              text: '⚡ 50.00 Hz FREQUENCY LOCKED • 20ms BESS BURST',
+              color: '#facc15',
+              alpha: 1.0,
+              life: 0,
+              maxLife: 2.5
+            });
+          }
+        }
+      },
+      {
+        text: '🔥 Wait 4 hours for thermal coal boilers to heat up',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Too slow! Steam turbines take hours; the grid collapsed into blackout!',
+        onSelect: (eng) => {
+          eng.setSlider('voltage', 140);
+        }
+      },
+      {
+        text: '📴 Cut power to all schools and hospitals',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Blackout! Critical services lost all electricity!',
+        onSelect: (eng) => {
+          eng.setSlider('voltage', 0);
+        }
+      }
+    ]
+  },
+  {
+    roundNumber: 4,
+    id: 'scrubber',
+    badge: '🌿 08:30 PM • METTUR EMISSION SCRUBBER',
+    question: 'Mettur coal units are firing to support late-night baseline load, releasing toxic fly-ash and soot over the valley! What is our move?',
+    options: [
+      {
+        text: '💨 Engage 100% Flue Gas Scrubbers & Precipitators!',
+        isCorrect: true,
+        score: 500,
+        badgeEarned: '100% Clean Air',
+        feedback: '🌿 Pure air restored! 100% scrubbers trap soot while houses glow bright!',
+        onSelect: (eng) => {
+          eng.setTime(1230); // 20:30 PM
+          eng.setSlider('coalFire', 60);
+          eng.setSlider('scrubber', 100);
+          eng.setSlider('townLoad', 2);
+          eng.setSlider('voltage', 230);
+          if (typeof eng.triggerVisualReaction === 'function') {
+            eng.triggerVisualReaction('scrubber_clearing');
+          }
+          if (eng.popTexts) {
+            eng.popTexts.push({
+              x: eng.canvas.width / (2 * eng.dpr),
+              y: 90,
+              text: '🌿 100% SCRUBBERS ENGAGED • AIR QUALITY PURE!',
+              color: '#34d399',
+              alpha: 1.0,
+              life: 0,
+              maxLife: 2.5
+            });
+          }
+        }
+      },
+      {
+        text: '🌫️ Turn off scrubbers to save electricity',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Toxic smog choke! Valley air index plummets and citizens cough!',
+        onSelect: (eng) => {
+          eng.setSlider('coalFire', 100);
+          eng.setSlider('scrubber', 0);
+        }
+      },
+      {
+        text: '💥 Shut down all power in pitch darkness',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Blackout! Clinics, schools, and homes lost all power!',
+        onSelect: (eng) => {
+          eng.setSlider('voltage', 0);
+          eng.setSlider('coalFire', 0);
+        }
+      }
+    ]
+  }
+];
+
+const quizState = {
+  active: false,
+  roundIndex: 0,
+  score: 0,
+  badges: new Set(),
+  answeredThisRound: false
+};
+
+function startQuizHero() {
+  quizState.active = true;
+  quizState.roundIndex = 0;
+  quizState.score = 0;
+  quizState.badges = new Set();
+  quizState.answeredThisRound = false;
+
+  renderQuizRound();
+}
+
+function renderQuizRound() {
+  if (quizState.roundIndex >= QUIZ_ROUNDS.length) {
+    showGridMasterPass();
+    return;
+  }
+
+  const round = QUIZ_ROUNDS[quizState.roundIndex];
+  quizState.answeredThisRound = false;
+
+  if (elements.quizRoundPill) {
+    elements.quizRoundPill.textContent = `ROUND ${round.roundNumber} OF ${QUIZ_ROUNDS.length}`;
+  }
+  if (elements.quizScorePill) {
+    elements.quizScorePill.textContent = `⭐ ${quizState.score} PTS`;
+  }
+  if (elements.quizBadgePill) {
+    elements.quizBadgePill.textContent = round.badge;
+  }
+  if (elements.quizQuestion) {
+    elements.quizQuestion.textContent = round.question;
+  }
+  if (elements.quizFeedbackBox) {
+    elements.quizFeedbackBox.classList.add('hidden');
+    elements.quizFeedbackBox.className = 'quiz-feedback-box hidden';
+  }
+
+  if (elements.quizOptionsGrid) {
+    elements.quizOptionsGrid.innerHTML = '';
+    round.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-option-btn';
+      btn.setAttribute('data-idx', String(idx));
+      btn.textContent = opt.text;
+      btn.addEventListener('click', () => handleQuizAnswer(opt, btn));
+      elements.quizOptionsGrid.appendChild(btn);
+    });
+  }
+}
+
+function handleQuizAnswer(opt, btnElement) {
+  if (quizState.answeredThisRound) return;
+  quizState.answeredThisRound = true;
+
+  // Disable all options immediately to prevent spam
+  if (elements.quizOptionsGrid) {
+    const allBtns = elements.quizOptionsGrid.querySelectorAll('.quiz-option-btn');
+    allBtns.forEach(b => {
+      b.disabled = true;
+      b.style.pointerEvents = 'none';
+    });
+  }
+
+  // Evaluate
+  if (opt.isCorrect) {
+    sfx.playDing();
+    triggerHaptic([40, 60, 60]);
+    if (btnElement) btnElement.classList.add('correct');
+    quizState.score += opt.score;
+    if (opt.badgeEarned) quizState.badges.add(opt.badgeEarned);
+
+    if (elements.quizFeedbackBox && elements.feedbackText && elements.feedbackIcon) {
+      elements.feedbackIcon.textContent = '⚡';
+      elements.feedbackText.textContent = opt.feedback;
+      elements.quizFeedbackBox.className = 'quiz-feedback-box correct';
+      elements.quizFeedbackBox.classList.remove('hidden');
+    }
+  } else {
+    sfx.playBuzzer();
+    triggerHaptic([180]);
+    if (btnElement) btnElement.classList.add('incorrect');
+    quizState.score = Math.max(0, quizState.score + opt.score);
+
+    if (elements.quizFeedbackBox && elements.feedbackText && elements.feedbackIcon) {
+      elements.feedbackIcon.textContent = '❌';
+      elements.feedbackText.textContent = opt.feedback;
+      elements.quizFeedbackBox.className = 'quiz-feedback-box incorrect';
+      elements.quizFeedbackBox.classList.remove('hidden');
+    }
+  }
+
+  if (elements.quizScorePill) {
+    elements.quizScorePill.textContent = `⭐ ${quizState.score} PTS`;
+  }
+  if (elements.playerScore) {
+    elements.playerScore.textContent = quizState.score.toLocaleString();
+  }
+
+  // Execute physical canvas reactivity callback
+  if (typeof opt.onSelect === 'function') {
+    opt.onSelect(engine);
+  }
+
+  // Advance to next round or finish
+  setTimeout(() => {
+    quizState.roundIndex++;
+    renderQuizRound();
+  }, 1600);
+}
+
+function showGridMasterPass() {
+  sfx.playVictory();
+  triggerHaptic([60, 40, 60, 40, 120, 80, 200]);
+
+  let rankText = 'GRADE A+ • ELITE CLEAN DISPATCHER';
+  if (quizState.score >= 2000) {
+    rankText = 'GRADE A+ • ELITE CLEAN DISPATCHER (தலைசிறந்தது)';
+  } else if (quizState.score >= 1500) {
+    rankText = 'GRADE A • SENIOR GRID CONTROLLER (முதன்மை)';
+  } else if (quizState.score >= 1000) {
+    rankText = 'GRADE B • JUNIOR GRID OPERATOR (இளநிலை)';
+  } else {
+    rankText = 'GRADE C • APPRENTICE DISPATCHER (பயிற்சி)';
+  }
+
+  if (elements.rewardScoreVal) {
+    elements.rewardScoreVal.textContent = `${quizState.score} / 2,000 PTS`;
+  }
+  if (elements.rewardRankBadge) {
+    elements.rewardRankBadge.textContent = rankText;
+  }
+  if (elements.gridMasterPassModal) {
+    elements.gridMasterPassModal.classList.remove('hidden');
+  }
+
+  if (engine.popTexts) {
+    engine.popTexts.push({
+      x: engine.canvas.width / (2 * engine.dpr),
+      y: 90,
+      text: '🏆 CHALLENGE COMPLETE • GRID MASTER PASS EARNED!',
+      color: '#facc15',
+      alpha: 1.0,
+      life: 0,
+      maxLife: 4.0
+    });
+  }
+}
+
+function closeRewardPassModal() {
+  if (elements.gridMasterPassModal) {
+    elements.gridMasterPassModal.classList.add('hidden');
+  }
+}
+
+// In-Booth QR Bridge Modal Handlers
+function openQrModal() {
+  sfx.playPop();
+  if (elements.qrModal) {
+    elements.qrModal.classList.remove('hidden');
+  }
+}
+
+function closeQrModal() {
+  if (elements.qrModal) {
+    elements.qrModal.classList.add('hidden');
+  }
+}
+
+function copyQrUrl() {
+  const url = (elements.qrUrlText && elements.qrUrlText.textContent) || 'https://kavinpro1989-blip.github.io/tn-grid-master/?mode=quiz';
+  sfx.playPop();
+
+  if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => {
+      onCopySuccess();
+    }).catch(() => {
+      fallbackCopy(url);
+    });
+  } else {
+    fallbackCopy(url);
+  }
+}
+
+function fallbackCopy(text) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    onCopySuccess();
+  } catch (e) {}
+}
+
+function onCopySuccess() {
+  if (elements.copyUrlBtn) {
+    const originalText = elements.copyUrlBtn.textContent;
+    elements.copyUrlBtn.textContent = '✓ Copied!';
+    elements.copyUrlBtn.style.background = 'rgba(16, 185, 129, 0.4)';
+    setTimeout(() => {
+      elements.copyUrlBtn.textContent = originalText;
+      elements.copyUrlBtn.style.background = '';
+    }, 2000);
+  }
+}
+
 function bootGame() {
   initEvents();
   engine.autoAdvanceTime = false;
   resetToDefaultBooth(); // Guarantee all 8 sliders start at 0%
   engine.start();
   updateClock(engine.timeMinutes);
+
+  // Initial Mode Detection & Dispatch (Milestone M3)
+  const initialMode = detectInitialMode();
+  setSimulationMode(initialMode, false);
+  if (sfx) sfx.updateUI();
 }
 
 if (document.readyState === 'loading') {
@@ -945,3 +1795,4 @@ if (document.readyState === 'loading') {
 } else {
   bootGame();
 }
+

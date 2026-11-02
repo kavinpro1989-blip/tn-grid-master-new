@@ -120,7 +120,7 @@ body.theme-night {
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: var(--font-family);
   background-color: var(--bg-body);
   color: var(--text-main);
@@ -135,7 +135,8 @@ html, body {
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* Header & Gamified Telemetry Badges */
@@ -2243,6 +2244,671 @@ input[type="range"]#timeRange::-webkit-slider-thumb:hover {
   .prompter-hero { flex-direction: column; align-items: flex-start; }
 }
 
+/* ==========================================================================
+   MILESTONES M2 & M3: MOBILE FIRST GRID HERO & IN-BOOTH QR BRIDGE
+   ========================================================================== */
+
+/* Mode Switcher Navigation Bar */
+.mode-switcher-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 24px;
+  background: rgba(13, 19, 33, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-glass-bright);
+  z-index: 25;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mode-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(2, 6, 23, 0.6);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--border-glass);
+}
+
+.mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  min-height: 48px;
+  font-family: var(--font-family);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mode-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mode-btn.active {
+  color: #0d1322;
+  background: linear-gradient(135deg, #38bdf8, #00e5ff);
+  box-shadow: 0 4px 14px rgba(0, 229, 255, 0.35);
+  font-weight: 700;
+}
+
+.mode-aux-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aux-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  min-height: 48px;
+  font-family: var(--font-family);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.aux-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.aux-btn:active {
+  transform: scale(0.97);
+}
+
+.aux-btn.qr-btn {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15));
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+.aux-btn.qr-btn:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25));
+}
+
+/* Mobile "Grid Hero" Stage */
+.mobile-quiz-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 12px 16px 20px;
+  z-index: 20;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.quiz-card {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(13, 19, 33, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quiz-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quiz-progress-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quiz-round-pill {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  letter-spacing: 0.05em;
+}
+
+.quiz-score-pill {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #facc15;
+  background: rgba(250, 204, 21, 0.12);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(250, 204, 21, 0.25);
+}
+
+.quiz-badge-pill {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f8fafc;
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(56, 189, 248, 0.2));
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.quiz-dilemma-body {
+  padding: 4px 0;
+}
+
+.quiz-question {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.quiz-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option-btn {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  min-height: 56px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid var(--border-glass-bright);
+  border-radius: 12px;
+  color: var(--text-main);
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.quiz-option-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(56, 189, 248, 0.5);
+  transform: translateY(-1px);
+}
+
+.quiz-option-btn:active {
+  transform: scale(0.98);
+  filter: brightness(1.15);
+}
+
+.quiz-option-btn.correct {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: #10b981 !important;
+  color: #6ee7b7 !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+}
+
+.quiz-option-btn.incorrect {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.35);
+}
+
+.quiz-feedback-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+  animation: feedbackSlideIn 0.25s ease-out;
+}
+
+@keyframes feedbackSlideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quiz-feedback-box.correct {
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #4ade80;
+  background: rgba(6, 78, 59, 0.35);
+}
+
+.quiz-feedback-box.incorrect {
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+  background: rgba(127, 29, 29, 0.35);
+}
+
+/* In-Booth Desktop QR Bridge Modal */
+.qr-card {
+  max-width: 480px;
+  text-align: center;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(56, 189, 248, 0.2);
+}
+
+.qr-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+}
+
+.qr-instruction {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--text-main);
+  max-width: 400px;
+}
+
+.qr-svg-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  margin: 4px 0;
+}
+
+.qr-svg {
+  display: block;
+  width: 220px;
+  height: 220px;
+}
+
+.qr-url-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(2, 6, 23, 0.7);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 10px;
+}
+
+.url-text {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: #38bdf8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy-url-btn {
+  padding: 6px 12px;
+  min-height: 38px;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.copy-url-btn:hover {
+  background: rgba(56, 189, 248, 0.35);
+}
+
+/* "Grid Master" Digital Reward Pass / Certificate Modal */
+.reward-pass-card {
+  max-width: 540px;
+  border: 2px solid #f59e0b;
+  box-shadow: 0 0 45px rgba(245, 158, 11, 0.35), 0 25px 60px rgba(0, 0, 0, 0.85);
+  background: linear-gradient(180deg, #0d1322 0%, #070b14 100%);
+  padding: 0;
+  overflow: hidden;
+}
+
+.reward-pass-frame {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.reward-stamp {
+  display: inline-block;
+  align-self: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #facc15;
+  background: rgba(250, 204, 21, 0.15);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  margin-bottom: 4px;
+}
+
+.reward-header h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.reward-tamil-title {
+  font-size: 0.95rem;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.reward-score-banner {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reward-score-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.reward-score-val {
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #facc15;
+  text-shadow: 0 0 14px rgba(250, 204, 21, 0.4);
+}
+
+.reward-rank-badge {
+  display: inline-block;
+  align-self: center;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.15);
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  margin-top: 4px;
+}
+
+.reward-badges-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.reward-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 10px;
+  padding: 10px 6px;
+}
+
+.reward-badge-item .badge-icon {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+}
+
+.reward-badge-item .badge-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.reward-badge-item .badge-desc {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.reward-booth-callout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(245, 158, 11, 0.15));
+  border: 1.5px dashed rgba(245, 158, 11, 0.6);
+  border-radius: 12px;
+  padding: 12px 16px;
+  text-align: left;
+  animation: borderGlow 2.5s infinite alternate;
+}
+
+@keyframes borderGlow {
+  from { border-color: rgba(245, 158, 11, 0.4); box-shadow: 0 0 10px rgba(245, 158, 11, 0.1); }
+  to { border-color: rgba(56, 189, 248, 0.7); box-shadow: 0 0 20px rgba(56, 189, 248, 0.25); }
+}
+
+.reward-booth-callout .callout-sparkle {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.reward-booth-callout .callout-text {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.reward-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.reward-btn {
+  flex: 1;
+  padding: 12px 16px;
+  min-height: 48px;
+  font-family: var(--font-family);
+  font-size: 0.92rem;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reward-btn.btn-restart {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-glass-bright);
+  color: var(--text-main);
+}
+
+.reward-btn.btn-restart:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.reward-btn.btn-pro {
+  background: linear-gradient(135deg, #0284c7, #10b981);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+}
+
+.reward-btn.btn-pro:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Mode State Rules */
+body.mode-quiz #tuningDeck,
+body.mode-quiz .dispatcher-tuning-deck,
+#tuningDeck.hidden-in-quiz {
+  display: none !important;
+}
+
+body.mode-quiz .mobile-quiz-stage {
+  display: flex;
+}
+
+body.mode-pro .mobile-quiz-stage {
+  display: none !important;
+}
+
+body.mode-quiz .stage-tip {
+  display: none;
+}
+
+body.mode-quiz .challenge-alert {
+  display: none;
+}
+
+/* Mobile & Touch Ergonomics Overrides */
+@media (max-width: 768px) {
+  html, body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 100%;
+  }
+
+  .game-wrapper {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+    overflow-x: hidden;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .game-header {
+    padding: 8px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .brand-title {
+    font-size: 1.05rem;
+  }
+
+  .brand-tagline {
+    font-size: 0.72rem;
+  }
+
+  .hud-badges {
+    width: 100%;
+    justify-content: space-between;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .mode-switcher-bar {
+    padding: 6px 12px;
+  }
+
+  .mode-btn {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    min-height: 48px;
+  }
+
+  .aux-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    min-height: 48px;
+  }
+
+  body.mode-quiz .canvas-stage {
+    height: 220px;
+    min-height: 200px;
+    max-height: 240px;
+    flex: none;
+  }
+
+  .quiz-card {
+    padding: 14px;
+  }
+
+  .quiz-question {
+    font-size: 0.96rem;
+  }
+
+  .quiz-option-btn {
+    min-height: 56px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+  }
+
+  .reward-pass-frame {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .reward-actions {
+    flex-direction: column;
+  }
+
+  .reward-btn {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mode-btn .btn-text {
+    font-size: 0.78rem;
+  }
+
+  .reward-badges-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+
   </style>
 </head>
 <body class="theme-solar">
@@ -2313,6 +2979,30 @@ input[type="range"]#timeRange::-webkit-slider-thumb:hover {
       </div>
     </header>
 
+    <!-- Top Mode Switcher Bar -->
+    <nav class="mode-switcher-bar" aria-label="Simulation Mode Controls">
+      <div class="mode-pill-group">
+        <button id="modeQuizBtn" class="mode-btn" data-mode="quiz" aria-pressed="false">
+          <span class="btn-icon">🎮</span>
+          <span class="btn-text">Grid Hero Challenge</span>
+        </button>
+        <button id="modeProBtn" class="mode-btn active" data-mode="pro" aria-pressed="true">
+          <span class="btn-icon">🔬</span>
+          <span class="btn-text">Pro Grid Sim</span>
+        </button>
+      </div>
+
+      <div class="mode-aux-group">
+        <button id="soundToggleBtn" class="aux-btn audio-btn" title="Toggle Sound">
+          <span id="audioIcon">🔊</span>
+          <span id="audioLabel">Sound ON</span>
+        </button>
+        <button id="qrModalTriggerBtn" class="aux-btn qr-btn desktop-only" title="Show Mobile QR Code">
+          <span>📱 Scan to Play</span>
+        </button>
+      </div>
+    </nav>
+
     <!-- 30-Second Challenge Banner -->
     <div class="challenge-alert hidden" id="challengeAlert">
       <div class="challenge-text">
@@ -2366,6 +3056,29 @@ input[type="range"]#timeRange::-webkit-slider-thumb:hover {
         </div>
       </div>
     </main>
+
+    <!-- Mobile "Grid Hero" Dilemma Stage -->
+    <section class="mobile-quiz-stage hidden" id="mobileQuizStage" aria-label="Grid Hero Challenge">
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-card-header">
+          <div class="quiz-progress-track">
+            <span class="quiz-round-pill" id="quizRoundPill">ROUND 1 OF 4</span>
+            <span class="quiz-score-pill" id="quizScorePill">⭐ 0 PTS</span>
+          </div>
+          <div class="quiz-badge-pill" id="quizBadgePill">☀️ 12:00 PM • NOON SOLAR FLOOD</div>
+        </div>
+        <div class="quiz-dilemma-body">
+          <p class="quiz-question" id="quizQuestion">648 MW of clean solar energy is flooding Kamuthi! What should we do with the surplus?</p>
+        </div>
+        <div class="quiz-options-grid" id="quizOptionsGrid">
+          <!-- Dynamic quiz choices generated by ui.js -->
+        </div>
+        <div class="quiz-feedback-box hidden" id="quizFeedbackBox" role="status" aria-live="polite">
+          <span class="feedback-icon" id="feedbackIcon">⚡</span>
+          <span class="feedback-text" id="feedbackText">Great choice!</span>
+        </div>
+      </div>
+    </section>
 
     <!-- Bottom Controls Deck -->
     <footer class="deck-controls">
@@ -3142,11 +3855,88 @@ input[type="range"]#timeRange::-webkit-slider-thumb:hover {
       </div>
     </div>
   </div>
+
+  <!-- In-Booth Desktop QR Bridge Modal -->
+  <div class="modal-backdrop hidden" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
+    <div class="modal-card qr-card">
+      <div class="modal-header">
+        <div class="card-title-group">
+          <span class="card-icon">📱</span>
+          <h3 id="qrModalTitle">Scan to Play Grid Hero on Your Phone!</h3>
+        </div>
+        <button class="modal-exit" id="qrCloseBtn" aria-label="Close QR Modal">&times;</button>
+      </div>
+      <div class="modal-body qr-modal-body">
+        <p class="qr-instruction">
+          Point your smartphone camera at the QR code below to launch the mobile <strong>Grid Hero Challenge</strong> at our exhibition booth!
+        </p>
+        <div class="qr-svg-container" id="qrSvgContainer">
+          <svg class="qr-svg" viewBox="0 0 37 37" width="220" height="220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="37" height="37" fill="#ffffff" rx="2" />
+            <path d="M2,2H3V3H2zM3,2H4V3H3zM4,2H5V3H4zM5,2H6V3H5zM6,2H7V3H6zM7,2H8V3H7zM8,2H9V3H8zM11,2H12V3H11zM12,2H13V3H12zM14,2H15V3H14zM16,2H17V3H16zM20,2H21V3H20zM28,2H29V3H28zM29,2H30V3H29zM30,2H31V3H30zM31,2H32V3H31zM32,2H33V3H32zM33,2H34V3H33zM34,2H35V3H34zM2,3H3V4H2zM8,3H9V4H8zM10,3H11V4H10zM11,3H12V4H11zM12,3H13V4H12zM13,3H14V4H13zM14,3H15V4H14zM15,3H16V4H15zM22,3H23V4H22zM24,3H25V4H24zM26,3H27V4H26zM28,3H29V4H28zM34,3H35V4H34zM2,4H3V5H2zM4,4H5V5H4zM5,4H6V5H5zM6,4H7V5H6zM8,4H9V5H8zM10,4H11V5H10zM14,4H15V5H14zM17,4H18V5H17zM18,4H19V5H18zM22,4H23V5H22zM23,4H24V5H23zM24,4H25V5H24zM25,4H26V5H25zM28,4H29V5H28zM30,4H31V5H30zM31,4H32V5H31zM32,4H33V5H32zM34,4H35V5H34zM2,5H3V6H2zM4,5H5V6H4zM5,5H6V6H5zM6,5H7V6H6zM8,5H9V6H8zM10,5H11V6H10zM12,5H13V6H12zM13,5H14V6H13zM16,5H17V6H16zM19,5H20V6H19zM21,5H22V6H21zM22,5H23V6H22zM23,5H24V6H23zM25,5H26V6H25zM26,5H27V6H26zM28,5H29V6H28zM30,5H31V6H30zM31,5H32V6H31zM32,5H33V6H32zM34,5H35V6H34zM2,6H3V7H2zM4,6H5V7H4zM5,6H6V7H5zM6,6H7V7H6zM8,6H9V7H8zM11,6H12V7H11zM14,6H15V7H14zM15,6H16V7H15zM18,6H19V7H18zM20,6H21V7H20zM21,6H22V7H21zM22,6H23V7H22zM23,6H24V7H23zM25,6H26V7H25zM28,6H29V7H28zM30,6H31V7H30zM31,6H32V7H31zM32,6H33V7H32zM34,6H35V7H34zM2,7H3V8H2zM8,7H9V8H8zM11,7H12V8H11zM14,7H15V8H14zM18,7H19V8H18zM19,7H20V8H19zM20,7H21V8H20zM22,7H23V8H22zM28,7H29V8H28zM34,7H35V8H34zM2,8H3V9H2zM3,8H4V9H3zM4,8H5V9H4zM5,8H6V9H5zM6,8H7V9H6zM7,8H8V9H7zM8,8H9V9H8zM10,8H11V9H10zM12,8H13V9H12zM14,8H15V9H14zM16,8H17V9H16zM18,8H19V9H18zM20,8H21V9H20zM22,8H23V9H22zM24,8H25V9H24zM26,8H27V9H26zM28,8H29V9H28zM29,8H30V9H29zM30,8H31V9H30zM31,8H32V9H31zM32,8H33V9H32zM33,8H34V9H33zM34,8H35V9H34zM10,9H11V10H10zM12,9H13V10H12zM13,9H14V10H13zM20,9H21V10H20zM21,9H22V10H21zM22,9H23V10H22zM2,10H3V11H2zM8,10H9V11H8zM10,10H11V11H10zM12,10H13V11H12zM14,10H15V11H14zM15,10H16V11H15zM16,10H17V11H16zM18,10H19V11H18zM19,10H20V11H19zM21,10H22V11H21zM24,10H25V11H24zM25,10H26V11H25zM26,10H27V11H26zM27,10H28V11H27zM28,10H29V11H28zM31,10H32V11H31zM32,10H33V11H32zM33,10H34V11H33zM2,11H3V12H2zM3,11H4V12H3zM4,11H5V12H4zM6,11H7V12H6zM7,11H8V12H7zM9,11H10V12H9zM10,11H11V12H10zM11,11H12V12H11zM15,11H16V12H15zM17,11H18V12H17zM19,11H20V12H19zM20,11H21V12H20zM21,11H22V12H21zM22,11H23V12H22zM25,11H26V12H25zM30,11H31V12H30zM31,11H32V12H31zM32,11H33V12H32zM2,12H3V13H2zM3,12H4V13H3zM4,12H5V13H4zM8,12H9V13H8zM12,12H13V13H12zM13,12H14V13H13zM15,12H16V13H15zM16,12H17V13H16zM17,12H18V13H17zM18,12H19V13H18zM19,12H20V13H19zM22,12H23V13H22zM23,12H24V13H23zM27,12H28V13H27zM28,12H29V13H28zM30,12H31V13H30zM32,12H33V13H32zM33,12H34V13H33zM4,13H5V14H4zM5,13H6V14H5zM6,13H7V14H6zM7,13H8V14H7zM10,13H11V14H10zM12,13H13V14H12zM15,13H16V14H15zM24,13H25V14H24zM26,13H27V14H26zM27,13H28V14H27zM29,13H30V14H29zM30,13H31V14H30zM31,13H32V14H31zM32,13H33V14H32zM34,13H35V14H34zM5,14H6V15H5zM8,14H9V15H8zM10,14H11V15H10zM11,14H12V15H11zM13,14H14V15H13zM14,14H15V15H14zM15,14H16V15H15zM18,14H19V15H18zM26,14H27V15H26zM28,14H29V15H28zM29,14H30V15H29zM2,15H3V16H2zM5,15H6V16H5zM9,15H10V16H9zM10,15H11V16H10zM12,15H13V16H12zM13,15H14V16H13zM14,15H15V16H14zM17,15H18V16H17zM18,15H19V16H18zM19,15H20V16H19zM20,15H21V16H20zM21,15H22V16H21zM24,15H25V16H24zM25,15H26V16H25zM26,15H27V16H26zM28,15H29V16H28zM33,15H34V16H33zM34,15H35V16H34zM2,16H3V17H2zM3,16H4V17H3zM6,16H7V17H6zM8,16H9V17H8zM9,16H10V17H9zM10,16H11V17H10zM12,16H13V17H12zM14,16H15V17H14zM16,16H17V17H16zM17,16H18V17H17zM18,16H19V17H18zM22,16H23V17H22zM26,16H27V17H26zM27,16H28V17H27zM28,16H29V17H28zM29,16H30V17H29zM30,16H31V17H30zM31,16H32V17H31zM32,16H33V17H32zM33,16H34V17H33zM2,17H3V18H2zM3,17H4V18H3zM4,17H5V18H4zM7,17H8V18H7zM9,17H10V18H9zM11,17H12V18H11zM14,17H15V18H14zM15,17H16V18H15zM20,17H21V18H20zM21,17H22V18H21zM24,17H25V18H24zM27,17H28V18H27zM29,17H30V18H29zM31,17H32V18H31zM32,17H33V18H32zM34,17H35V18H34zM3,18H4V19H3zM4,18H5V19H4zM7,18H8V19H7zM8,18H9V19H8zM9,18H10V19H9zM10,18H11V19H10zM11,18H12V19H11zM13,18H14V19H13zM14,18H15V19H14zM17,18H18V19H17zM19,18H20V19H19zM21,18H22V19H21zM22,18H23V19H22zM24,18H25V19H24zM26,18H27V19H26zM27,18H28V19H27zM29,18H30V19H29zM30,18H31V19H30zM34,18H35V19H34zM3,19H4V20H3zM9,19H10V20H9zM10,19H11V20H10zM11,19H12V20H11zM12,19H13V20H12zM14,19H15V20H14zM15,19H16V20H15zM17,19H18V20H17zM18,19H19V20H18zM20,19H21V20H20zM21,19H22V20H21zM25,19H26V20H25zM28,19H29V20H28zM31,19H32V20H31zM32,19H33V20H32zM34,19H35V20H34zM2,20H3V21H2zM6,20H7V21H6zM7,20H8V21H7zM8,20H9V21H8zM11,20H12V21H11zM12,20H13V21H12zM14,20H15V21H14zM15,20H16V21H15zM17,20H18V21H17zM19,20H20V21H19zM21,20H22V21H21zM22,20H23V21H22zM24,20H25V21H24zM25,20H26V21H25zM26,20H27V21H26zM28,20H29V21H28zM29,20H30V21H29zM31,20H32V21H31zM32,20H33V21H32zM33,20H34V21H33zM34,20H35V21H34zM2,21H3V22H2zM3,21H4V22H3zM4,21H5V22H4zM13,21H14V22H13zM14,21H15V22H14zM15,21H16V22H15zM17,21H18V22H17zM18,21H19V22H18zM20,21H21V22H20zM24,21H25V22H24zM25,21H26V22H25zM27,21H28V22H27zM28,21H29V22H28zM30,21H31V22H30zM31,21H32V22H31zM32,21H33V22H32zM34,21H35V22H34zM3,22H4V23H3zM6,22H7V23H6zM8,22H9V23H8zM10,22H11V23H10zM11,22H12V23H11zM13,22H14V23H13zM15,22H16V23H15zM16,22H17V23H16zM17,22H18V23H17zM18,22H19V23H18zM19,22H20V23H19zM21,22H22V23H21zM24,22H25V23H24zM26,22H27V23H26zM27,22H28V23H27zM29,22H30V23H29zM30,22H31V23H30zM31,22H32V23H31zM2,23H3V24H2zM10,23H11V24H10zM12,23H13V24H12zM14,23H15V24H14zM16,23H17V24H16zM17,23H18V24H17zM19,23H20V24H19zM20,23H21V24H20zM21,23H22V24H21zM22,23H23V24H22zM23,23H24V24H23zM25,23H26V24H25zM27,23H28V24H27zM29,23H30V24H29zM30,23H31V24H30zM31,23H32V24H31zM2,24H3V25H2zM4,24H5V25H4zM5,24H6V25H5zM6,24H7V25H6zM7,24H8V25H7zM8,24H9V25H8zM12,24H13V25H12zM17,24H18V25H17zM18,24H19V25H18zM20,24H21V25H20zM24,24H25V25H24zM28,24H29V25H28zM29,24H30V25H29zM31,24H32V25H31zM33,24H34V25H33zM2,25H3V26H2zM4,25H5V26H4zM6,25H7V26H6zM10,25H11V26H10zM13,25H14V26H13zM16,25H17V26H16zM21,25H22V26H21zM24,25H25V26H24zM26,25H27V26H26zM27,25H28V26H27zM28,25H29V26H28zM29,25H30V26H29zM32,25H33V26H32zM33,25H34V26H33zM2,26H3V27H2zM3,26H4V27H3zM4,26H5V27H4zM6,26H7V27H6zM7,26H8V27H7zM8,26H9V27H8zM9,26H10V27H9zM15,26H16V27H15zM17,26H18V27H17zM18,26H19V27H18zM21,26H22V27H21zM24,26H25V27H24zM26,26H27V27H26zM27,26H28V27H27zM28,26H29V27H28zM29,26H30V27H29zM30,26H31V27H30zM31,26H32V27H31zM10,27H11V28H10zM12,27H13V28H12zM13,27H14V28H13zM14,27H15V28H14zM16,27H17V28H16zM17,27H18V28H17zM18,27H19V28H18zM21,27H22V28H21zM24,27H25V28H24zM25,27H26V28H25zM26,27H27V28H26zM30,27H31V28H30zM32,27H33V28H32zM34,27H35V28H34zM2,28H3V29H2zM3,28H4V29H3zM4,28H5V29H4zM5,28H6V29H5zM6,28H7V29H6zM7,28H8V29H7zM8,28H9V29H8zM13,28H14V29H13zM17,28H18V29H17zM22,28H23V29H22zM23,28H24V29H23zM24,28H25V29H24zM25,28H26V29H25zM26,28H27V29H26zM28,28H29V29H28zM30,28H31V29H30zM32,28H33V29H32zM33,28H34V29H33zM2,29H3V30H2zM8,29H9V30H8zM11,29H12V30H11zM12,29H13V30H12zM15,29H16V30H15zM16,29H17V30H16zM17,29H18V30H17zM22,29H23V30H22zM24,29H25V30H24zM25,29H26V30H25zM26,29H27V30H26zM30,29H31V30H30zM31,29H32V30H31zM32,29H33V30H32zM33,29H34V30H33zM34,29H35V30H34zM2,30H3V31H2zM4,30H5V31H4zM5,30H6V31H5zM6,30H7V31H6zM8,30H9V31H8zM11,30H12V31H11zM12,30H13V31H12zM13,30H14V31H13zM15,30H16V31H15zM16,30H17V31H16zM18,30H19V31H18zM19,30H20V31H19zM20,30H21V31H20zM21,30H22V31H21zM22,30H23V31H22zM24,30H25V31H24zM26,30H27V31H26zM27,30H28V31H27zM28,30H29V31H28zM29,30H30V31H29zM30,30H31V31H30zM31,30H32V31H31zM33,30H34V31H33zM2,31H3V32H2zM4,31H5V32H4zM5,31H6V32H5zM6,31H7V32H6zM8,31H9V32H8zM11,31H12V32H11zM12,31H13V32H12zM13,31H14V32H13zM15,31H16V32H15zM16,31H17V32H16zM17,31H18V32H17zM18,31H19V32H18zM21,31H22V32H21zM22,31H23V32H22zM25,31H26V32H25zM26,31H27V32H26zM27,31H28V32H27zM29,31H30V32H29zM30,31H31V32H30zM31,31H32V32H31zM33,31H34V32H33zM34,31H35V32H34zM2,32H3V33H2zM4,32H5V33H4zM5,32H6V33H5zM6,32H7V33H6zM8,32H9V33H8zM11,32H12V33H11zM15,32H16V33H15zM16,32H17V33H16zM17,32H18V33H17zM19,32H20V33H19zM20,32H21V33H20zM21,32H22V33H21zM23,32H24V33H23zM24,32H25V33H24zM25,32H26V33H25zM26,32H27V33H26zM27,32H28V33H27zM29,32H30V33H29zM30,32H31V33H30zM33,32H34V33H33zM34,32H35V33H34zM2,33H3V34H2zM8,33H9V34H8zM12,33H13V34H12zM13,33H14V34H13zM15,33H16V34H15zM16,33H17V34H16zM18,33H19V34H18zM20,33H21V34H20zM22,33H23V34H22zM24,33H25V34H24zM29,33H30V34H29zM30,33H31V34H30zM31,33H32V34H31zM32,33H33V34H32zM2,34H3V35H2zM3,34H4V35H3zM4,34H5V35H4zM5,34H6V35H5zM6,34H7V35H6zM7,34H8V35H7zM8,34H9V35H8zM10,34H11V35H10zM11,34H12V35H11zM13,34H14V35H13zM14,34H15V35H14zM15,34H16V35H15zM16,34H17V35H16zM19,34H20V35H19zM20,34H21V35H20zM22,34H23V35H22zM25,34H26V35H25zM26,34H27V35H26zM28,34H29V35H28zM29,34H30V35H29zM31,34H32V35H31zM33,34H34V35H33z" id="qr-path" fill="#000000" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg>
+        </div>
+        <div class="qr-url-pill">
+          <span class="url-text" id="qrUrlText">https://kavinpro1989-blip.github.io/tn-grid-master/?mode=quiz</span>
+          <button class="copy-url-btn" id="copyUrlBtn" title="Copy URL">📋 Copy Link</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-dismiss" id="qrDismissBtn">
+          <span>Close & Back to Booth</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- "Grid Master" Digital Reward Pass / Certificate Modal -->
+  <div class="modal-backdrop hidden" id="gridMasterPassModal" role="dialog" aria-modal="true" aria-labelledby="rewardPassTitle">
+    <div class="modal-card reward-pass-card">
+      <div class="reward-pass-frame">
+        <div class="reward-header">
+          <div class="reward-stamp">🏆 VERIFIED DISPATCHER</div>
+          <h2 id="rewardPassTitle">TAMIL NADU GRID MASTER PASS</h2>
+          <p class="reward-tamil-title">தமிழ்நாடு மின் கட்டமைப்பு சாதனையாளர் அட்டை</p>
+        </div>
+        <div class="reward-score-banner">
+          <div class="reward-score-label">FINAL SCORE</div>
+          <div class="reward-score-val" id="rewardScoreVal">2,000 / 2,000 PTS</div>
+          <div class="reward-rank-badge" id="rewardRankBadge">GRADE A+ • ELITE CLEAN DISPATCHER</div>
+        </div>
+        <div class="reward-badges-group">
+          <div class="reward-badge-item">
+            <span class="badge-icon">⚡</span>
+            <span class="badge-title">50.00 Hz Lock</span>
+            <span class="badge-desc">Frequency Stabilized</span>
+          </div>
+          <div class="reward-badge-item">
+            <span class="badge-icon">🌿</span>
+            <span class="badge-title">100% Clean Air</span>
+            <span class="badge-desc">Flue Gas Scrubbed</span>
+          </div>
+          <div class="reward-badge-item">
+            <span class="badge-icon">🔋</span>
+            <span class="badge-title">485 MWh BESS</span>
+            <span class="badge-desc">20ms Fast Response</span>
+          </div>
+        </div>
+        <div class="reward-booth-callout">
+          <span class="callout-sparkle">📢</span>
+          <p class="callout-text">
+            <strong>Show this screen to Kavin, Mithran, or Faaris at the booth to claim your reward!</strong>
+          </p>
+        </div>
+        <div class="reward-actions">
+          <button class="reward-btn btn-restart" id="quizPlayAgainBtn">🔄 Play Again</button>
+          <button class="reward-btn btn-pro" id="quizExploreProBtn">🔬 Explore Pro Simulation</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script>
 /**
  * ============================================================================
  * TN GRID MASTER: SCHOOL EDITION - CANVAS GAME ENGINE (engine.js)
- * Compiled for browser execution.
+ * High-Fidelity Cyber-Physical Digital Twin of Tamil Nadu Electrical Grid
  * ============================================================================
  */
 
@@ -3156,36 +3946,49 @@ class PowerGridEngine {
     const context = canvas.getContext('2d');
     if (!context) throw new Error('2D context unavailable');
     this.ctx = context;
-    this.dpr = window.devicePixelRatio || 1;
+    this.dpr = (typeof window !== 'undefined' ? window.devicePixelRatio : 1) || 1;
     this.animFrameId = null;
     this.lastTime = 0;
 
-    // Game & Sim State
-    this.timeMinutes = 720; // Default: 12:00 Noon
+    // Simulation Clock & Operational State
+    this.timeMinutes = 720; // Default: 12:00 Noon (Kamuthi Peak Sun)
     this.isRunning = true;
-    this.autoAdvanceTime = false; // 🛑 Time locked! Sun never moves on its own
+    this.autoAdvanceTime = false; // Time locked unless explicitly toggled
     this.ecoScore = 0;
     this.fanRotation = 0;
+    this.currentFanRpm = 0; // Rotational inertia easing state
 
-    // 🎛️ 8 Master of Control Levers (Full Grid Authority) - All 0% on Game Start!
-    this.sliderSunshine   = 0; // 0% (Solar PV harvest)
-    this.sliderStorage    = 0; // 0 MWh (Battery reserve buffer)
-    this.sliderCoalFire   = 0; // 0% (Thermal boiler burn rate)
-    this.sliderScrubber   = 0; // 0% (Chimney soot precipitator)
-    this.sliderTownLoad   = 0; // 0 (0% Off to 100% Peak)
-    this.sliderAgriPumps  = 0; // 0% (Agricultural irrigation motors)
-    this.sliderVoltage    = 230; // 230V Nominal Grid Voltage (Transformer operational)
-    this.sliderGridTie    = 0; // 0 MW
-    this.currentLineLossPct = 0;
+    // ⚡ Tamil Nadu Grid Physical Parameters & Capacities
+    this.nuclearCapacityMW = 2000; // Kudankulam Nuclear 2,000 MW baseload (KKNPP Units 1 & 2)
+    this.nuclearBaseFactor = 1.0;  // 100% continuous baseload capacity factor
+    this.windCapacityMW    = 1500; // Muppandal Wind Corridor 1,500 MW (Aralvaimozhi Gap)
+    this.frequencyHz       = 50.00;// Indian National Grid 50.00 Hz frequency lock
+    this.batteryMode       = 'idle'; // 'idle' | 'charging' | 'discharging' | 'full' | 'empty'
+    this.batteryFlowMW     = 0;    // Active battery flow in MW (+ charge / - discharge)
+    this.currentLineLossPct = 5;   // Joule heating line loss percentage
+    this.batteryDepletedNotified = false;
 
-    // Grid Graph
+    // 🎛️ 8 Master of Control Levers (Full Grid Authority)
+    this.sliderSunshine   = 0;   // 0% (Kamuthi Solar PV harvest)
+    this.sliderStorage    = 0;   // 0 MWh (485 MWh BESS battery buffer)
+    this.sliderCoalFire   = 0;   // 0% (Mettur Thermal boiler burn rate)
+    this.sliderScrubber   = 0;   // 0% (Electrostatic precipitator & FGD scrubber)
+    this.sliderTownLoad   = 0;   // 0 (0% Off to 100% Peak town residential demand)
+    this.sliderAgriPumps  = 0;   // 0% (Agricultural irrigation motors)
+    this.sliderVoltage    = 230; // 230V Nominal Grid Voltage (Distribution transformer)
+    this.sliderGridTie    = 0;   // 0 MW (Regional grid tie interchange)
+
+    // Grid Topology Graph & Dynamic Particle Systems
     this.nodes = new Map();
     this.packets = [];
     this.smokePuffs = [];
     this.popTexts = [];
     this.ripples = [];
+    this.photonSparkles = [];
+    this.batterySurgeParticles = [];
     this.nextPacketId = 1;
     this.packetTimer = 0;
+    this.lastTelemetryState = null;
 
     this.onTelemetry = onTelemetry;
 
@@ -3193,35 +3996,57 @@ class PowerGridEngine {
     this.initTopology();
 
     if (typeof window !== 'undefined') {
-      window.addEventListener('resize', () => {
+      const resizeHandler = () => {
         this.setupDpr();
         this.repositionNodes();
-      });
-      window.addEventListener('DOMContentLoaded', () => {
-        this.setupDpr();
-        this.repositionNodes();
-      });
-      window.addEventListener('load', () => {
-        this.setupDpr();
-        this.repositionNodes();
-      });
+      };
+      window.addEventListener('resize', resizeHandler);
+      window.addEventListener('DOMContentLoaded', resizeHandler);
+      window.addEventListener('load', resizeHandler);
     }
   }
 
   setupDpr() {
-    this.dpr = window.devicePixelRatio || 1;
-    const rect = this.canvas.getBoundingClientRect();
-    const w = rect.width > 0 ? rect.width : (typeof window !== 'undefined' ? window.innerWidth : 1100);
-    const h = rect.height > 0 ? rect.height : (typeof window !== 'undefined' ? Math.max(300, window.innerHeight - 260) : 480);
-    this.canvas.width = Math.round(w * this.dpr);
-    this.canvas.height = Math.round(h * this.dpr);
+    this.dpr = Math.max(1, (typeof window !== 'undefined' ? window.devicePixelRatio : 1) || 1);
+
+    let w = 0;
+    let h = 0;
+
+    if (this.canvas) {
+      const rect = this.canvas.getBoundingClientRect();
+      if (rect.width > 0) w = rect.width;
+      if (rect.height > 0) h = rect.height;
+
+      // Fallback to parent container clientWidth during layout transitions
+      if (w <= 0 && this.canvas.parentElement) {
+        w = this.canvas.parentElement.clientWidth;
+      }
+    }
+
+    if (w <= 0) {
+      w = typeof window !== 'undefined' ? window.innerWidth : 1100;
+    }
+    if (h <= 0) {
+      const isMobileQuiz = typeof document !== 'undefined' && document.body && document.body.classList.contains('mode-quiz');
+      h = isMobileQuiz ? 220 : (typeof window !== 'undefined' ? Math.max(280, window.innerHeight - 260) : 480);
+    }
+
+    const targetPixelW = Math.round(w * this.dpr);
+    const targetPixelH = Math.round(h * this.dpr);
+
+    // Only resize canvas pixel buffer if dimensions actually changed to avoid flicker
+    if (this.canvas.width !== targetPixelW || this.canvas.height !== targetPixelH) {
+      this.canvas.width = targetPixelW;
+      this.canvas.height = targetPixelH;
+    }
+
     this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
   }
 
   initTopology() {
     this.nodes.clear();
 
-    // 1. Generation Complex (Left)
+    // 1. Generation Complex (Left) - Kamuthi Solar Park (648 MW) / Mettur Thermal (1440 MW)
     this.nodes.set('plant', {
       id: 'plant',
       name: 'Kamuthi Solar Park',
@@ -3236,13 +4061,13 @@ class PowerGridEngine {
       flickerPhase: 0
     });
 
-    // 2. High-Voltage Transmission Pylon 1
+    // 2. High-Voltage Transmission Pylon 1 (400 kV Grid Backbone)
     this.nodes.set('pylon1', {
       id: 'pylon1',
       name: 'HV Pylon #1',
       role: '400 kV Transmission',
       icon: '🗼',
-      xNorm: 0.30,
+      xNorm: 0.28,
       yNorm: 0.48,
       x: 0,
       y: 0,
@@ -3251,14 +4076,14 @@ class PowerGridEngine {
       flickerPhase: 0
     });
 
-    // 3. Connected Fan Station (Load unit)
+    // 3. Muppandal Wind Corridor (1,500 MW Clean Wind Hub)
     this.nodes.set('fanStation', {
       id: 'fanStation',
-      name: 'Connected Fan Station',
-      role: 'Town Grid Load Unit',
+      name: 'Muppandal Wind Corridor',
+      role: '1,500 MW Clean Wind Hub',
       icon: '🌀',
-      xNorm: 0.46,
-      yNorm: 0.52,
+      xNorm: 0.45,
+      yNorm: 0.48,
       x: 0,
       y: 0,
       isLit: true,
@@ -3266,11 +4091,11 @@ class PowerGridEngine {
       flickerPhase: 0
     });
 
-    // 4. TANTRANSCO Main Grid Substation
+    // 4. TANTRANSCO Main Grid Substation & 485 MWh BESS Battery
     this.nodes.set('substation', {
       id: 'substation',
       name: 'TANTRANSCO Substation',
-      role: 'Splits Power to Town',
+      role: '485 MWh BESS & 230V Bus',
       icon: '🏢',
       xNorm: 0.62,
       yNorm: 0.60,
@@ -3335,14 +4160,257 @@ class PowerGridEngine {
   }
 
   setTime(minutes) {
-    this.timeMinutes = ((minutes % 1440) + 1440) % 1440;
+    const parsed = Number(minutes);
+    if (!Number.isFinite(parsed)) return this.timeMinutes;
+
+    // Circular modulo math without resetting user state
+    this.timeMinutes = ((Math.round(parsed) % 1440) + 1440) % 1440;
+
+    if (!this.isRunning && this.onTelemetry) {
+      this.updateSimulation(0);
+    }
+    return this.timeMinutes;
+  }
+
+  setSlider(key, value) {
+    const num = Number(value);
+    if (isNaN(num)) return 0;
+
+    const k = String(key).toLowerCase().trim();
+    let applied = num;
+
+    if (k === 'sunshine' || k === 'solar' || k === 'sun' || k === 'solarpv') {
+      applied = Math.max(0, Math.min(100, num));
+      this.sliderSunshine = applied;
+    } else if (k === 'storage' || k === 'battery' || k === 'bess' || k === 'bessstorage') {
+      applied = Math.max(0, Math.min(500, num));
+      this.sliderStorage = applied;
+    } else if (k === 'coalfire' || k === 'coal' || k === 'thermal' || k === 'boiler') {
+      applied = Math.max(0, Math.min(100, num));
+      this.sliderCoalFire = applied;
+    } else if (k === 'scrubber' || k === 'filter' || k === 'flue' || k === 'precipitator') {
+      applied = Math.max(0, Math.min(100, num));
+      this.sliderScrubber = applied;
+    } else if (k === 'townload' || k === 'load' || k === 'demand' || k === 'houses') {
+      applied = Math.max(0, Math.min(4, Math.round(num)));
+      this.sliderTownLoad = applied;
+    } else if (k === 'agripumps' || k === 'pumps' || k === 'agri' || k === 'irrigation') {
+      applied = Math.max(0, Math.min(100, num));
+      this.sliderAgriPumps = applied;
+    } else if (k === 'voltage' || k === 'volt' || k === 'transformer' || k === 'tap') {
+      applied = Math.max(0, Math.min(250, num));
+      this.sliderVoltage = applied;
+    } else if (k === 'gridtie' || k === 'tie' || k === 'gridexchange' || k === 'interchange') {
+      applied = Math.max(-200, Math.min(200, num));
+      this.sliderGridTie = applied;
+    }
+
+    return applied;
+  }
+
+  triggerVisualReaction(type, payload) {
+    const p = (payload && typeof payload === 'object') ? payload : {};
+    const w = this.canvas.width / this.dpr;
+    const h = this.canvas.height / this.dpr;
+    const centerX = w * 0.5;
+    const centerY = h * 0.5;
+    const plant = this.nodes.get('plant');
+    const sub = this.nodes.get('substation');
+
+    const t = String(type).toLowerCase().replace(/[-_ 	]/g, '');
+
+    switch (t) {
+      case 'solarflood':
+      case 'solarsurge':
+      case 'solarharvest':
+      case 'solar': {
+        this.setTime(720); // 12:00 PM Peak Zenith
+        this.setSlider('sunshine', 100);
+        this.setSlider('coalFire', 0);
+        const px = plant ? plant.x : w * 0.15;
+        const py = plant ? plant.y : h * 0.65;
+
+        this.ripples.push({
+          x: px, y: py, radius: 12, maxRadius: 110, speed: 140,
+          color: '#facc15', alpha: 1.0
+        });
+
+        this.spawnPopup(px, py - 48, p.text || '☀️ 648 MW KAMUTHI SOLAR HARVEST', '#facc15', { maxLife: 2.5 });
+
+        for (let i = 0; i < 8; i++) {
+          this.spawnElectron(true, 5);
+        }
+        break;
+      }
+
+      case 'batterysurge':
+      case 'batteryburst':
+      case 'batterydischarge':
+      case 'battery': {
+        const mode = p.mode || 'discharge';
+        const mw = p.mw || 250;
+        const sx = sub ? sub.x : w * 0.62;
+        const sy = sub ? sub.y : h * 0.60;
+
+        this.ripples.push({
+          x: sx, y: sy, radius: 10, maxRadius: 100, speed: 130,
+          color: mode === 'charge' ? '#4ade80' : '#38bdf8', alpha: 1.0
+        });
+
+        const badgeText = p.text || (mode === 'charge' 
+          ? `🔋 BESS CHARGING (+${mw} MW)` 
+          : `⚡ 20ms BESS INJECTION (-${mw} MW) • 50.00 Hz LOCKED`);
+        this.spawnPopup(sx, sy - 46, badgeText, mode === 'charge' ? '#4ade80' : '#38bdf8', { maxLife: 2.5 });
+
+        // High-speed radial discharge sparks
+        for (let i = 0; i < 12; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const spd = 40 + Math.random() * 80;
+          this.batterySurgeParticles.push({
+            x: sx - 63,
+            y: sy + 2,
+            vx: Math.cos(angle) * spd,
+            vy: Math.sin(angle) * spd,
+            color: mode === 'charge' ? '#4ade80' : '#38bdf8',
+            radius: 2.5 + Math.random() * 2,
+            alpha: 1.0,
+            life: 0,
+            maxLife: 0.9
+          });
+        }
+        break;
+      }
+
+      case 'agripumps':
+      case 'agriirrigation':
+      case 'irrigation': {
+        this.setTime(840); // 02:00 PM
+        this.setSlider('agriPumps', 95);
+        const farm = this.nodes.get('house_3');
+        const fx = farm ? farm.x : w * 0.95;
+        const fy = farm ? farm.y : h * 0.40;
+
+        this.ripples.push({
+          x: fx, y: fy, radius: 10, maxRadius: 85, speed: 125,
+          color: '#4ade80', alpha: 1.0
+        });
+
+        this.spawnPopup(fx - 20, fy - 40, p.text || '💧 AGRI PUMPS ACTIVE (320 MW) • SOLAR POWERED', '#4ade80', { maxLife: 2.5 });
+        break;
+      }
+
+      case 'duckcurvesunset':
+      case 'duckcurve':
+      case 'sunset': {
+        this.setTime(1110); // 06:30 PM Sunset
+        this.setSlider('sunshine', 0);
+        this.spawnPopup(centerX, 80, p.text || '🌆 SUNSET DUCK CURVE: SOLAR COLLAPSES TO 0 MW', '#f97316', { maxLife: 2.6 });
+        break;
+      }
+
+      case 'scrubberclearing':
+      case 'scrubberactive':
+      case 'cleanair':
+      case 'scrubber': {
+        this.setSlider('scrubber', 100);
+        this.clearChimneySoot();
+        break;
+      }
+
+      case 'blackout':
+      case 'blackoutfailure':
+      case 'gridcollapse': {
+        this.setSlider('voltage', 0);
+        this.ripples.push({
+          x: centerX, y: centerY, radius: 20, maxRadius: 180, speed: 160,
+          color: '#ef4444', alpha: 1.0
+        });
+
+        this.spawnPopup(centerX, centerY - 50, p.text || '🚨 TOTAL BLACKOUT: GRID COLLAPSED', '#ef4444', { maxLife: 3.0 });
+        break;
+      }
+
+      case 'ripple': {
+        this.ripples.push({
+          x: p.x !== undefined ? p.x : centerX,
+          y: p.y !== undefined ? p.y : centerY,
+          radius: p.radius || 8,
+          maxRadius: p.maxRadius || 80,
+          speed: p.speed || 120,
+          color: p.color || '#38bdf8',
+          alpha: p.alpha !== undefined ? p.alpha : 1.0
+        });
+        break;
+      }
+
+      case 'poptext':
+      case 'popup': {
+        this.spawnPopup(
+          p.x !== undefined ? p.x : centerX,
+          p.y !== undefined ? p.y : centerY,
+          p.text || '⚡ GRID UPDATE',
+          p.color || '#38bdf8',
+          p
+        );
+        break;
+      }
+
+      default:
+        if (p.text) {
+          this.spawnPopup(
+            p.x !== undefined ? p.x : centerX,
+            p.y !== undefined ? p.y : centerY,
+            p.text,
+            p.color || '#38bdf8',
+            p
+          );
+        }
+        break;
+    }
+  }
+
+  getTelemetry() {
+    if (!this.lastTelemetryState) {
+      this.updateSimulation(0);
+    }
+    return { ...this.lastTelemetryState };
+  }
+
+  spawnPopup(x, y, text, color = '#38bdf8', options = {}) {
+    const maxLife = options.maxLife || 2.0;
+    this.popTexts.push({
+      x,
+      y,
+      text,
+      color,
+      textColor: options.textColor || '#ffffff',
+      badgeBg: options.badgeBg || 'rgba(10, 15, 26, 0.90)',
+      alpha: 1.0,
+      life: 0,
+      maxLife,
+      scale: 0.6,
+      vy: options.vy || 28
+    });
+  }
+
+  clearChimneySoot() {
+    const plant = this.nodes.get('plant');
+    for (let i = 0; i < this.smokePuffs.length; i++) {
+      const s = this.smokePuffs[i];
+      if (s.isSoot) {
+        s.alpha *= 0.5;
+        s.life += 1.8;
+      }
+    }
+    const px = plant ? plant.x : 100;
+    const py = plant ? plant.y - 75 : 200;
+    this.spawnPopup(px, py - 40, '🌿 100% SCRUBBERS ENGAGED • PURE STEAM!', '#34d399', { maxLife: 2.5 });
   }
 
   gameTick(timestamp) {
     const dt = Math.min((timestamp - this.lastTime) / 1000, 0.1);
     this.lastTime = timestamp;
 
-    // Time is locked unless explicitly commanded by user or challenge
     if (this.autoAdvanceTime) {
       this.timeMinutes = (this.timeMinutes + dt * 2.2) % 1440;
     }
@@ -3357,40 +4425,46 @@ class PowerGridEngine {
     const hours = this.timeMinutes / 60;
     const isSolarTime = hours >= 6 && hours <= 18;
 
+    // 1. Kamuthi Solar Diurnal Elevation Geometry (648 MW Peak PV)
     let baseSun = 0;
     if (isSolarTime) {
       const angle = ((hours - 6) / 12) * Math.PI;
       baseSun = Math.pow(Math.sin(angle), 1.3);
     }
-    
-    // Dynamic Slider Modulation (100% Manual Master Control)
-    // Auto-energize Substation transformer to nominal 230V if generation is active and voltage was left at 0V
+
+    // 2. Transformer Auto-Energization Safeguard to Nominal 230V AC
     if (this.sliderVoltage === 0 && (this.sliderSunshine > 0 || this.sliderCoalFire > 0 || this.sliderStorage > 0)) {
       this.sliderVoltage = 230;
     }
 
     const effectiveSolar = baseSun * (this.sliderSunshine / 100);
     const solarGenMW = Math.round(effectiveSolar * 648);
-    const coalGenMW = Math.round((this.sliderCoalFire / 100) * 1440);
+    const coalGenMW  = Math.round((this.sliderCoalFire / 100) * 1440);
     const netGridTie = this.sliderGridTie;
 
-    // Total Demand: Homes Demand + Agri Irrigation Motors - Grid Tie Support
-    const homesDemand = (this.sliderTownLoad / 4.0) * 1100; // 0 to 1100 MW (0 = Off)
-    const agriDemand  = (this.sliderAgriPumps / 100) * 320; // 0 - 320 MW
+    // 3. Kudankulam Nuclear 2,000 MW Baseload Factor Integration
+    const nuclearMW = Math.round(this.nuclearCapacityMW * this.nuclearBaseFactor);
+
+    // 4. Muppandal Wind Corridor Generation (1,500 MW Capacity, Aralvaimozhi Gap)
+    const windDiurnalFactor = 0.45 + 0.35 * Math.sin(((hours - 10) / 24) * Math.PI * 2);
+    const windGenMW = Math.round(windDiurnalFactor * this.windCapacityMW);
+
+    // Total Demand: Town Residential Load + Agri Irrigation Motors - Grid Tie
+    const homesDemand = (this.sliderTownLoad / 4.0) * 1100; // 0 to 1100 MW
+    const agriDemand  = (this.sliderAgriPumps / 100) * 320; // 0 to 320 MW
     const totalDemand = Math.max(0, homesDemand + agriDemand - netGridTie);
 
-    // Dynamic Battery Energy Storage System (BESS) Physics: Realistic Charging & Draining
+    // 5. 485 MWh BESS Fast Inverter Response Dynamics (Sub-second / 20ms Frame Execution)
     let batteryDischargeMW = 0;
     let batteryChargeMW = 0;
     let batteryMode = 'idle';
     let batteryFlowMW = 0;
 
     if (this.sliderSunshine > 0 && solarGenMW > totalDemand) {
-      // ☀️ SURPLUS SOLAR: Excess clean electricity charges the battery!
+      // Surplus Solar: 485 MWh BESS charges rapidly (+250 MW max inverter intake)
       const surplusSolarMW = solarGenMW - totalDemand;
       batteryChargeMW = Math.min(250, surplusSolarMW);
       if (this.sliderStorage < 500) {
-        // Fast, satisfying charge rate: +25 to +29 MWh/s at 200+ MW surplus
         const chargeDelta = (batteryChargeMW / 8.5) * dt;
         this.sliderStorage = Math.min(500, this.sliderStorage + chargeDelta);
         batteryMode = 'charging';
@@ -3400,15 +4474,11 @@ class PowerGridEngine {
         batteryFlowMW = 0;
       }
     } else if (solarGenMW < totalDemand && this.sliderStorage > 0.5) {
-      // 🌙 DEFICIT / SUNSET / NIGHT: Battery discharges to power the town and actively drains!
+      // Deficit / Sunset Duck Curve: BESS fires 20ms sub-second injection (-360 MW max burst)
       const solarDeficitMW = totalDemand - solarGenMW;
       const maxDeliverableMW = Math.min(360, this.sliderStorage * 2.8);
-      // Circuit must have voltage >= 100V to deliver power across lines to town
       batteryDischargeMW = (this.sliderVoltage >= 100) ? Math.min(maxDeliverableMW, solarDeficitMW) : 0;
 
-      // Fast, realistic, responsive drain rate:
-      // At 250 MW discharge, drains ~23 MWh per second (250 / 11.0 = 22.7 MWh/s)
-      // Even on smaller deficits, maintains minimum noticeable active drain
       const drainDelta = Math.max(3.5 * dt, (batteryDischargeMW / 11.0) * dt);
       this.sliderStorage = Math.max(0, this.sliderStorage - drainDelta);
       batteryMode = 'discharging';
@@ -3422,15 +4492,7 @@ class PowerGridEngine {
 
         if (!this.batteryDepletedNotified) {
           this.batteryDepletedNotified = true;
-          this.popTexts.push({
-            x: this.canvas.width / (2 * this.dpr),
-            y: 140,
-            text: '🪫 BATTERY DEPLETED (0 MWh)! (பேட்டரி காலியானது)',
-            color: '#ef4444',
-            alpha: 1.0,
-            life: 0,
-            maxLife: 2.5
-          });
+          this.spawnPopup(this.canvas.width / (2 * this.dpr), 140, '🪫 BATTERY DEPLETED (0 MWh)! (பேட்டரி காலியானது)', '#ef4444', { maxLife: 2.5 });
         }
       } else {
         this.batteryDepletedNotified = false;
@@ -3444,7 +4506,7 @@ class PowerGridEngine {
     this.batteryMode = batteryMode;
     this.batteryFlowMW = batteryFlowMW;
 
-    // Operator Mode & Grid Dispatch
+    // Merit Order Dispatch Assessment
     const cleanPotentialMW = solarGenMW + batteryDischargeMW;
     const isSolar = (cleanPotentialMW >= 180 && this.sliderCoalFire < 50) || 
                     (solarGenMW > coalGenMW && solarGenMW > 120);
@@ -3469,32 +4531,49 @@ class PowerGridEngine {
 
     const powerDeficit = Math.max(0, totalDemand - activeSupplyMW);
     const deficitRatio = totalDemand > 0 ? Math.min(1.0, powerDeficit / totalDemand) : 0;
-    const isTotalBlackout = (this.sliderVoltage < 100) || (activeSupplyMW < 50 && totalDemand > 0) || (deficitRatio > 0.82) || (activeSupplyMW === 0);
+    const isTotalBlackout = (this.sliderVoltage < 100) || (totalDemand > 0 && (activeSupplyMW < 50 || deficitRatio > 0.82));
 
-    // Voltage & Line Loss (Joule Heating I^2 R)
+    // 6. 50.00 Hz Dynamic Frequency Lock (Dynamic Swing Formula)
+    // Formula: f = 50.00 + ((Supply - Demand) / 1000) * 0.45
+    let rawFreq = 50.00;
+    if (isTotalBlackout) {
+      rawFreq = 0.00;
+    } else {
+      const deltaP = activeSupplyMW - totalDemand;
+      rawFreq = 50.00 + (deltaP / 1000.0) * 0.45;
+      rawFreq = Math.max(47.50, Math.min(52.50, rawFreq));
+    }
+    this.frequencyHz = +rawFreq.toFixed(2);
+
+    // 7. Joule Heating Line Loss (I^2 * R = P^2 * R / V^2)
     const voltageSagPenalty = Math.max(0, (230 - this.sliderVoltage) / 20.0);
     const voltageOverload   = Math.max(0, (this.sliderVoltage - 238) / 12.0);
     const coalStress = (this.sliderCoalFire / 100) * (totalDemand / 650.0);
+    const voltFactor = Math.pow(230.0 / Math.max(100, this.sliderVoltage), 2);
 
-    const lineLossPct = isSolar 
-      ? Math.round(5 + (1.0 - effectiveSolar) * 5 + voltageOverload * 14) 
-      : Math.round(20 + coalStress * 24 + voltageOverload * 18);
+    const baseLossPct = isSolar 
+      ? (5 + (1.0 - effectiveSolar) * 5 + voltageOverload * 14) 
+      : (20 + coalStress * 24 + voltageOverload * 18);
+    const lineLossPct = Math.min(65, Math.round(baseLossPct * voltFactor));
     this.currentLineLossPct = lineLossPct;
+    const lineLossMW = Math.round(activeSupplyMW * (lineLossPct / 100.0));
     const efficiencyPct = Math.max(20, 100 - lineLossPct);
 
-    // Fan RPM: Direct visual consequence of power delivery & voltage
+    // 8. Muppandal Wind Corridor Blade RPM Dynamics (Rotational Inertia Easing)
     let targetRpm = 0;
-    const voltageRatio = this.sliderVoltage / 230.0;
-    if (isTotalBlackout) {
-      targetRpm = 0; // Fans completely dead in blackout!
-    } else if (isSolar) {
-      targetRpm = Math.max(200, Math.round((2800 + (effectiveSolar * 800) - (deficitRatio * 2000)) * voltageRatio));
+    const voltageRatio = Math.max(0.2, this.sliderVoltage / 230.0);
+    if (this.sliderVoltage < 100) {
+      targetRpm = 0;
     } else {
-      targetRpm = Math.max(100, Math.round((2200 - coalStress * 1400 - voltageSagPenalty * 900 - deficitRatio * 1500) * voltageRatio));
+      const windFlowRatio = windGenMW / this.windCapacityMW;
+      const cleanDemandFactor = Math.max(0.4, 1.0 - deficitRatio);
+      targetRpm = Math.round((1400 + windFlowRatio * 2000) * cleanDemandFactor * voltageRatio);
     }
-    this.fanRotation += (targetRpm / 60) * Math.PI * 2 * dt;
+    this.currentFanRpm = this.currentFanRpm || 0;
+    this.currentFanRpm += (targetRpm - this.currentFanRpm) * Math.min(1.0, Math.max(0.2, dt * 2.8));
+    this.fanRotation += (Math.max(100, this.currentFanRpm) / 60) * 2 * Math.PI * dt;
 
-    // Load & Brownout Calculation
+    // Load Shedding, Brownout & House Illumination Logic
     let brownoutCount = 0;
     let litCount = 0;
 
@@ -3511,7 +4590,6 @@ class PowerGridEngine {
           house.brownoutLevel = 1.0;
           brownoutCount++;
         } else if (deficitRatio > 0.15) {
-          // Deficit causes progressive shedding from farthest nodes
           const shedThreshold = (7 - i) / 6.0;
           if (deficitRatio >= shedThreshold * 0.75 || this.sliderVoltage < 205) {
             house.isLit = false;
@@ -3528,7 +4606,6 @@ class PowerGridEngine {
           house.brownoutLevel = 0.0;
           litCount++;
         } else {
-          // Coal or low voltage: progressive voltage sag
           const dropRatio = (i / 6.0) * (0.38 + coalStress * 0.60 + voltageSagPenalty * 0.55);
           if (dropRatio > 0.35 || this.sliderVoltage < 205) {
             house.brownoutLevel = Math.min(1.0, (dropRatio - 0.30) * 2.6);
@@ -3542,29 +4619,29 @@ class PowerGridEngine {
       }
     }
 
-    // Smog and Air Quality
+    // 9. Soot Generation & Continuous Scrubber Dynamics
     const rawSmog = isSolar ? 0 : (this.sliderCoalFire / 100) * 100;
-    const filterReduction = (this.sliderScrubber / 100) * 0.85;
+    const filterReduction = (this.sliderScrubber / 100) * 0.95; // 95% efficiency when 100% engaged
     const finalSmog = isSolar ? 0 : Math.round(rawSmog * (1.0 - filterReduction));
     const airCleanliness = Math.max(5, 100 - finalSmog);
 
-    // Realistic Town Happiness: Penalize Blackout (92%), Smog (up to 65%), and Voltage sag!
+    // Town Satisfaction & Happiness Rating
     const smogPenalty = (finalSmog / 100) * 65;
     const blackoutPenalty = isTotalBlackout ? 92 : (brownoutCount * 14 + deficitRatio * 35);
     const voltagePenalty = (this.sliderVoltage < 205) ? (205 - this.sliderVoltage) * 1.5 : (this.sliderVoltage > 242 ? (this.sliderVoltage - 242) * 1.5 : 0);
     const townHappiness = Math.max(5, Math.min(100, Math.round(100 - blackoutPenalty - smogPenalty - voltagePenalty)));
 
-    // Eco Score Dynamics
+    // Cumulative Eco-Score Dynamics
     if (isTotalBlackout) {
-      this.ecoScore = Math.max(0, this.ecoScore - dt * 70); // Rapid crash to 0 in blackout!
+      this.ecoScore = Math.max(0, this.ecoScore - dt * 70);
     } else if (finalSmog > 50) {
-      this.ecoScore = Math.max(0, this.ecoScore - dt * 45); // Heavy smog pollution fine!
+      this.ecoScore = Math.max(0, this.ecoScore - dt * 45);
     } else if (brownoutCount > 1 || this.sliderVoltage < 205) {
-      this.ecoScore = Math.max(0, this.ecoScore - dt * 25); // Brownout instability penalty
+      this.ecoScore = Math.max(0, this.ecoScore - dt * 25);
     } else if (isSolar && townHappiness >= 85 && airCleanliness >= 80) {
-      this.ecoScore = Math.min(3000, this.ecoScore + dt * 25); // Clean solar reward
+      this.ecoScore = Math.min(3000, this.ecoScore + dt * 25);
     } else if (!isSolar && coalGenMW > 0) {
-      this.ecoScore = Math.max(0, this.ecoScore - dt * 10); // Carbon emission burn
+      this.ecoScore = Math.max(0, this.ecoScore - dt * 10);
     }
 
     // Live Grid Performance Rating
@@ -3600,7 +4677,7 @@ class PowerGridEngine {
       gradeColor = '#22c55e';
     }
 
-    // Electrons only flow if there is active generation!
+    // Electron packet emission
     this.packetTimer += dt;
     const interval = isSolar ? 0.08 : 0.20;
     if (!isTotalBlackout && activeSupplyMW > 40 && this.packetTimer >= interval) {
@@ -3610,61 +4687,78 @@ class PowerGridEngine {
 
     this.updatePackets(dt);
     this.updateSmoke(dt, isSolar, finalSmog);
+    this.updateBatterySurgeParticles(dt);
+    this.updatePhotonSparkles(dt);
 
+    // Update floating pop text badges
     for (let i = this.popTexts.length - 1; i >= 0; i--) {
       const pt = this.popTexts[i];
       pt.life += dt;
-      pt.y -= dt * 26;
-      pt.alpha = Math.max(0, 1.0 - pt.life / pt.maxLife);
+      pt.y -= dt * (pt.vy || 26);
+      if (pt.scale !== undefined && pt.scale < 1.0) {
+        pt.scale = Math.min(1.0, pt.scale + dt * 4.5);
+      }
+      pt.alpha = Math.max(0, 1.0 - (pt.life / pt.maxLife));
       if (pt.life >= pt.maxLife) {
         this.popTexts.splice(i, 1);
       }
     }
 
-    if (this.onTelemetry) {
-      this.onTelemetry({
-        timeMinutes: this.timeMinutes,
-        isSolar,
-        efficiencyPct,
-        townHappiness,
-        airCleanliness,
-        fanRpm: targetRpm,
-        ecoScore: Math.round(this.ecoScore),
-        housesLitCount: litCount,
-        brownoutCount,
-        lineLossPct,
-        storageMwh: Math.round(this.sliderStorage),
-        batteryMode: this.batteryMode,
-        batteryFlowMW: Math.round(this.batteryFlowMW),
-        sunshinePct: this.sliderSunshine,
-        coalFirePct: this.sliderCoalFire,
-        scrubberPct: this.sliderScrubber,
-        townLoad: this.sliderTownLoad,
-        agriPumps: this.sliderAgriPumps,
-        voltage: this.sliderVoltage,
-        gridTie: this.sliderGridTie,
-        activeSupplyMW,
-        totalDemand,
-        powerDeficit,
-        isTotalBlackout,
-        finalSmog,
-        grade: liveGrade,
-        gradeTitle,
-        gradeTamil,
-        gradeColor
-      });
-    }
-  }
+    // Unified Telemetry Snapshot with Dual-Key Standard Contracts
+    const telemetry = {
+      // ⚡ Physical Grid Parameters
+      frequencyHz: this.frequencyHz,             // 50.00 Hz Indian Grid frequency lock
+      voltageAC: this.sliderVoltage,             // 230V AC Single-Phase
+      voltage: this.sliderVoltage,               // Backward-compatible alias
+      solarMW: solarGenMW,                       // Kamuthi Solar 648 MW output
+      coalMW: coalGenMW,                         // Mettur Coal 1440 MW output
+      nuclearMW: nuclearMW,                      // Kudankulam Nuclear 2000 MW baseload
+      windMW: windGenMW,                         // Muppandal Wind 1500 MW corridor
+      bessMWh: Math.round(this.sliderStorage),   // 485 MWh BESS battery state of charge
+      storageMwh: Math.round(this.sliderStorage),// Backward-compatible alias
+      batteryMode: this.batteryMode,
+      batteryFlowMW: Math.round(this.batteryFlowMW),
+      townDemandMW: Math.round(totalDemand),     // Total town demand in MW
+      totalDemand: Math.round(totalDemand),      // Backward-compatible alias
+      activeSupplyMW,
+      powerDeficit,
+      lineLossPct,
+      lineLossMW,
+      efficiencyPct,
 
-  setSlider(name, value) {
-    if (name === 'sunshine')  this.sliderSunshine  = Math.max(0, Math.min(100, value));
-    if (name === 'storage')   this.sliderStorage   = Math.max(0, Math.min(500, value));
-    if (name === 'coalFire')  this.sliderCoalFire  = Math.max(0, Math.min(100, value));
-    if (name === 'scrubber')  this.sliderScrubber  = Math.max(0, Math.min(100, value));
-    if (name === 'townLoad')  this.sliderTownLoad  = Math.max(0, Math.min(4, value));
-    if (name === 'agriPumps') this.sliderAgriPumps = Math.max(0, Math.min(100, value));
-    if (name === 'voltage')   this.sliderVoltage   = Math.max(0, Math.min(250, value));
-    if (name === 'gridTie')   this.sliderGridTie   = Math.max(-200, Math.min(200, value));
+      // 🌿 Environmental & Quality Metrics
+      airCleanliness,
+      finalSmog,
+      airQualityGrade: liveGrade,
+      townHappiness,
+      housesLitCount: litCount,
+      brownoutCount,
+      isTotalBlackout,
+      isSolar,
+
+      // 🎛️ Control Levers & Runtime State
+      timeMinutes: this.timeMinutes,
+      sunshinePct: this.sliderSunshine,
+      coalFirePct: this.sliderCoalFire,
+      scrubberPct: this.sliderScrubber,
+      townLoad: this.sliderTownLoad,
+      agriPumps: this.sliderAgriPumps,
+      gridTie: this.sliderGridTie,
+      fanRpm: Math.round(this.currentFanRpm),
+      ecoScore: Math.round(this.ecoScore),
+
+      // 🏆 Ratings
+      grade: liveGrade,
+      gradeTitle,
+      gradeTamil,
+      gradeColor
+    };
+
+    this.lastTelemetryState = telemetry;
+
+    if (this.onTelemetry) {
+      this.onTelemetry(telemetry);
+    }
   }
 
   spawnElectron(isSolar, lineLossPct = 5) {
@@ -3726,17 +4820,23 @@ class PowerGridEngine {
       const plant = this.nodes.get('plant');
       const spawnRate = (this.sliderCoalFire / 100) * 0.9;
       if (plant && Math.random() < spawnRate) {
-        const isDirty = (finalSmog > 35);
+        const scrubberFrac = Math.max(0, Math.min(1, (this.sliderScrubber / 100.0) * 0.95));
+        const r = Math.round(15 + 225 * scrubberFrac);
+        const g = Math.round(23 + 222 * scrubberFrac);
+        const b = Math.round(42 + 213 * scrubberFrac);
+        const isSoot = (scrubberFrac < 0.4);
+
         this.smokePuffs.push({
           x: plant.x + (Math.random() - 0.5) * 35,
           y: plant.y - 75,
-          vx: Math.random() * 34 + 15,
-          vy: -Math.random() * 45 - 25,
-          radius: Math.random() * (isDirty ? 16 : 8) + 10,
-          colorRGB: isDirty ? '15, 23, 42' : '203, 213, 225',
-          alpha: isDirty ? 0.85 : 0.35,
+          vx: Math.random() * (isSoot ? 34 : 20) + 10,
+          vy: isSoot ? (-Math.random() * 35 - 20) : (-Math.random() * 55 - 40),
+          radius: Math.random() * (isSoot ? 16 : 8) + 10,
+          colorRGB: `${r}, ${g}, ${b}`,
+          alpha: isSoot ? 0.85 : 0.35,
           life: 0,
-          maxLife: isDirty ? 3.6 : 2.0
+          maxLife: isSoot ? 3.6 : 1.6,
+          isSoot
         });
       }
     }
@@ -3746,14 +4846,14 @@ class PowerGridEngine {
       s.life += dt;
       s.x += s.vx * dt;
       s.y += s.vy * dt;
-      s.radius += dt * (s.colorRGB === '15, 23, 42' ? 18 : 10);
+      s.radius += dt * (s.isSoot ? 16 : 9);
       s.currentAlpha = Math.max(0, s.alpha * (1.0 - s.life / s.maxLife));
       if (s.life >= s.maxLife) {
         this.smokePuffs.splice(i, 1);
       }
     }
 
-    // Update animated touch ripples
+    // Update animated touch/event ripples
     for (let i = this.ripples.length - 1; i >= 0; i--) {
       const r = this.ripples[i];
       r.radius += r.speed * dt;
@@ -3761,6 +4861,87 @@ class PowerGridEngine {
       if (r.radius >= r.maxRadius || r.alpha <= 0) {
         this.ripples.splice(i, 1);
       }
+    }
+  }
+
+  updateBatterySurgeParticles(dt) {
+    const sub = this.nodes.get('substation');
+    if (!sub) return;
+
+    const bessX = sub.x - 63;
+    const bessY = sub.y + 2;
+
+    // Ambient charge/discharge particle spawning
+    if (this.batteryMode === 'charging' && this.batteryFlowMW > 10 && Math.random() < 0.22) {
+      this.batterySurgeParticles.push({
+        x: sub.x + (Math.random() - 0.5) * 16,
+        y: sub.y + (Math.random() - 0.5) * 10,
+        vx: (bessX - sub.x) * 1.8 + (Math.random() - 0.5) * 15,
+        vy: (bessY - sub.y) * 1.8 + (Math.random() - 0.5) * 15,
+        color: '#4ade80',
+        radius: 3,
+        alpha: 1.0,
+        life: 0,
+        maxLife: 0.6
+      });
+    } else if (this.batteryMode === 'discharging' && this.batteryFlowMW > 10 && Math.random() < 0.25) {
+      this.batterySurgeParticles.push({
+        x: bessX + (Math.random() - 0.5) * 12,
+        y: bessY + (Math.random() - 0.5) * 12,
+        vx: (sub.x - bessX) * 1.6 + (Math.random() - 0.5) * 20,
+        vy: (sub.y - bessY) * 1.6 + (Math.random() - 0.5) * 20,
+        color: '#38bdf8',
+        radius: 3.5,
+        alpha: 1.0,
+        life: 0,
+        maxLife: 0.7
+      });
+    }
+
+    for (let i = this.batterySurgeParticles.length - 1; i >= 0; i--) {
+      const bp = this.batterySurgeParticles[i];
+      bp.life += dt;
+      bp.x += bp.vx * dt;
+      bp.y += bp.vy * dt;
+      bp.alpha = Math.max(0, 1.0 - bp.life / bp.maxLife);
+      if (bp.life >= bp.maxLife) {
+        this.batterySurgeParticles.splice(i, 1);
+      }
+    }
+  }
+
+  updatePhotonSparkles(dt) {
+    const plant = this.nodes.get('plant');
+    if (plant && this.sliderSunshine > 40 && Math.random() < 0.16) {
+      this.photonSparkles.push({
+        x: plant.x + (Math.random() - 0.5) * 64,
+        y: plant.y - 12 - Math.random() * 22,
+        vx: (Math.random() - 0.5) * 14,
+        vy: -Math.random() * 20 - 10,
+        alpha: 1.0,
+        life: 0,
+        maxLife: 0.8,
+        char: Math.random() > 0.5 ? '✨' : '⚡'
+      });
+    }
+
+    for (let i = this.photonSparkles.length - 1; i >= 0; i--) {
+      const sp = this.photonSparkles[i];
+      sp.life += dt;
+      sp.x += sp.vx * dt;
+      sp.y += sp.vy * dt;
+      sp.alpha = Math.max(0, 1.0 - sp.life / sp.maxLife);
+      if (sp.life >= sp.maxLife) {
+        this.photonSparkles.splice(i, 1);
+      }
+    }
+  }
+
+  drawSafeRoundRect(ctx, x, y, w, h, r = 4) {
+    if (typeof ctx.roundRect === 'function') {
+      ctx.roundRect(x, y, w, h, r);
+    } else {
+      ctx.rect(x, y, w, h);
     }
   }
 
@@ -3773,12 +4954,92 @@ class PowerGridEngine {
     const hours = this.timeMinutes / 60;
     const isSolarTime = hours >= 6 && hours <= 18;
 
+    // 1. Atmosphere, Landscape & Sun Zenith Rays
     this.drawLandscape(w, h, isSolarTime);
+    if (isSolarTime && this.sliderSunshine > 10) {
+      this.drawZenithRays(w, h, isSolarTime);
+    }
+
+    // 2. Power Lines & Interactive Ripples
     this.drawPowerLines();
     this.drawRipples();
+
+    // 3. Infrastructure Nodes & Town Buildings
     this.drawInfrastructure(isSolarTime);
+
+    // 4. In-Flight Energy Particles & Battery Surge
     this.drawElectrons();
+    this.drawBatterySurgeParticles();
+
+    // 5. Environmental Emissions, Popups & Photon Sparkles
     this.drawPuffsAndPopups();
+    this.drawPhotonSparkles();
+  }
+
+  drawZenithRays(w, h, isSolarTime) {
+    const ctx = this.ctx;
+    const plant = this.nodes.get('plant');
+    const dayProgress = Math.max(0, Math.min(1, (this.timeMinutes - 360) / 720));
+
+    // Calculate celestial sun position
+    const sunX = w * (0.10 + dayProgress * 0.75);
+    const sunY = h * (0.42 - Math.sin(dayProgress * Math.PI) * 0.32);
+
+    const groundY = h * 0.76;
+    const clarity = 1.0 - (this.lastTelemetryState ? (this.lastTelemetryState.finalSmog / 100.0) * 0.75 : 0);
+    const rayIntensity = (this.sliderSunshine / 100.0) * Math.pow(Math.sin(dayProgress * Math.PI), 1.2) * clarity;
+
+    if (rayIntensity <= 0.04) return;
+
+    ctx.save();
+
+    // Soft celestial sun disc
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, 22, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(254, 240, 138, ${Math.min(0.8, rayIntensity * 0.9)})`;
+    ctx.shadowColor = '#facc15';
+    ctx.shadowBlur = 18;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Direct targeted solar ray beamed down onto Kamuthi Solar Park
+    if (plant) {
+      const gradTarget = ctx.createLinearGradient(sunX, sunY, plant.x, plant.y);
+      gradTarget.addColorStop(0, `rgba(254, 240, 138, ${0.30 * rayIntensity})`);
+      gradTarget.addColorStop(0.5, `rgba(250, 204, 21, ${0.14 * rayIntensity})`);
+      gradTarget.addColorStop(1, 'rgba(16, 185, 129, 0)');
+
+      ctx.beginPath();
+      ctx.moveTo(sunX, sunY);
+      ctx.lineTo(plant.x - 48, plant.y);
+      ctx.lineTo(plant.x + 48, plant.y);
+      ctx.closePath();
+      ctx.fillStyle = gradTarget;
+      ctx.fill();
+    }
+
+    // Ambient fan light cones radiating downward across terrain
+    const angles = [-0.55, -0.32, -0.12, 0.12, 0.32, 0.55];
+    angles.forEach((ang, idx) => {
+      const shimmer = Math.sin(performance.now() * 0.0018 + idx) * 0.03;
+      const targetX = sunX + Math.tan(ang) * (groundY - sunY);
+      const halfW = 28 + Math.abs(ang) * 18;
+
+      const grad = ctx.createLinearGradient(sunX, sunY, targetX, groundY);
+      grad.addColorStop(0, `rgba(254, 240, 138, ${(0.18 + shimmer) * rayIntensity})`);
+      grad.addColorStop(0.6, `rgba(250, 204, 21, ${0.07 * rayIntensity})`);
+      grad.addColorStop(1, 'rgba(30, 41, 59, 0)');
+
+      ctx.beginPath();
+      ctx.moveTo(sunX, sunY);
+      ctx.lineTo(targetX - halfW, groundY);
+      ctx.lineTo(targetX + halfW, groundY);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+    });
+
+    ctx.restore();
   }
 
   drawRipples() {
@@ -3800,7 +5061,7 @@ class PowerGridEngine {
     const groundY = h * 0.76;
 
     ctx.save();
-    // Distant background ridge
+    // Distant background mountain ridge (Western Ghats backdrop)
     ctx.beginPath();
     ctx.moveTo(0, groundY - 30);
     ctx.bezierCurveTo(w * 0.25, groundY - 75, w * 0.5, groundY - 35, w * 0.75, groundY - 65);
@@ -3828,7 +5089,7 @@ class PowerGridEngine {
     ctx.fillStyle = isSolar ? '#061710' : '#060810';
     ctx.fill();
 
-    // Subtle modern terrain contour accent line
+    // Terrain contour accent line
     ctx.beginPath();
     ctx.moveTo(0, groundY);
     ctx.bezierCurveTo(w * 0.2, groundY - 35, w * 0.45, groundY - 10, w * 0.7, groundY - 30);
@@ -3907,7 +5168,7 @@ class PowerGridEngine {
       } else if (n.id === 'pylon1') {
         this.drawPylon(n.name);
       } else if (n.id === 'fanStation') {
-        this.drawFanStation();
+        this.drawMuppandalWindTurbines();
       } else if (n.id === 'substation') {
         this.drawSubstation();
       } else if (n.id.startsWith('house_')) {
@@ -3920,7 +5181,10 @@ class PowerGridEngine {
 
   drawKamuthiSolarPark() {
     const ctx = this.ctx;
+    const effectiveSolar = (this.lastTelemetryState ? this.lastTelemetryState.solarMW : 0) / 648.0;
+    const isExcited = (effectiveSolar > 0.15);
 
+    // Mounting rack frame
     ctx.fillStyle = '#475569';
     ctx.fillRect(-52, 18, 104, 6);
     ctx.fillRect(-26, 0, 8, 18);
@@ -3932,15 +5196,32 @@ class PowerGridEngine {
       ctx.translate(px, -4);
       ctx.rotate(-0.16);
 
-      ctx.fillStyle = '#0369a1';
-      ctx.strokeStyle = '#38bdf8';
+      // Multi-pass excitation radiance glow on solar PV modules
+      if (isExcited) {
+        ctx.shadowColor = effectiveSolar > 0.75 ? '#fde047' : '#38bdf8';
+        ctx.shadowBlur = Math.round(6 + 14 * effectiveSolar);
+      }
+
+      const grad = ctx.createLinearGradient(-16, -12, 16, 12);
+      if (isExcited) {
+        grad.addColorStop(0, '#0284c7');
+        grad.addColorStop(1, '#38bdf8');
+      } else {
+        grad.addColorStop(0, '#0369a1');
+        grad.addColorStop(1, '#075985');
+      }
+
+      ctx.fillStyle = grad;
+      ctx.strokeStyle = isExcited ? '#7dd3fc' : '#38bdf8';
       ctx.lineWidth = 1.8;
       ctx.beginPath();
-      ctx.roundRect(-16, -12, 32, 24, 4);
+      this.drawSafeRoundRect(ctx, -16, -12, 32, 24, 4);
       ctx.fill();
       ctx.stroke();
+      ctx.shadowBlur = 0;
 
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      // Silicon cell busbars
+      ctx.strokeStyle = isExcited ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.45)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(-16, 0); ctx.lineTo(16, 0);
@@ -3951,7 +5232,7 @@ class PowerGridEngine {
     });
 
     ctx.font = '16px Fredoka, sans-serif';
-    ctx.fillText('✨', 38, -25);
+    ctx.fillText(isExcited ? '✨' : '☀️', 38, -25);
 
     ctx.fillStyle = '#34d399';
     ctx.font = 'bold 11px Fredoka, sans-serif';
@@ -3962,17 +5243,21 @@ class PowerGridEngine {
   drawMetturCoalPlant() {
     const ctx = this.ctx;
 
+    // Main boiler house
     ctx.fillStyle = '#1e293b';
     ctx.fillRect(-36, -16, 72, 36);
 
+    // Twin thermal smokestacks (Stage I & II)
     ctx.fillStyle = '#ef4444';
     ctx.fillRect(-22, -76, 13, 60);
     ctx.fillRect(9, -76, 13, 60);
 
+    // Red & white aviation warning stripes
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(-22, -61, 13, 10);
     ctx.fillRect(9, -61, 13, 10);
 
+    // Furnace glow windows
     ctx.fillStyle = '#f97316';
     ctx.fillRect(-16, 4, 11, 10);
     ctx.fillRect(6, 4, 11, 10);
@@ -4014,57 +5299,117 @@ class PowerGridEngine {
     ctx.fillText(name, 0, 52);
   }
 
-  drawFanStation() {
+  drawMuppandalWindTurbines() {
     const ctx = this.ctx;
+    const isSpinning = this.currentFanRpm > 100;
 
-    ctx.fillStyle = '#1e293b';
-    ctx.strokeStyle = '#0284c7';
-    ctx.lineWidth = 2;
+    // Atmospheric breeze streamlines through mountain pass
+    if (isSpinning) {
+      ctx.save();
+      const streamTime = performance.now() * 0.002;
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
+      ctx.lineWidth = 1.2;
+      for (let i = 0; i < 3; i++) {
+        const lineY = -35 + i * 14;
+        const lineX = ((streamTime * 60 + i * 35) % 90) - 45;
+        ctx.beginPath();
+        ctx.moveTo(lineX - 18, lineY);
+        ctx.lineTo(lineX + 18, lineY);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // Tapered monopole wind turbine tower
+    ctx.fillStyle = '#64748b';
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.roundRect(-24, -16, 48, 38, 6);
+    ctx.moveTo(-4, 34);
+    ctx.lineTo(-2, -22);
+    ctx.lineTo(2, -22);
+    ctx.lineTo(4, 34);
+    ctx.closePath();
     ctx.fill();
     ctx.stroke();
 
+    // Streamlined nacelle pod at tower top
+    ctx.fillStyle = '#1e293b';
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    this.drawSafeRoundRect(ctx, -12, -26, 24, 9, 3);
+    ctx.fill();
+    ctx.stroke();
+
+    // Rotor Hub & 3 Aerodynamic Blades
     ctx.save();
-    ctx.translate(0, 0);
+    ctx.translate(0, -22);
     ctx.rotate(this.fanRotation);
 
-    ctx.fillStyle = '#38bdf8';
-    for (let i = 0; i < 4; i++) {
-      ctx.rotate(Math.PI / 2);
-      ctx.beginPath();
-      ctx.ellipse(0, -12, 4, 10, 0, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.restore();
+    // 3 Aerofoil Blades (120 deg symmetry)
+    for (let i = 0; i < 3; i++) {
+      ctx.save();
+      ctx.rotate((i * 2 * Math.PI) / 3);
 
+      const bladeGrad = ctx.createLinearGradient(0, 0, 0, -32);
+      bladeGrad.addColorStop(0, '#e2e8f0');
+      bladeGrad.addColorStop(1, '#38bdf8');
+
+      ctx.fillStyle = bladeGrad;
+      ctx.beginPath();
+      ctx.moveTo(-2.5, 0);
+      ctx.lineTo(-1, -32);
+      ctx.lineTo(1, -32);
+      ctx.lineTo(2.5, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      // Aviation red safety tip
+      ctx.fillStyle = '#ef4444';
+      ctx.fillRect(-1.2, -32, 2.4, 6);
+
+      ctx.restore();
+    }
+
+    // Nose cone hub spinner
     ctx.fillStyle = '#facc15';
     ctx.beginPath();
-    ctx.arc(0, 0, 5, 0, Math.PI * 2);
+    ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
     ctx.fill();
+    ctx.restore();
 
+    // Bilingual label
     ctx.fillStyle = '#38bdf8';
     ctx.font = 'bold 10px Fredoka, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('Town Cooling Station', 0, 36);
+    ctx.fillText('Muppandal Wind (1,500 MW)', 0, 48);
+  }
+
+  // Alias for backward compatibility with existing tests/inspectors
+  drawFanStation() {
+    this.drawMuppandalWindTurbines();
   }
 
   drawSubstation() {
     const ctx = this.ctx;
 
+    // Substation Transformer Enclosure
     ctx.fillStyle = '#334155';
     ctx.strokeStyle = '#38bdf8';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.roundRect(-26, -16, 52, 36, 6);
+    this.drawSafeRoundRect(ctx, -26, -16, 52, 36, 6);
     ctx.fill();
     ctx.stroke();
 
+    // Transformer cooling fins
     ctx.fillStyle = '#0f172a';
     for (let x = -19; x <= 19; x += 9) {
       ctx.fillRect(x, -11, 4, 26);
     }
 
+    // High-voltage insulators
     ctx.fillStyle = '#facc15';
     ctx.fillRect(-11, -27, 6, 11);
     ctx.fillRect(5, -27, 6, 11);
@@ -4073,21 +5418,120 @@ class PowerGridEngine {
     ctx.font = 'bold 10px Fredoka, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('TANTRANSCO Substation', 0, 34);
+
+    // ========================================================================
+    // Dedicated On-Canvas 485 MWh BESS Battery Storage Enclosure
+    // ========================================================================
+    const bessX = -64;
+    const bessY = 2;
+
+    ctx.save();
+    ctx.translate(bessX, bessY);
+
+    // Container Enclosure Body
+    ctx.fillStyle = '#0f172a';
+    ctx.strokeStyle = this.batteryMode === 'discharging' ? '#f87171' : (this.batteryMode === 'charging' ? '#4ade80' : '#0284c7');
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    this.drawSafeRoundRect(ctx, -24, -15, 48, 30, 4);
+    ctx.fill();
+    ctx.stroke();
+
+    // Inverter status LED beacon
+    ctx.beginPath();
+    ctx.arc(-18, -9, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = this.batteryMode === 'charging' ? '#22c55e' : (this.batteryMode === 'discharging' ? '#38bdf8' : (this.sliderStorage <= 0.5 ? '#ef4444' : '#64748b'));
+    ctx.fill();
+
+    // 5-Segment State-of-Charge (SOC) Meter
+    const socRatio = Math.max(0, Math.min(1.0, this.sliderStorage / 500.0));
+    const activeBars = Math.ceil(socRatio * 5);
+
+    for (let b = 1; b <= 5; b++) {
+      const bx = -14 + (b - 1) * 6.5;
+      const by = -4;
+      const bw = 4.5;
+      const bh = 14;
+
+      if (b <= activeBars) {
+        let barColor = '#22c55e';
+        if (b <= 2) barColor = '#ef4444';
+        else if (b <= 4) barColor = '#eab308';
+
+        ctx.fillStyle = barColor;
+        ctx.fillRect(bx, by, bw, bh);
+
+        // Discharging glow
+        if (this.batteryMode === 'discharging') {
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 0.8;
+          ctx.strokeRect(bx, by, bw, bh);
+        }
+      } else {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+        ctx.fillRect(bx, by, bw, bh);
+      }
+    }
+
+    // Battery label
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '8px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('485 MWh BESS', 0, 22);
+
+    // Live Flow Badge Pill above container
+    let pillText = `${Math.round(this.sliderStorage)} MWh`;
+    let pillBorder = '#64748b';
+    let pillBg = 'rgba(15, 23, 42, 0.90)';
+
+    if (this.batteryMode === 'charging') {
+      pillText = `▲ +${Math.round(this.batteryFlowMW)} MW`;
+      pillBorder = '#4ade80';
+    } else if (this.batteryMode === 'discharging') {
+      pillText = `▼ -${Math.round(this.batteryFlowMW)} MW`;
+      pillBorder = '#f87171';
+    } else if (this.sliderStorage <= 0.5) {
+      pillText = `0 MWh EMPTY`;
+      pillBorder = '#ef4444';
+    }
+
+    ctx.font = 'bold 8px Fredoka, sans-serif';
+    const pw = ctx.measureText(pillText).width + 8;
+    ctx.fillStyle = pillBg;
+    ctx.strokeStyle = pillBorder;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    this.drawSafeRoundRect(ctx, -pw / 2, -26, pw, 10, 3);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = pillBorder;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(pillText, 0, -21);
+
+    ctx.restore();
   }
 
   drawHouse(n) {
     const ctx = this.ctx;
+    const hours = this.timeMinutes / 60;
+    const isNightTime = hours >= 18.0 || hours <= 6.5;
+    const isTwilight = hours > 16.8 && hours < 18.0;
+
     const isLit = n.isLit && n.brownoutLevel < 0.8;
     const isBrownout = n.brownoutLevel > 0.2;
 
+    // Building exterior walls
     ctx.fillStyle = '#1e293b';
     ctx.strokeStyle = isBrownout ? '#ef4444' : '#475569';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.roundRect(-20, -8, 40, 26, 4);
+    this.drawSafeRoundRect(ctx, -20, -8, 40, 26, 4);
     ctx.fill();
     ctx.stroke();
 
+    // Sloped roof
     ctx.fillStyle = '#d97706';
     ctx.beginPath();
     ctx.moveTo(-24, -8);
@@ -4096,22 +5540,49 @@ class PowerGridEngine {
     ctx.closePath();
     ctx.fill();
 
-    let windowColor = '#facc15';
+    // Window illumination logic
+    let windowColor = '#0f172a';
+    let glowIntensity = 0;
+
     if (n.brownoutLevel >= 0.8 || !isLit) {
       windowColor = '#0f172a';
+      glowIntensity = 0;
     } else if (isBrownout) {
-      const flicker = Math.sin(n.flickerPhase) > 0;
+      const flicker = Math.sin(n.flickerPhase * 2.5) > 0;
       windowColor = flicker ? '#f97316' : '#451a03';
+      glowIntensity = flicker ? 4 : 0;
+    } else if (isNightTime || isTwilight) {
+      // 🌙 Evening & Night Peak: Radiant golden incandescent windows
+      windowColor = '#facc15';
+      glowIntensity = isNightTime ? 12 : 6;
+    } else {
+      // ☀️ Daytime: Soft cyan glass reflection
+      windowColor = '#67e8f9';
+      glowIntensity = 2;
     }
 
     ctx.fillStyle = windowColor;
-    if (isLit && !isBrownout) {
-      ctx.shadowColor = '#facc15';
-      ctx.shadowBlur = 10;
+    if (glowIntensity > 0) {
+      ctx.shadowColor = (windowColor === '#f97316') ? '#f97316' : '#facc15';
+      ctx.shadowBlur = glowIntensity;
     }
     ctx.fillRect(-14, -2, 9, 9);
     ctx.fillRect(5, -2, 9, 9);
     ctx.shadowBlur = 0;
+
+    // Ground porch light projection cone during evening/night illumination
+    if ((isNightTime || isTwilight) && isLit && !isBrownout) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(-14, 18);
+      ctx.lineTo(-24, 34);
+      ctx.lineTo(24, 34);
+      ctx.lineTo(14, 18);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(250, 204, 21, 0.12)';
+      ctx.fill();
+      ctx.restore();
+    }
 
     ctx.font = '12px Fredoka, sans-serif';
     ctx.textAlign = 'center';
@@ -4152,6 +5623,37 @@ class PowerGridEngine {
     ctx.restore();
   }
 
+  drawBatterySurgeParticles() {
+    const ctx = this.ctx;
+    ctx.save();
+
+    this.batterySurgeParticles.forEach((bp) => {
+      ctx.fillStyle = bp.color;
+      ctx.shadowColor = bp.color;
+      ctx.shadowBlur = 8;
+      ctx.globalAlpha = bp.alpha;
+      ctx.beginPath();
+      ctx.arc(bp.x, bp.y, bp.radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    ctx.restore();
+  }
+
+  drawPhotonSparkles() {
+    const ctx = this.ctx;
+    ctx.save();
+
+    this.photonSparkles.forEach((sp) => {
+      ctx.globalAlpha = sp.alpha;
+      ctx.font = '14px Fredoka, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(sp.char, sp.x, sp.y);
+    });
+
+    ctx.restore();
+  }
+
   drawPuffsAndPopups() {
     const ctx = this.ctx;
     ctx.save();
@@ -4166,12 +5668,47 @@ class PowerGridEngine {
     });
 
     this.popTexts.forEach((pt) => {
-      ctx.fillStyle = pt.color;
-      ctx.globalAlpha = pt.alpha;
-      ctx.font = 'bold 14px Fredoka, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(pt.text, pt.x, pt.y);
+      this.drawPopBadge(pt);
     });
+
+    ctx.restore();
+  }
+
+  drawPopBadge(pt) {
+    const ctx = this.ctx;
+    ctx.save();
+
+    ctx.font = 'bold 12px Fredoka, sans-serif';
+    const textWidth = ctx.measureText(pt.text).width;
+    const badgeW = Math.max(textWidth + 24, 60);
+    const badgeH = 26;
+    const radius = 6;
+
+    ctx.globalAlpha = Math.max(0, Math.min(1, pt.alpha));
+    ctx.translate(pt.x, pt.y);
+
+    if (pt.scale && pt.scale < 1.0) {
+      ctx.scale(pt.scale, pt.scale);
+    }
+
+    // High-contrast rounded badge background
+    ctx.fillStyle = pt.badgeBg || 'rgba(10, 15, 26, 0.90)';
+    ctx.strokeStyle = pt.color;
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+    ctx.shadowBlur = 6;
+
+    ctx.beginPath();
+    this.drawSafeRoundRect(ctx, -badgeW / 2, -badgeH / 2, badgeW, badgeH, radius);
+    ctx.fill();
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Badge text label
+    ctx.fillStyle = pt.textColor || '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(pt.text, 0, 0);
 
     ctx.restore();
   }
@@ -4203,35 +5740,30 @@ class PowerGridEngine {
           color: isPowered ? '#4ade80' : '#ef4444',
           alpha: 1.0
         });
-        this.popTexts.push({
-          x: clickedNode.x,
-          y: clickedNode.y - 42,
-          text: isPowered ? `⚡ ${clickedNode.name}: 230V Active` : `⚠️ ${clickedNode.name}: Low Power`,
-          color: isPowered ? '#4ade80' : '#ef4444',
-          alpha: 1.0,
-          life: 0,
-          maxLife: 1.4
-        });
+        this.spawnPopup(
+          clickedNode.x,
+          clickedNode.y - 42,
+          isPowered ? `⚡ ${clickedNode.name}: 230V Active` : `⚠️ ${clickedNode.name}: Low Power`,
+          isPowered ? '#4ade80' : '#ef4444',
+          { maxLife: 1.6 }
+        );
       } else if (clickedNode.id === 'fanStation') {
-        const isSpinning = this.fanRotation > 0;
         this.ripples.push({
           x: clickedNode.x,
           y: clickedNode.y,
-          radius: 8,
-          maxRadius: 65,
-          speed: 110,
+          radius: 10,
+          maxRadius: 75,
+          speed: 130,
           color: '#38bdf8',
           alpha: 1.0
         });
-        this.popTexts.push({
-          x: clickedNode.x,
-          y: clickedNode.y - 42,
-          text: `🌀 Town Cooling Fan Station`,
-          color: '#38bdf8',
-          alpha: 1.0,
-          life: 0,
-          maxLife: 1.4
-        });
+        this.spawnPopup(
+          clickedNode.x,
+          clickedNode.y - 42,
+          `🌀 Muppandal Wind Corridor (1,500 MW)`,
+          '#38bdf8',
+          { maxLife: 1.6 }
+        );
       } else if (clickedNode.id === 'plant') {
         const isSolar = clickedNode.name.includes('Solar');
         if (isSolar) {
@@ -4245,15 +5777,13 @@ class PowerGridEngine {
             color: '#facc15',
             alpha: 1.0
           });
-          this.popTexts.push({
-            x: clickedNode.x,
-            y: clickedNode.y - 42,
-            text: '⭐ SOLAR BOOST +100! (சூரிய ஆற்றல்)',
-            color: '#facc15',
-            alpha: 1.0,
-            life: 0,
-            maxLife: 1.6
-          });
+          this.spawnPopup(
+            clickedNode.x,
+            clickedNode.y - 42,
+            '⭐ KAMUTHI SOLAR BOOST +100! (சூரிய ஆற்றல்)',
+            '#facc15',
+            { maxLife: 1.8 }
+          );
         } else {
           this.ecoScore = Math.max(0, this.ecoScore - 20);
           this.ripples.push({
@@ -4265,35 +5795,14 @@ class PowerGridEngine {
             color: '#ef4444',
             alpha: 1.0
           });
-          this.popTexts.push({
-            x: clickedNode.x,
-            y: clickedNode.y - 42,
-            text: '💨 COUGH! -20 SMOG PENALTY (புகை மாசு)',
-            color: '#ef4444',
-            alpha: 1.0,
-            life: 0,
-            maxLife: 1.6
-          });
+          this.spawnPopup(
+            clickedNode.x,
+            clickedNode.y - 42,
+            '💨 COUGH! -20 SMOG PENALTY (புகை மாசு)',
+            '#ef4444',
+            { maxLife: 1.8 }
+          );
         }
-      } else if (clickedNode.id === 'fanStation') {
-        this.ripples.push({
-          x: clickedNode.x,
-          y: clickedNode.y,
-          radius: 10,
-          maxRadius: 75,
-          speed: 130,
-          color: '#38bdf8',
-          alpha: 1.0
-        });
-        this.popTexts.push({
-          x: clickedNode.x,
-          y: clickedNode.y - 42,
-          text: '🌀 FANS SPINNING FAST! (குளிர்விப்பான்)',
-          color: '#38bdf8',
-          alpha: 1.0,
-          life: 0,
-          maxLife: 1.4
-        });
       } else if (clickedNode.id === 'substation') {
         this.ripples.push({
           x: clickedNode.x,
@@ -4304,19 +5813,17 @@ class PowerGridEngine {
           color: '#eab308',
           alpha: 1.0
         });
-        this.popTexts.push({
-          x: clickedNode.x,
-          y: clickedNode.y - 42,
-          text: '⚡ SUBSTATION: 230V BALANCED! (துணை நிலையம்)',
-          color: '#eab308',
-          alpha: 1.0,
-          life: 0,
-          maxLife: 1.4
-        });
+        this.spawnPopup(
+          clickedNode.x,
+          clickedNode.y - 42,
+          '⚡ SUBSTATION & 485 MWh BESS (230V AC)',
+          '#eab308',
+          { maxLife: 1.6 }
+        );
       }
       return clickedNode;
     } else {
-      // Gentle ripple feedback even when clicking open grid landscape
+      // Gentle ripple feedback on clicking open terrain
       this.ripples.push({
         x: mouseX,
         y: mouseY,
@@ -4422,24 +5929,258 @@ const elements = {
   reportVerdictText: document.getElementById('reportVerdictText'),
   reportExitBtn: document.getElementById('reportExitBtn'),
   reportCloseBtn: document.getElementById('reportCloseBtn'),
-  reportResetBtn: document.getElementById('reportResetBtn')
+  reportResetBtn: document.getElementById('reportResetBtn'),
+
+  // Milestone M2 & M3 Elements
+  modeQuizBtn: document.getElementById('modeQuizBtn'),
+  modeProBtn: document.getElementById('modeProBtn'),
+  soundToggleBtn: document.getElementById('soundToggleBtn'),
+  audioIcon: document.getElementById('audioIcon'),
+  audioLabel: document.getElementById('audioLabel'),
+  qrModalTriggerBtn: document.getElementById('qrModalTriggerBtn'),
+  mobileQuizStage: document.getElementById('mobileQuizStage'),
+  quizCard: document.getElementById('quizCard'),
+  quizRoundPill: document.getElementById('quizRoundPill'),
+  quizScorePill: document.getElementById('quizScorePill'),
+  quizBadgePill: document.getElementById('quizBadgePill'),
+  quizQuestion: document.getElementById('quizQuestion'),
+  quizOptionsGrid: document.getElementById('quizOptionsGrid'),
+  quizFeedbackBox: document.getElementById('quizFeedbackBox'),
+  feedbackIcon: document.getElementById('feedbackIcon'),
+  feedbackText: document.getElementById('feedbackText'),
+  qrModal: document.getElementById('qrModal'),
+  qrCloseBtn: document.getElementById('qrCloseBtn'),
+  qrDismissBtn: document.getElementById('qrDismissBtn'),
+  copyUrlBtn: document.getElementById('copyUrlBtn'),
+  qrUrlText: document.getElementById('qrUrlText'),
+  gridMasterPassModal: document.getElementById('gridMasterPassModal'),
+  rewardScoreVal: document.getElementById('rewardScoreVal'),
+  rewardRankBadge: document.getElementById('rewardRankBadge'),
+  quizPlayAgainBtn: document.getElementById('quizPlayAgainBtn'),
+  quizExploreProBtn: document.getElementById('quizExploreProBtn'),
+  tuningDeck: document.getElementById('tuningDeck')
 };
 
-// Web Audio Sound Synthesizer (Permanently Silenced per User Request)
-class SoundFX {
+// Procedural Web Audio API Synthesizer (Milestone M2)
+class ProceduralAudioEngine {
   constructor() {
     this.ctx = null;
-    this.muted = true;
+    this.masterGain = null;
+    this.muted = false;
+
+    if (typeof localStorage !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('tn_grid_muted');
+        if (saved !== null) {
+          this.muted = saved === 'true' || saved === '1';
+        }
+      } catch (e) {}
+    }
   }
 
-  init() {}
-  toggle() { return false; }
-  playSolarChime() {}
-  playCoalRumble() {}
-  playPop() {}
+  init() {
+    if (!this.ctx && typeof window !== 'undefined') {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        this.ctx = new AudioCtx();
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.gain.setValueAtTime(this.muted ? 0 : 0.3, this.ctx.currentTime);
+        this.masterGain.connect(this.ctx.destination);
+      }
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume().catch(() => {});
+    }
+  }
+
+  toggleMute() {
+    this.muted = !this.muted;
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.setValueAtTime(this.muted ? 0 : 0.3, this.ctx.currentTime);
+    }
+    if (typeof localStorage !== 'undefined') {
+      try {
+        localStorage.setItem('tn_grid_muted', this.muted ? '1' : '0');
+      } catch (e) {}
+    }
+    this.updateUI();
+    return this.muted;
+  }
+
+  toggle() {
+    return this.toggleMute();
+  }
+
+  updateUI() {
+    const audioIcon = document.getElementById('audioIcon');
+    const audioLabel = document.getElementById('audioLabel');
+    if (audioIcon) {
+      audioIcon.textContent = this.muted ? '🔇' : '🔊';
+    }
+    if (audioLabel) {
+      audioLabel.textContent = this.muted ? 'Muted' : 'Sound ON';
+    }
+  }
+
+  playDing() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    // Two-tone sine wave chime (880Hz -> 1320Hz)
+    const osc1 = this.ctx.createOscillator();
+    const gain1 = this.ctx.createGain();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(880, now);
+    gain1.gain.setValueAtTime(0.25, now);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+    osc1.connect(gain1);
+    gain1.connect(this.masterGain || this.ctx.destination);
+    osc1.start(now);
+    osc1.stop(now + 0.35);
+
+    const osc2 = this.ctx.createOscillator();
+    const gain2 = this.ctx.createGain();
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(1320, now + 0.08);
+    gain2.gain.setValueAtTime(0, now);
+    gain2.gain.setValueAtTime(0.28, now + 0.08);
+    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+    osc2.connect(gain2);
+    gain2.connect(this.masterGain || this.ctx.destination);
+    osc2.start(now + 0.08);
+    osc2.stop(now + 0.5);
+  }
+
+  playSolarChime() {
+    this.playDing();
+  }
+
+  playBuzzer() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    // Filtered sawtooth buzzer (180Hz -> 140Hz)
+    const osc = this.ctx.createOscillator();
+    const filter = this.ctx.createBiquadFilter();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.linearRampToValueAtTime(140, now + 0.25);
+
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(450, now);
+
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.28);
+  }
+
+  playPowerSurge() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    // Ascending frequency sweep (150Hz -> 600Hz)
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(150, now);
+    osc.frequency.exponentialRampToValueAtTime(600, now + 0.45);
+
+    gain.gain.setValueAtTime(0.05, now);
+    gain.gain.linearRampToValueAtTime(0.22, now + 0.2);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.5);
+  }
+
+  playCoalRumble() {
+    this.playPowerSurge();
+  }
+
+  playVictory() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    // 4-note brass fanfare arpeggio (C5 -> E5 -> G5 -> C6)
+    const notes = [
+      { freq: 523.25, time: 0.00, dur: 0.15 }, // C5
+      { freq: 659.25, time: 0.14, dur: 0.15 }, // E5
+      { freq: 783.99, time: 0.28, dur: 0.18 }, // G5
+      { freq: 1046.5, time: 0.45, dur: 0.80 }  // C6
+    ];
+
+    notes.forEach(n => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(n.freq, now + n.time);
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.setValueAtTime(0.25, now + n.time);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + n.time + n.dur);
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      osc.start(now + n.time);
+      osc.stop(now + n.time + n.dur);
+    });
+  }
+
+  playPop() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(400, now);
+    osc.frequency.exponentialRampToValueAtTime(100, now + 0.04);
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+    osc.connect(gain);
+    gain.connect(this.masterGain || this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.04);
+  }
 }
 
-const sfx = new SoundFX();
+class SoundFX extends ProceduralAudioEngine {}
+const sfx = new ProceduralAudioEngine();
+if (typeof window !== 'undefined') {
+  window.sfx = sfx;
+  window.SoundFX = SoundFX;
+  window.ProceduralAudioEngine = ProceduralAudioEngine;
+}
+
+// Haptic Vibration Helper (Milestone M2)
+function triggerHaptic(pattern = 40) {
+  if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+    try {
+      navigator.vibrate(pattern);
+    } catch (e) {}
+  }
+}
+if (typeof window !== 'undefined') {
+  window.triggerHaptic = triggerHaptic;
+}
+
 const engine = new PowerGridEngine(elements.canvas, handleTelemetry);
 if (typeof window !== 'undefined') {
   window.engine = engine;
@@ -4946,7 +6687,88 @@ function initEvents() {
       engine.setSlider('gridTie', val);
     });
   }
+
+  // Mode Switcher Buttons (Milestone M3)
+  if (elements.modeQuizBtn) {
+    elements.modeQuizBtn.addEventListener('click', () => {
+      sfx.playPop();
+      setSimulationMode('quiz');
+    });
+  }
+  if (elements.modeProBtn) {
+    elements.modeProBtn.addEventListener('click', () => {
+      sfx.playPop();
+      setSimulationMode('pro');
+    });
+  }
+
+  // Audio Toggle Button (Milestone M2)
+  if (elements.soundToggleBtn) {
+    elements.soundToggleBtn.addEventListener('click', () => {
+      sfx.toggleMute();
+    });
+  }
+
+  // In-Booth QR Bridge Modal (Milestone M2)
+  if (elements.qrModalTriggerBtn) {
+    elements.qrModalTriggerBtn.addEventListener('click', openQrModal);
+  }
+  if (elements.qrCloseBtn) {
+    elements.qrCloseBtn.addEventListener('click', closeQrModal);
+  }
+  if (elements.qrDismissBtn) {
+    elements.qrDismissBtn.addEventListener('click', closeQrModal);
+  }
+  if (elements.qrModal) {
+    elements.qrModal.addEventListener('click', (e) => {
+      if (e.target === elements.qrModal) closeQrModal();
+    });
+  }
+  if (elements.copyUrlBtn) {
+    elements.copyUrlBtn.addEventListener('click', copyQrUrl);
+  }
+
+  // Grid Master Reward Pass Actions (Milestone M3)
+  if (elements.quizPlayAgainBtn) {
+    elements.quizPlayAgainBtn.addEventListener('click', () => {
+      sfx.playPop();
+      closeRewardPassModal();
+      startQuizHero();
+    });
+  }
+  if (elements.quizExploreProBtn) {
+    elements.quizExploreProBtn.addEventListener('click', () => {
+      sfx.playPop();
+      closeRewardPassModal();
+      setSimulationMode('pro');
+    });
+  }
+
+  // Keyboard Shortcuts: Q to toggle QR modal, ESC to close modals
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'q' || e.key === 'Q') {
+      const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      if (activeTag !== 'input' && activeTag !== 'textarea') {
+        if (elements.qrModal && !elements.qrModal.classList.contains('hidden')) {
+          closeQrModal();
+        } else {
+          openQrModal();
+        }
+      }
+    } else if (e.key === 'Escape') {
+      closeQrModal();
+      closeRewardPassModal();
+    }
+  });
+
+  // Autoplay Audio Unlock on first user gesture
+  const unlockAudio = () => {
+    sfx.init();
+  };
+  document.addEventListener('pointerdown', unlockAudio, { once: true });
+  document.addEventListener('click', unlockAudio, { once: true });
 }
+
 
 function startChallenge() {
   if (challengeRunning) return;
@@ -5266,12 +7088,547 @@ function resetToDefaultBooth() {
   updateClock(720);
 }
 
+// ============================================================================
+// MILESTONE M3: MOBILE FIRST "GRID HERO" CHALLENGE & MODE ROUTING
+// ============================================================================
+
+let currentMode = 'pro';
+
+function detectInitialMode() {
+  if (typeof window === 'undefined') return 'pro';
+
+  // 1. URL search param check (?mode=quiz or ?mode=pro)
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const modeParam = urlParams.get('mode');
+    if (modeParam === 'quiz' || modeParam === 'pro') {
+      return modeParam;
+    }
+  } catch (e) {}
+
+  // 2. Session storage preference
+  try {
+    const savedMode = sessionStorage.getItem('tn_grid_mode');
+    if (savedMode === 'quiz' || savedMode === 'pro') {
+      return savedMode;
+    }
+  } catch (e) {}
+
+  // 3. Viewport <= 768px or touch device capability
+  const isSmallScreen = typeof window.innerWidth !== 'undefined' && window.innerWidth <= 768;
+  const isTouchDevice = (typeof window.matchMedia === 'function' && window.matchMedia('(hover: none) and (pointer: coarse)').matches) ||
+                        (typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0) ||
+                        (typeof window !== 'undefined' && 'ontouchstart' in window);
+
+  if (isSmallScreen || isTouchDevice) {
+    return 'quiz';
+  }
+  return 'pro';
+}
+
+function setSimulationMode(mode, persist = true) {
+  currentMode = mode;
+  if (persist) {
+    try {
+      sessionStorage.setItem('tn_grid_mode', mode);
+    } catch (e) {}
+  }
+
+  const body = document.body;
+  if (mode === 'quiz') {
+    if (body) {
+      body.classList.add('mode-quiz');
+      body.classList.remove('mode-pro');
+    }
+    if (elements.modeQuizBtn) {
+      elements.modeQuizBtn.classList.add('active');
+      elements.modeQuizBtn.setAttribute('aria-pressed', 'true');
+    }
+    if (elements.modeProBtn) {
+      elements.modeProBtn.classList.remove('active');
+      elements.modeProBtn.setAttribute('aria-pressed', 'false');
+    }
+    if (elements.mobileQuizStage) elements.mobileQuizStage.classList.remove('hidden');
+    if (elements.tuningDeck) elements.tuningDeck.classList.add('hidden-in-quiz');
+
+    // Launch or resume Grid Hero challenge
+    if (!quizState.active) {
+      startQuizHero();
+    }
+  } else {
+    if (body) {
+      body.classList.add('mode-pro');
+      body.classList.remove('mode-quiz');
+    }
+    if (elements.modeQuizBtn) {
+      elements.modeQuizBtn.classList.remove('active');
+      elements.modeQuizBtn.setAttribute('aria-pressed', 'false');
+    }
+    if (elements.modeProBtn) {
+      elements.modeProBtn.classList.add('active');
+      elements.modeProBtn.setAttribute('aria-pressed', 'true');
+    }
+    if (elements.mobileQuizStage) elements.mobileQuizStage.classList.add('hidden');
+    if (elements.tuningDeck) elements.tuningDeck.classList.remove('hidden-in-quiz');
+  }
+
+  if (window.engine) {
+    if (typeof window.engine.setupDpr === 'function') window.engine.setupDpr();
+    if (typeof window.engine.repositionNodes === 'function') window.engine.repositionNodes();
+  }
+}
+
+// Mobile "Grid Hero" Dilemmas Data Matrix
+const QUIZ_ROUNDS = [
+  {
+    roundNumber: 1,
+    id: 'solar_noon',
+    badge: '☀️ 12:00 PM • NOON SOLAR FLOOD',
+    question: '648 MW of clean solar energy is flooding Kamuthi! What should we do with the massive surplus?',
+    options: [
+      {
+        text: '🔋 Charge our 485 MWh BESS Battery!',
+        isCorrect: true,
+        score: 500,
+        badgeEarned: '485 MWh BESS',
+        feedback: '⚡ Boom! Clean solar stored in 485 MWh BESS! Zero waste, zero pollution!',
+        onSelect: (eng) => {
+          eng.setTime(720); // 12:00 PM
+          eng.setSlider('sunshine', 100);
+          eng.setSlider('storage', 485);
+          eng.setSlider('coalFire', 0);
+          eng.setSlider('townLoad', 2);
+          eng.setSlider('voltage', 230);
+          if (typeof eng.triggerVisualReaction === 'function') {
+            eng.triggerVisualReaction('solar_flood');
+          }
+          if (eng.popTexts) {
+            eng.popTexts.push({
+              x: eng.canvas.width / (2 * eng.dpr),
+              y: 90,
+              text: '🔋 +485 MWh Clean Solar Stored in BESS!',
+              color: '#4ade80',
+              alpha: 1.0,
+              life: 0,
+              maxLife: 2.5
+            });
+          }
+        }
+      },
+      {
+        text: '🏭 Burn more coal at Mettur',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Toxic soot blanketed the town while free solar was wasted!',
+        onSelect: (eng) => {
+          eng.setSlider('coalFire', 100);
+          eng.setSlider('scrubber', 0);
+        }
+      },
+      {
+        text: '🗑️ Just throw away and curtail the solar',
+        isCorrect: false,
+        score: -50,
+        feedback: '⚠️ Clean renewable solar was curtailed and wasted!',
+        onSelect: (eng) => {
+          eng.setSlider('sunshine', 10);
+        }
+      }
+    ]
+  },
+  {
+    roundNumber: 2,
+    id: 'agri_pumps',
+    badge: '🌾 02:00 PM • AGRI-PUMPS SCHEDULING',
+    question: 'Tamil Nadu farmers need irrigation water for delta fields! When should thousands of agricultural pumps run?',
+    options: [
+      {
+        text: '☀️ Run pumps right now on sunny afternoon solar',
+        isCorrect: true,
+        score: 500,
+        badgeEarned: 'Solar Agri',
+        feedback: '🌾 Brilliant dispatching! Free Kamuthi solar powers irrigation zero-carbon!',
+        onSelect: (eng) => {
+          eng.setTime(840); // 14:00 PM
+          eng.setSlider('sunshine', 90);
+          eng.setSlider('agriPumps', 100);
+          eng.setSlider('voltage', 230);
+          if (typeof eng.triggerVisualReaction === 'function') {
+            eng.triggerVisualReaction('agri_pumps');
+          }
+          if (eng.popTexts) {
+            eng.popTexts.push({
+              x: eng.canvas.width / (2 * eng.dpr),
+              y: 90,
+              text: '🌾 Irrigation Pumps Running on 100% Solar!',
+              color: '#38bdf8',
+              alpha: 1.0,
+              life: 0,
+              maxLife: 2.5
+            });
+          }
+        }
+      },
+      {
+        text: '🌙 Turn on all pumps at 7:00 PM evening peak',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Overload! Pumping water during evening peak triggers substation brownouts!',
+        onSelect: (eng) => {
+          eng.setTime(1140);
+          eng.setSlider('agriPumps', 100);
+        }
+      },
+      {
+        text: '🔌 Ban farm pumps completely',
+        isCorrect: false,
+        score: -50,
+        feedback: '⚠️ Farming yields collapsed without irrigation water!',
+        onSelect: (eng) => {
+          eng.setSlider('agriPumps', 0);
+        }
+      }
+    ]
+  },
+  {
+    roundNumber: 3,
+    id: 'duck_curve',
+    badge: '🌇 06:30 PM • SUNSET DUCK CURVE CRISIS',
+    question: 'The sun set, solar dropped to 0 MW, and 80 million people turned on lights and ACs! Frequency dips to 49.2 Hz! What saves the grid?',
+    options: [
+      {
+        text: '⚡ Discharge 485 MWh BESS Battery in 20 milliseconds!',
+        isCorrect: true,
+        score: 500,
+        badgeEarned: '50.00 Hz Lock',
+        feedback: '⚡ Master stroke! 20ms BESS burst locks frequency at exactly 50.00 Hz!',
+        onSelect: (eng) => {
+          eng.setTime(1110); // 18:30 PM
+          eng.setSlider('sunshine', 0);
+          eng.setSlider('storage', 485);
+          eng.setSlider('townLoad', 3);
+          eng.setSlider('voltage', 230);
+          if (typeof eng.triggerVisualReaction === 'function') {
+            eng.triggerVisualReaction('duck_curve_sunset');
+          }
+          if (eng.popTexts) {
+            eng.popTexts.push({
+              x: eng.canvas.width / (2 * eng.dpr),
+              y: 90,
+              text: '⚡ 50.00 Hz FREQUENCY LOCKED • 20ms BESS BURST',
+              color: '#facc15',
+              alpha: 1.0,
+              life: 0,
+              maxLife: 2.5
+            });
+          }
+        }
+      },
+      {
+        text: '🔥 Wait 4 hours for thermal coal boilers to heat up',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Too slow! Steam turbines take hours; the grid collapsed into blackout!',
+        onSelect: (eng) => {
+          eng.setSlider('voltage', 140);
+        }
+      },
+      {
+        text: '📴 Cut power to all schools and hospitals',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Blackout! Critical services lost all electricity!',
+        onSelect: (eng) => {
+          eng.setSlider('voltage', 0);
+        }
+      }
+    ]
+  },
+  {
+    roundNumber: 4,
+    id: 'scrubber',
+    badge: '🌿 08:30 PM • METTUR EMISSION SCRUBBER',
+    question: 'Mettur coal units are firing to support late-night baseline load, releasing toxic fly-ash and soot over the valley! What is our move?',
+    options: [
+      {
+        text: '💨 Engage 100% Flue Gas Scrubbers & Precipitators!',
+        isCorrect: true,
+        score: 500,
+        badgeEarned: '100% Clean Air',
+        feedback: '🌿 Pure air restored! 100% scrubbers trap soot while houses glow bright!',
+        onSelect: (eng) => {
+          eng.setTime(1230); // 20:30 PM
+          eng.setSlider('coalFire', 60);
+          eng.setSlider('scrubber', 100);
+          eng.setSlider('townLoad', 2);
+          eng.setSlider('voltage', 230);
+          if (typeof eng.triggerVisualReaction === 'function') {
+            eng.triggerVisualReaction('scrubber_clearing');
+          }
+          if (eng.popTexts) {
+            eng.popTexts.push({
+              x: eng.canvas.width / (2 * eng.dpr),
+              y: 90,
+              text: '🌿 100% SCRUBBERS ENGAGED • AIR QUALITY PURE!',
+              color: '#34d399',
+              alpha: 1.0,
+              life: 0,
+              maxLife: 2.5
+            });
+          }
+        }
+      },
+      {
+        text: '🌫️ Turn off scrubbers to save electricity',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Toxic smog choke! Valley air index plummets and citizens cough!',
+        onSelect: (eng) => {
+          eng.setSlider('coalFire', 100);
+          eng.setSlider('scrubber', 0);
+        }
+      },
+      {
+        text: '💥 Shut down all power in pitch darkness',
+        isCorrect: false,
+        score: -100,
+        feedback: '❌ Blackout! Clinics, schools, and homes lost all power!',
+        onSelect: (eng) => {
+          eng.setSlider('voltage', 0);
+          eng.setSlider('coalFire', 0);
+        }
+      }
+    ]
+  }
+];
+
+const quizState = {
+  active: false,
+  roundIndex: 0,
+  score: 0,
+  badges: new Set(),
+  answeredThisRound: false
+};
+
+function startQuizHero() {
+  quizState.active = true;
+  quizState.roundIndex = 0;
+  quizState.score = 0;
+  quizState.badges = new Set();
+  quizState.answeredThisRound = false;
+
+  renderQuizRound();
+}
+
+function renderQuizRound() {
+  if (quizState.roundIndex >= QUIZ_ROUNDS.length) {
+    showGridMasterPass();
+    return;
+  }
+
+  const round = QUIZ_ROUNDS[quizState.roundIndex];
+  quizState.answeredThisRound = false;
+
+  if (elements.quizRoundPill) {
+    elements.quizRoundPill.textContent = `ROUND ${round.roundNumber} OF ${QUIZ_ROUNDS.length}`;
+  }
+  if (elements.quizScorePill) {
+    elements.quizScorePill.textContent = `⭐ ${quizState.score} PTS`;
+  }
+  if (elements.quizBadgePill) {
+    elements.quizBadgePill.textContent = round.badge;
+  }
+  if (elements.quizQuestion) {
+    elements.quizQuestion.textContent = round.question;
+  }
+  if (elements.quizFeedbackBox) {
+    elements.quizFeedbackBox.classList.add('hidden');
+    elements.quizFeedbackBox.className = 'quiz-feedback-box hidden';
+  }
+
+  if (elements.quizOptionsGrid) {
+    elements.quizOptionsGrid.innerHTML = '';
+    round.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-option-btn';
+      btn.setAttribute('data-idx', String(idx));
+      btn.textContent = opt.text;
+      btn.addEventListener('click', () => handleQuizAnswer(opt, btn));
+      elements.quizOptionsGrid.appendChild(btn);
+    });
+  }
+}
+
+function handleQuizAnswer(opt, btnElement) {
+  if (quizState.answeredThisRound) return;
+  quizState.answeredThisRound = true;
+
+  // Disable all options immediately to prevent spam
+  if (elements.quizOptionsGrid) {
+    const allBtns = elements.quizOptionsGrid.querySelectorAll('.quiz-option-btn');
+    allBtns.forEach(b => {
+      b.disabled = true;
+      b.style.pointerEvents = 'none';
+    });
+  }
+
+  // Evaluate
+  if (opt.isCorrect) {
+    sfx.playDing();
+    triggerHaptic([40, 60, 60]);
+    if (btnElement) btnElement.classList.add('correct');
+    quizState.score += opt.score;
+    if (opt.badgeEarned) quizState.badges.add(opt.badgeEarned);
+
+    if (elements.quizFeedbackBox && elements.feedbackText && elements.feedbackIcon) {
+      elements.feedbackIcon.textContent = '⚡';
+      elements.feedbackText.textContent = opt.feedback;
+      elements.quizFeedbackBox.className = 'quiz-feedback-box correct';
+      elements.quizFeedbackBox.classList.remove('hidden');
+    }
+  } else {
+    sfx.playBuzzer();
+    triggerHaptic([180]);
+    if (btnElement) btnElement.classList.add('incorrect');
+    quizState.score = Math.max(0, quizState.score + opt.score);
+
+    if (elements.quizFeedbackBox && elements.feedbackText && elements.feedbackIcon) {
+      elements.feedbackIcon.textContent = '❌';
+      elements.feedbackText.textContent = opt.feedback;
+      elements.quizFeedbackBox.className = 'quiz-feedback-box incorrect';
+      elements.quizFeedbackBox.classList.remove('hidden');
+    }
+  }
+
+  if (elements.quizScorePill) {
+    elements.quizScorePill.textContent = `⭐ ${quizState.score} PTS`;
+  }
+  if (elements.playerScore) {
+    elements.playerScore.textContent = quizState.score.toLocaleString();
+  }
+
+  // Execute physical canvas reactivity callback
+  if (typeof opt.onSelect === 'function') {
+    opt.onSelect(engine);
+  }
+
+  // Advance to next round or finish
+  setTimeout(() => {
+    quizState.roundIndex++;
+    renderQuizRound();
+  }, 1600);
+}
+
+function showGridMasterPass() {
+  sfx.playVictory();
+  triggerHaptic([60, 40, 60, 40, 120, 80, 200]);
+
+  let rankText = 'GRADE A+ • ELITE CLEAN DISPATCHER';
+  if (quizState.score >= 2000) {
+    rankText = 'GRADE A+ • ELITE CLEAN DISPATCHER (தலைசிறந்தது)';
+  } else if (quizState.score >= 1500) {
+    rankText = 'GRADE A • SENIOR GRID CONTROLLER (முதன்மை)';
+  } else if (quizState.score >= 1000) {
+    rankText = 'GRADE B • JUNIOR GRID OPERATOR (இளநிலை)';
+  } else {
+    rankText = 'GRADE C • APPRENTICE DISPATCHER (பயிற்சி)';
+  }
+
+  if (elements.rewardScoreVal) {
+    elements.rewardScoreVal.textContent = `${quizState.score} / 2,000 PTS`;
+  }
+  if (elements.rewardRankBadge) {
+    elements.rewardRankBadge.textContent = rankText;
+  }
+  if (elements.gridMasterPassModal) {
+    elements.gridMasterPassModal.classList.remove('hidden');
+  }
+
+  if (engine.popTexts) {
+    engine.popTexts.push({
+      x: engine.canvas.width / (2 * engine.dpr),
+      y: 90,
+      text: '🏆 CHALLENGE COMPLETE • GRID MASTER PASS EARNED!',
+      color: '#facc15',
+      alpha: 1.0,
+      life: 0,
+      maxLife: 4.0
+    });
+  }
+}
+
+function closeRewardPassModal() {
+  if (elements.gridMasterPassModal) {
+    elements.gridMasterPassModal.classList.add('hidden');
+  }
+}
+
+// In-Booth QR Bridge Modal Handlers
+function openQrModal() {
+  sfx.playPop();
+  if (elements.qrModal) {
+    elements.qrModal.classList.remove('hidden');
+  }
+}
+
+function closeQrModal() {
+  if (elements.qrModal) {
+    elements.qrModal.classList.add('hidden');
+  }
+}
+
+function copyQrUrl() {
+  const url = (elements.qrUrlText && elements.qrUrlText.textContent) || 'https://kavinpro1989-blip.github.io/tn-grid-master/?mode=quiz';
+  sfx.playPop();
+
+  if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => {
+      onCopySuccess();
+    }).catch(() => {
+      fallbackCopy(url);
+    });
+  } else {
+    fallbackCopy(url);
+  }
+}
+
+function fallbackCopy(text) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    onCopySuccess();
+  } catch (e) {}
+}
+
+function onCopySuccess() {
+  if (elements.copyUrlBtn) {
+    const originalText = elements.copyUrlBtn.textContent;
+    elements.copyUrlBtn.textContent = '✓ Copied!';
+    elements.copyUrlBtn.style.background = 'rgba(16, 185, 129, 0.4)';
+    setTimeout(() => {
+      elements.copyUrlBtn.textContent = originalText;
+      elements.copyUrlBtn.style.background = '';
+    }, 2000);
+  }
+}
+
 function bootGame() {
   initEvents();
   engine.autoAdvanceTime = false;
   resetToDefaultBooth(); // Guarantee all 8 sliders start at 0%
   engine.start();
   updateClock(engine.timeMinutes);
+
+  // Initial Mode Detection & Dispatch (Milestone M3)
+  const initialMode = detectInitialMode();
+  setSimulationMode(initialMode, false);
+  if (sfx) sfx.updateUI();
 }
 
 if (document.readyState === 'loading') {
@@ -5279,6 +7636,7 @@ if (document.readyState === 'loading') {
 } else {
   bootGame();
 }
+
 
   </script>
 </body>
