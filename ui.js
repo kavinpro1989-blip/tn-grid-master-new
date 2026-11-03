@@ -173,11 +173,15 @@ class ProceduralAudioEngine {
   updateUI() {
     const audioIcon = document.getElementById('audioIcon');
     const audioLabel = document.getElementById('audioLabel');
+    const quizSoundIcon = document.getElementById('quizSoundIcon');
     if (audioIcon) {
       audioIcon.textContent = this.muted ? '🔇' : '🔊';
     }
     if (audioLabel) {
       audioLabel.textContent = this.muted ? 'Muted' : 'Sound ON';
+    }
+    if (quizSoundIcon) {
+      quizSoundIcon.textContent = this.muted ? '🔇' : '🔊';
     }
   }
 
@@ -864,6 +868,12 @@ function initEvents() {
   // Audio Toggle Button (Milestone M2)
   if (elements.soundToggleBtn) {
     elements.soundToggleBtn.addEventListener('click', () => {
+      sfx.toggleMute();
+    });
+  }
+  const quizSoundBtn = document.getElementById('quizSoundBtn');
+  if (quizSoundBtn) {
+    quizSoundBtn.addEventListener('click', () => {
       sfx.toggleMute();
     });
   }
@@ -1588,6 +1598,12 @@ function renderQuizRound() {
   const round = QUIZ_ROUNDS[quizState.roundIndex];
   quizState.answeredThisRound = false;
 
+  const progressPct = ((quizState.roundIndex + 1) / QUIZ_ROUNDS.length) * 100;
+  const progressBar = document.getElementById('neonProgressBar');
+  if (progressBar) {
+    progressBar.style.width = `${progressPct}%`;
+  }
+
   if (elements.quizRoundPill) {
     elements.quizRoundPill.textContent = `ROUND ${round.roundNumber} OF ${QUIZ_ROUNDS.length}`;
   }
@@ -1609,7 +1625,7 @@ function renderQuizRound() {
     elements.quizOptionsGrid.innerHTML = '';
     round.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
-      btn.className = 'quiz-option-btn';
+      btn.className = `quiz-option-btn neon-opt-${idx % 3}`;
       btn.setAttribute('data-idx', String(idx));
       btn.textContent = opt.text;
       btn.addEventListener('click', () => handleQuizAnswer(opt, btn));

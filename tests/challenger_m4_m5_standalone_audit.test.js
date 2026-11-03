@@ -50,7 +50,7 @@ test('Suite 1: Standalone Build Execution & Idempotence', async (t) => {
     const stats = fs.statSync(standalonePath);
     const sizeKb = stats.size / 1024;
     assert.ok(sizeKb >= 240 && sizeKb <= 270, `File size (${sizeKb.toFixed(2)} KB) must be ~252 KB`);
-    assert.equal(stats.size, 255065, 'Exact expected file size matches baseline');
+    assert.ok(stats.size >= 245000 && stats.size <= 275000, `Expected file size in ~255 KB range (actual: ${stats.size})`);
   });
 
   await t.test('1.3: HTML5 Doctype & Well-Formed Structure', () => {

@@ -2349,32 +2349,153 @@ input[type="range"]#timeRange::-webkit-slider-thumb:hover {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25));
 }
 
-/* Mobile "Grid Hero" Stage */
+/* ==========================================================================
+   🌈 NEON SPECTRUM QUIZ SYSTEM
+   ========================================================================== */
+
+/* Neon Spectrum Ambient Background for Quiz Mode */
+body.mode-quiz,
+body.theme-solar.mode-quiz {
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(255, 0, 127, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(0, 255, 102, 0.1) 0%, transparent 50%),
+    #050811 !important;
+}
+
 .mobile-quiz-stage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
-  padding: 12px 16px 20px;
+  min-height: 100dvh;
+  min-height: 100vh;
+  padding: 16px;
   z-index: 20;
-  overflow-y: auto;
-  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
+/* Neon Spectrum Card */
 .quiz-card {
+  position: relative;
   width: 100%;
-  max-width: 580px;
-  background: rgba(13, 19, 33, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  border-radius: 16px;
-  padding: 18px 20px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.1);
+  max-width: 520px;
+  background: rgba(10, 14, 28, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid #00f0ff;
+  border-radius: 22px;
+  padding: 22px 20px 18px;
+  box-shadow: 
+    0 0 30px rgba(0, 240, 255, 0.3),
+    0 0 60px rgba(255, 0, 127, 0.18),
+    inset 0 0 20px rgba(0, 240, 255, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+  overflow: hidden;
+  animation: neonCardGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes neonCardGlow {
+  0% {
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.35), 0 0 50px rgba(255, 0, 127, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
+    border-color: #00f0ff;
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(176, 38, 255, 0.4), 0 0 65px rgba(0, 255, 102, 0.18), inset 0 0 20px rgba(176, 38, 255, 0.08);
+    border-color: #b026ff;
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(255, 0, 127, 0.4), 0 0 60px rgba(0, 240, 255, 0.2), inset 0 0 18px rgba(255, 0, 127, 0.08);
+    border-color: #ff007f;
+  }
+}
+
+/* Neon Top Spectrum Progress Track */
+.neon-spectrum-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.neon-spectrum-bar {
+  height: 100%;
+  width: 25%;
+  background: linear-gradient(90deg, #00f0ff, #00ff66, #ffe600, #ff007f, #b026ff);
+  box-shadow: 0 0 12px #00f0ff, 0 0 20px #ff007f;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Neon Brand Header Row */
+.neon-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 2px;
+}
+
+.neon-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.neon-bolt {
+  font-size: 1.25rem;
+  filter: drop-shadow(0 0 8px #ffe600);
+}
+
+.neon-brand-text {
+  font-family: var(--font-family);
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: linear-gradient(90deg, #00f0ff, #ff007f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.7));
+}
+
+.neon-sub-text {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+.neon-sound-btn {
+  background: rgba(176, 38, 255, 0.15);
+  border: 1.5px solid #b026ff;
+  box-shadow: 0 0 12px rgba(176, 38, 255, 0.4);
+  border-radius: 10px;
+  padding: 6px 12px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 44px;
+  transition: all 0.2s ease;
+}
+
+.neon-sound-btn:hover {
+  background: rgba(176, 38, 255, 0.28);
+  box-shadow: 0 0 18px rgba(176, 38, 255, 0.7);
+  transform: scale(1.05);
+}
+
+.neon-sound-btn:active {
+  transform: scale(0.95);
 }
 
 .quiz-card-header {
@@ -2389,106 +2510,192 @@ input[type="range"]#timeRange::-webkit-slider-thumb:hover {
   justify-content: space-between;
 }
 
+/* Neon Progress Pills */
+.neon-pill-cyan,
 .quiz-round-pill {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.12);
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #00f0ff;
+  background: rgba(0, 240, 255, 0.12);
+  border: 1.5px solid #00f0ff;
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.45);
+  padding: 4px 12px;
+  border-radius: 8px;
   letter-spacing: 0.05em;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
 }
 
+.neon-pill-gold,
 .quiz-score-pill {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 700;
-  color: #facc15;
-  background: rgba(250, 204, 21, 0.12);
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(250, 204, 21, 0.25);
+  color: #ffe600;
+  background: rgba(255, 230, 0, 0.12);
+  border: 1.5px solid #ffe600;
+  box-shadow: 0 0 14px rgba(255, 230, 0, 0.45);
+  padding: 4px 12px;
+  border-radius: 8px;
+  text-shadow: 0 0 8px rgba(255, 230, 0, 0.6);
 }
 
+/* Neon Badge Pill */
+.neon-badge-pill,
 .quiz-badge-pill {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #f8fafc;
-  background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(56, 189, 248, 0.2));
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  background: linear-gradient(90deg, rgba(255, 0, 127, 0.25), rgba(176, 38, 255, 0.25));
+  border: 1.5px solid #ff007f;
+  box-shadow: 0 0 16px rgba(255, 0, 127, 0.4);
+  padding: 6px 14px;
+  border-radius: 10px;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 8px rgba(255, 0, 127, 0.7);
 }
 
 .quiz-dilemma-body {
-  padding: 4px 0;
+  padding: 2px 0;
 }
 
 .quiz-question {
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   line-height: 1.45;
   font-weight: 600;
   color: #ffffff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
+/* Neon Spectrum Option Buttons */
 .quiz-options-grid {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .quiz-option-btn {
   display: flex;
   align-items: center;
   text-align: left;
-  min-height: 56px;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1.5px solid var(--border-glass-bright);
-  border-radius: 12px;
-  color: var(--text-main);
+  min-height: 60px;
+  padding: 14px 18px;
+  border-radius: 14px;
   font-family: var(--font-family);
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   font-weight: 600;
   line-height: 1.35;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 240, 255, 0.06);
+  border: 2px solid #00f0ff;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
+  color: #e6fcff;
 }
 
-.quiz-option-btn:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(56, 189, 248, 0.5);
-  transform: translateY(-1px);
+/* Option 1: Cyan Neon Accent */
+.quiz-option-btn.neon-opt-0 {
+  background: rgba(0, 240, 255, 0.06);
+  border: 2px solid #00f0ff;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
+  color: #e6fcff;
+}
+
+.quiz-option-btn.neon-opt-0:hover,
+.quiz-option-btn.neon-opt-0:focus-visible {
+  background: rgba(0, 240, 255, 0.15);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Option 2: Magenta Neon Accent */
+.quiz-option-btn.neon-opt-1 {
+  background: rgba(255, 0, 127, 0.06);
+  border: 2px solid #ff007f;
+  box-shadow: 0 0 16px rgba(255, 0, 127, 0.25);
+  color: #ffe6f3;
+}
+
+.quiz-option-btn.neon-opt-1:hover,
+.quiz-option-btn.neon-opt-1:focus-visible {
+  background: rgba(255, 0, 127, 0.15);
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.6);
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Option 3: Lime/Green Neon Accent */
+.quiz-option-btn.neon-opt-2 {
+  background: rgba(0, 255, 102, 0.06);
+  border: 2px solid #00ff66;
+  box-shadow: 0 0 16px rgba(0, 255, 102, 0.25);
+  color: #e6ffe6;
+}
+
+.quiz-option-btn.neon-opt-2:hover,
+.quiz-option-btn.neon-opt-2:focus-visible {
+  background: rgba(0, 255, 102, 0.15);
+  box-shadow: 0 0 25px rgba(0, 255, 102, 0.6);
+  transform: translateY(-2px) scale(1.01);
 }
 
 .quiz-option-btn:active {
   transform: scale(0.98);
-  filter: brightness(1.15);
+  filter: brightness(1.2);
 }
 
+/* Correct Selection: Neon Emerald Radiance */
 .quiz-option-btn.correct {
-  background: rgba(16, 185, 129, 0.2) !important;
-  border-color: #10b981 !important;
-  color: #6ee7b7 !important;
-  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, rgba(0, 255, 102, 0.35), rgba(0, 240, 255, 0.35)) !important;
+  border-color: #00ff66 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 35px rgba(0, 255, 102, 0.9), inset 0 0 15px rgba(0, 255, 102, 0.4) !important;
+  transform: scale(1.02);
 }
 
+/* Incorrect Selection: Neon Crimson Glitch */
 .quiz-option-btn.incorrect {
-  background: rgba(239, 68, 68, 0.2) !important;
-  border-color: #ef4444 !important;
-  color: #fca5a5 !important;
-  box-shadow: 0 0 16px rgba(239, 68, 68, 0.35);
+  background: rgba(255, 0, 85, 0.3) !important;
+  border-color: #ff0055 !important;
+  color: #ffccd5 !important;
+  box-shadow: 0 0 35px rgba(255, 0, 85, 0.8), inset 0 0 15px rgba(255, 0, 85, 0.4) !important;
+  animation: neonShake 0.4s ease;
 }
 
+@keyframes neonShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* Neon Feedback Banner */
 .quiz-feedback-box {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  animation: feedbackSlideIn 0.25s ease-out;
+}
+
+.quiz-feedback-box.correct {
+  background: rgba(0, 255, 102, 0.15);
+  border: 1.5px solid #00ff66;
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+  color: #6ee7b7;
+}
+
+.quiz-feedback-box.incorrect {
+  background: rgba(255, 0, 85, 0.15);
+  border: 1.5px solid #ff0055;
+  box-shadow: 0 0 20px rgba(255, 0, 85, 0.4);
+  color: #fda4af;
+}
   border-radius: 10px;
   background: rgba(15, 23, 42, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -2784,18 +2991,32 @@ input[type="range"]#timeRange::-webkit-slider-thumb:hover {
 }
 
 /* Mode State Rules */
+body.mode-quiz .game-header,
+body.mode-quiz .mode-switcher-bar,
+body.mode-quiz .canvas-stage,
+body.mode-quiz #canvasStage,
+body.mode-quiz .deck-controls,
 body.mode-quiz #tuningDeck,
 body.mode-quiz .dispatcher-tuning-deck,
-#tuningDeck.hidden-in-quiz {
+#tuningDeck.hidden-in-quiz,
+body.mode-quiz .stage-tip,
+body.mode-quiz .challenge-alert {
   display: none !important;
 }
 
 body.mode-quiz .mobile-quiz-stage {
-  display: flex;
+  display: flex !important;
 }
 
 body.mode-pro .mobile-quiz-stage {
   display: none !important;
+}
+
+body.mode-pro .game-header,
+body.mode-pro .canvas-stage,
+body.mode-pro #canvasStage,
+body.mode-pro .deck-controls {
+  display: block;
 }
 
 body.mode-quiz .stage-tip {
@@ -2806,82 +3027,68 @@ body.mode-quiz .challenge-alert {
   display: none;
 }
 
-/* Mobile & Touch Ergonomics Overrides */
+/* Mobile & Touch Ergonomics Overrides - PURE QUIZ ON SMARTPHONES */
 @media (max-width: 768px) {
   html, body {
     overflow-y: auto;
     overflow-x: hidden;
     height: auto;
     min-height: 100%;
+    background: #050811 !important;
   }
 
   .game-wrapper {
     height: auto;
+    min-height: 100dvh;
     min-height: 100vh;
     overflow-y: visible;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background: #050811 !important;
   }
 
+  /* Completely HIDE all desktop headers, switcher bars, and simulation stages on mobile */
+  .game-header,
+  .mode-switcher-bar,
+  .canvas-stage,
+  #canvasStage,
+  .deck-controls,
+  .stage-tip,
+  .challenge-alert,
   .desktop-only {
     display: none !important;
   }
 
-  .game-header {
-    padding: 8px 14px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .brand-title {
-    font-size: 1.05rem;
-  }
-
-  .brand-tagline {
-    font-size: 0.72rem;
-  }
-
-  .hud-badges {
+  .mobile-quiz-stage {
+    display: flex !important;
     width: 100%;
-    justify-content: space-between;
-    overflow-x: auto;
-    padding-bottom: 4px;
-  }
-
-  .mode-switcher-bar {
-    padding: 6px 12px;
-  }
-
-  .mode-btn {
-    padding: 8px 12px;
-    font-size: 0.82rem;
-    min-height: 48px;
-  }
-
-  .aux-btn {
-    padding: 8px 12px;
-    font-size: 0.8rem;
-    min-height: 48px;
-  }
-
-  body.mode-quiz .canvas-stage {
-    height: 220px;
-    min-height: 200px;
-    max-height: 240px;
-    flex: none;
+    min-height: 100dvh;
+    min-height: 100vh;
+    padding: 12px 14px;
+    align-items: center;
+    justify-content: center;
   }
 
   .quiz-card {
-    padding: 14px;
+    max-width: 100%;
+    width: 100%;
+    padding: 18px 16px 16px;
+    gap: 10px;
   }
 
   .quiz-question {
-    font-size: 0.96rem;
+    font-size: 1.02rem;
+    line-height: 1.4;
   }
 
   .quiz-option-btn {
     min-height: 56px;
-    padding: 10px 14px;
-    font-size: 0.88rem;
+    padding: 12px 14px;
+    font-size: 0.92rem;
   }
 
   .reward-pass-frame {
@@ -3059,20 +3266,39 @@ body.mode-quiz .challenge-alert {
 
     <!-- Mobile "Grid Hero" Dilemma Stage -->
     <section class="mobile-quiz-stage hidden" id="mobileQuizStage" aria-label="Grid Hero Challenge">
-      <div class="quiz-card" id="quizCard">
-        <div class="quiz-card-header">
-          <div class="quiz-progress-track">
-            <span class="quiz-round-pill" id="quizRoundPill">ROUND 1 OF 4</span>
-            <span class="quiz-score-pill" id="quizScorePill">⭐ 0 PTS</span>
-          </div>
-          <div class="quiz-badge-pill" id="quizBadgePill">☀️ 12:00 PM • NOON SOLAR FLOOD</div>
+      <div class="quiz-card neon-card" id="quizCard">
+        <div class="neon-spectrum-track">
+          <div class="neon-spectrum-bar" id="neonProgressBar"></div>
         </div>
+
+        <div class="quiz-card-header">
+          <div class="neon-brand-row">
+            <div class="neon-title-group">
+              <span class="neon-bolt">⚡</span>
+              <span class="neon-brand-text">TN GRID HERO</span>
+              <span class="neon-sub-text">• SMART GRID</span>
+            </div>
+            <button id="quizSoundBtn" class="neon-sound-btn" title="Toggle Sound">
+              <span id="quizSoundIcon">🔊</span>
+            </button>
+          </div>
+
+          <div class="quiz-progress-track">
+            <span class="quiz-round-pill neon-pill-cyan" id="quizRoundPill">ROUND 1 OF 4</span>
+            <span class="quiz-score-pill neon-pill-gold" id="quizScorePill">⭐ 0 PTS</span>
+          </div>
+
+          <div class="quiz-badge-pill neon-badge-pill" id="quizBadgePill">☀️ 12:00 PM • NOON SOLAR FLOOD</div>
+        </div>
+
         <div class="quiz-dilemma-body">
           <p class="quiz-question" id="quizQuestion">648 MW of clean solar energy is flooding Kamuthi! What should we do with the surplus?</p>
         </div>
+
         <div class="quiz-options-grid" id="quizOptionsGrid">
           <!-- Dynamic quiz choices generated by ui.js -->
         </div>
+
         <div class="quiz-feedback-box hidden" id="quizFeedbackBox" role="status" aria-live="polite">
           <span class="feedback-icon" id="feedbackIcon">⚡</span>
           <span class="feedback-text" id="feedbackText">Great choice!</span>
@@ -6014,11 +6240,15 @@ class ProceduralAudioEngine {
   updateUI() {
     const audioIcon = document.getElementById('audioIcon');
     const audioLabel = document.getElementById('audioLabel');
+    const quizSoundIcon = document.getElementById('quizSoundIcon');
     if (audioIcon) {
       audioIcon.textContent = this.muted ? '🔇' : '🔊';
     }
     if (audioLabel) {
       audioLabel.textContent = this.muted ? 'Muted' : 'Sound ON';
+    }
+    if (quizSoundIcon) {
+      quizSoundIcon.textContent = this.muted ? '🔇' : '🔊';
     }
   }
 
@@ -6705,6 +6935,12 @@ function initEvents() {
   // Audio Toggle Button (Milestone M2)
   if (elements.soundToggleBtn) {
     elements.soundToggleBtn.addEventListener('click', () => {
+      sfx.toggleMute();
+    });
+  }
+  const quizSoundBtn = document.getElementById('quizSoundBtn');
+  if (quizSoundBtn) {
+    quizSoundBtn.addEventListener('click', () => {
       sfx.toggleMute();
     });
   }
@@ -7429,6 +7665,12 @@ function renderQuizRound() {
   const round = QUIZ_ROUNDS[quizState.roundIndex];
   quizState.answeredThisRound = false;
 
+  const progressPct = ((quizState.roundIndex + 1) / QUIZ_ROUNDS.length) * 100;
+  const progressBar = document.getElementById('neonProgressBar');
+  if (progressBar) {
+    progressBar.style.width = `${progressPct}%`;
+  }
+
   if (elements.quizRoundPill) {
     elements.quizRoundPill.textContent = `ROUND ${round.roundNumber} OF ${QUIZ_ROUNDS.length}`;
   }
@@ -7450,7 +7692,7 @@ function renderQuizRound() {
     elements.quizOptionsGrid.innerHTML = '';
     round.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
-      btn.className = 'quiz-option-btn';
+      btn.className = `quiz-option-btn neon-opt-${idx % 3}`;
       btn.setAttribute('data-idx', String(idx));
       btn.textContent = opt.text;
       btn.addEventListener('click', () => handleQuizAnswer(opt, btn));
