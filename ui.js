@@ -1347,20 +1347,20 @@ function setSimulationMode(mode, persist = true) {
   }
 }
 
-// Mobile "Grid Hero" Dilemmas Data Matrix
+// Mobile "Grid Hero" Dilemmas Data Matrix - General Sustainability & Clean Planet Edition
 const QUIZ_ROUNDS = [
   {
     roundNumber: 1,
     id: 'solar_noon',
-    badge: '☀️ 12:00 PM • NOON SOLAR FLOOD',
-    question: '648 MW of clean solar energy is flooding Kamuthi! What should we do with the massive surplus?',
+    badge: '☀️ CLEAN ENERGY • 12:00 PM',
+    question: 'Why is generating electricity from the sun and wind so much better for our Earth than burning dirty coal?',
     options: [
       {
-        text: '🔋 Charge our 485 MWh BESS Battery!',
+        text: '🔋 Zero pollution, clean air, and charge our battery with free solar!',
         isCorrect: true,
         score: 500,
-        badgeEarned: '485 MWh BESS',
-        feedback: '⚡ Boom! Clean solar stored in 485 MWh BESS! Zero waste, zero pollution!',
+        badgeEarned: 'Clean Energy Hero',
+        feedback: '⚡ Exactly! Free solar energy produces zero emissions, saves natural resources, and protects our planet!',
         onSelect: (eng) => {
           eng.setTime(720); // 12:00 PM
           eng.setSlider('sunshine', 100);
@@ -1385,20 +1385,20 @@ const QUIZ_ROUNDS = [
         }
       },
       {
-        text: '🏭 Burn more coal at Mettur',
+        text: '🏭 Burning coal makes healthier air to breathe',
         isCorrect: false,
         score: -100,
-        feedback: '❌ Toxic soot blanketed the town while free solar was wasted!',
+        feedback: '❌ Coal burning creates toxic soot, greenhouse gases, and accelerates global warming!',
         onSelect: (eng) => {
           eng.setSlider('coalFire', 100);
           eng.setSlider('scrubber', 0);
         }
       },
       {
-        text: '🗑️ Just throw away and curtail the solar',
+        text: '🗑️ It does not matter, all electricity is the same',
         isCorrect: false,
         score: -50,
-        feedback: '⚠️ Clean renewable solar was curtailed and wasted!',
+        feedback: '⚠️ Burning fossil fuels causes climate change; renewable energy is 100% clean and infinite!',
         onSelect: (eng) => {
           eng.setSlider('sunshine', 10);
         }
@@ -1408,15 +1408,15 @@ const QUIZ_ROUNDS = [
   {
     roundNumber: 2,
     id: 'agri_pumps',
-    badge: '🌾 02:00 PM • AGRI-PUMPS SCHEDULING',
-    question: 'Tamil Nadu farmers need irrigation water for delta fields! When should thousands of agricultural pumps run?',
+    badge: '🌱 DAILY HABITS & AGRI • 02:00 PM',
+    question: 'What is the most sustainable way to use electricity and water for homes and farm irrigation?',
     options: [
       {
-        text: '☀️ Run pumps right now on sunny afternoon solar',
+        text: '☀️ Power irrigation and appliances during sunny daytime hours!',
         isCorrect: true,
         score: 500,
-        badgeEarned: 'Solar Agri',
-        feedback: '🌾 Brilliant dispatching! Free Kamuthi solar powers irrigation zero-carbon!',
+        badgeEarned: 'Eco Habits Champion',
+        feedback: '🌱 Brilliant! Matching our daily energy use to daylight solar cuts carbon emissions to absolute zero!',
         onSelect: (eng) => {
           eng.setTime(840); // 14:00 PM
           eng.setSlider('sunshine', 90);
@@ -1439,20 +1439,20 @@ const QUIZ_ROUNDS = [
         }
       },
       {
-        text: '🌙 Turn on all pumps at 7:00 PM evening peak',
+        text: '🌙 Run everything at peak night hours using coal power',
         isCorrect: false,
         score: -100,
-        feedback: '❌ Overload! Pumping water during evening peak triggers substation brownouts!',
+        feedback: '❌ Heavy appliances running during peak evening hours force dirty peaker coal plants to fire up!',
         onSelect: (eng) => {
           eng.setTime(1140);
           eng.setSlider('agriPumps', 100);
         }
       },
       {
-        text: '🔌 Ban farm pumps completely',
+        text: '🔌 Waste electricity with lights and motors running continuously',
         isCorrect: false,
         score: -50,
-        feedback: '⚠️ Farming yields collapsed without irrigation water!',
+        feedback: '⚠️ Energy waste increases pollution, burns fossil fuels, and accelerates global warming!',
         onSelect: (eng) => {
           eng.setSlider('agriPumps', 0);
         }
@@ -1462,15 +1462,15 @@ const QUIZ_ROUNDS = [
   {
     roundNumber: 3,
     id: 'duck_curve',
-    badge: '🌇 06:30 PM • SUNSET DUCK CURVE CRISIS',
-    question: 'The sun set, solar dropped to 0 MW, and 80 million people turned on lights and ACs! Frequency dips to 49.2 Hz! What saves the grid?',
+    badge: '🔋 24/7 CLEAN GRID • 06:30 PM SUNSET',
+    question: 'At 06:30 PM sunset when the sun goes down, how can a modern city keep lights on sustainably?',
     options: [
       {
-        text: '⚡ Discharge 485 MWh BESS Battery in 20 milliseconds!',
+        text: '⚡ Discharge clean battery storage in 20ms to power homes!',
         isCorrect: true,
         score: 500,
-        badgeEarned: '50.00 Hz Lock',
-        feedback: '⚡ Master stroke! 20ms BESS burst locks frequency at exactly 50.00 Hz!',
+        badgeEarned: '24/7 Green Grid',
+        feedback: '⚡ Master stroke! Fast-acting batteries discharge daytime sunshine to power our nights clean and blackout-free!',
         onSelect: (eng) => {
           eng.setTime(1110); // 18:30 PM
           eng.setSlider('sunshine', 0);
@@ -1494,19 +1494,19 @@ const QUIZ_ROUNDS = [
         }
       },
       {
-        text: '🔥 Wait 4 hours for thermal coal boilers to heat up',
+        text: '🔥 Burn more coal, oil, and gas to heat up boilers',
         isCorrect: false,
         score: -100,
-        feedback: '❌ Too slow! Steam turbines take hours; the grid collapsed into blackout!',
+        feedback: '❌ Burning more fossil fuels pollutes the atmosphere and worsens climate change!',
         onSelect: (eng) => {
           eng.setSlider('voltage', 140);
         }
       },
       {
-        text: '📴 Cut power to all schools and hospitals',
+        text: '📴 Cut power completely to all homes and schools',
         isCorrect: false,
         score: -100,
-        feedback: '❌ Blackout! Critical services lost all electricity!',
+        feedback: '❌ Unnecessary blackouts disrupt lives when battery storage can cleanly power the grid!',
         onSelect: (eng) => {
           eng.setSlider('voltage', 0);
         }
@@ -1516,15 +1516,15 @@ const QUIZ_ROUNDS = [
   {
     roundNumber: 4,
     id: 'scrubber',
-    badge: '🌿 08:30 PM • METTUR EMISSION SCRUBBER',
-    question: 'Mettur coal units are firing to support late-night baseline load, releasing toxic fly-ash and soot over the valley! What is our move?',
+    badge: '🌿 PLANET HEALTH & CLEAN AIR • 08:30 PM',
+    question: 'What is the greatest environmental benefit when a community switches to 100% clean energy and air scrubbers?',
     options: [
       {
-        text: '💨 Engage 100% Flue Gas Scrubbers & Precipitators!',
+        text: '💨 100% Clean air, blue skies, and healthy lungs for everyone!',
         isCorrect: true,
         score: 500,
-        badgeEarned: '100% Clean Air',
-        feedback: '🌿 Pure air restored! 100% scrubbers trap soot while houses glow bright!',
+        badgeEarned: 'Clean Air Guardian',
+        feedback: '🌿 Pure air restored! Clean sustainable power eliminates toxic soot and keeps our planet cool!',
         onSelect: (eng) => {
           eng.setTime(1230); // 20:30 PM
           eng.setSlider('coalFire', 60);
@@ -1548,20 +1548,20 @@ const QUIZ_ROUNDS = [
         }
       },
       {
-        text: '🌫️ Turn off scrubbers to save electricity',
+        text: '🌫️ Releasing thick black smog to save money',
         isCorrect: false,
         score: -100,
-        feedback: '❌ Toxic smog choke! Valley air index plummets and citizens cough!',
+        feedback: '❌ Toxic air pollution causes respiratory diseases and destroys the environment!',
         onSelect: (eng) => {
           eng.setSlider('coalFire', 100);
           eng.setSlider('scrubber', 0);
         }
       },
       {
-        text: '💥 Shut down all power in pitch darkness',
+        text: '💥 Ignoring sustainability and letting pollution spread',
         isCorrect: false,
         score: -100,
-        feedback: '❌ Blackout! Clinics, schools, and homes lost all power!',
+        feedback: '❌ Ignoring sustainability threatens the future of our planet for future generations!',
         onSelect: (eng) => {
           eng.setSlider('voltage', 0);
           eng.setSlider('coalFire', 0);
