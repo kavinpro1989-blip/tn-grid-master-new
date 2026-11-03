@@ -626,9 +626,11 @@ function initEvents() {
   });
 
   // 30s Challenge
-  elements.challengeBtn.addEventListener('click', () => {
-    startChallenge();
-  });
+  if (elements.challengeBtn) {
+    elements.challengeBtn.addEventListener('click', () => {
+      startChallenge();
+    });
+  }
 
   // Hardware Inspector
   if (elements.inspectBtn) {
@@ -980,8 +982,8 @@ function startChallenge() {
   // Lock storage slider during challenge so player cannot cheat free energy into a dead battery!
   if (elements.sliderStorage) elements.sliderStorage.disabled = true;
 
-  elements.challengeAlert.classList.remove('hidden');
-  elements.gameTimer.textContent = `${challengeTime}s`;
+  if (elements.challengeAlert) elements.challengeAlert.classList.remove('hidden');
+  if (elements.gameTimer) elements.gameTimer.textContent = `${challengeTime}s`;
   sfx.playSolarChime();
 
   engine.popTexts.push({
@@ -1753,7 +1755,7 @@ function closeQrModal() {
 }
 
 function copyQrUrl() {
-  const url = (elements.qrUrlText && elements.qrUrlText.textContent) || 'https://kavinpro1989-blip.github.io/tn-grid-master/?mode=quiz';
+  const url = (elements.qrUrlText && elements.qrUrlText.textContent) || 'https://kavinpro1989-blip.github.io/tn-grid-master-new/?mode=quiz';
   sfx.playPop();
 
   if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
