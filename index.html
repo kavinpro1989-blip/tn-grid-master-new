@@ -75,11 +75,14 @@
         <button class="guide-toggle-btn" id="guideBtn" title="How to Play & Teacher Guide">
           <span>🎓 Guide</span>
         </button>
+        <button class="guide-toggle-btn qr-header-btn desktop-only" id="qrModalTriggerBtn" title="Show Phone QR Code for Visitors">
+          <span>📱 Mobile Quiz QR</span>
+        </button>
       </div>
     </header>
 
-    <!-- Top Mode Switcher Bar: Seamless Navigation for All Devices -->
-    <nav class="mode-switcher-bar" aria-label="Simulation Mode Controls">
+    <!-- Top Mode Switcher Bar (Hidden via CSS - Pure separation: Sim on Desktop, Quiz on Mobile) -->
+    <nav class="mode-switcher-bar hidden" aria-label="Simulation Mode Controls">
       <div class="mode-pill-group">
         <button id="modeQuizBtn" class="mode-btn" data-mode="quiz" aria-pressed="false">
           <span class="btn-icon">🎮</span>
@@ -95,9 +98,6 @@
         <button id="soundToggleBtn" class="aux-btn audio-btn" title="Toggle Sound">
           <span id="audioIcon">🔊</span>
           <span id="audioLabel">Sound ON</span>
-        </button>
-        <button id="qrModalTriggerBtn" class="aux-btn qr-btn desktop-only" title="Show Mobile QR Code">
-          <span>📱 Scan to Play</span>
         </button>
       </div>
     </nav>
