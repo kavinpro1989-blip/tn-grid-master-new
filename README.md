@@ -1,65 +1,77 @@
-# ⚡ Tamil Nadu Power Grid Simulation: Solar vs. Coal (School Edition)
+# ⚡ TN Grid Master • தமிழ்நாடு மின் கட்டமைப்பு சிமுலேஷன்
 
-An interactive, gamified, and highly visual web simulation demonstrating the contrast between **Daytime Clean Solar Energy** (Kamuthi Solar Park) and **Evening Coal Thermal Energy** (Mettur & North Chennai Thermal Power Stations) in Tamil Nadu, India.
+> **Tamil Nadu Power Grid Digital Twin** — Solar vs Coal School Exhibition Edition  
+> An interactive, cyber-physical, gamified simulation demonstrating the balance between **Daytime Clean Solar Energy** (Kamuthi Solar Park) and **Evening Coal Thermal Energy** (Mettur & North Chennai Thermal Stations) across Tamil Nadu's electrical grid.
 
 ---
 
-## 🎮 How to Play / Run Immediately
+## 🌐 Live Demonstrations & Quick Play
 
-### Option 1: Zero-Install Quick Play (Recommended)
-Simply open **`standalone_simulation.html`** in any web browser (Chrome, Edge, Firefox, Safari):
-- No build tools, web servers, or package managers required.
-- 100% self-contained and runs offline on any school computer or Chromebook.
+- 🚀 **Live Production Deployment**: [https://kavinpro1989-blip.github.io/tn-grid-master-new/](https://kavinpro1989-blip.github.io/tn-grid-master-new/)
+- 📱 **Mobile Grid Hero Challenge**: [https://kavinpro1989-blip.github.io/tn-grid-master-new/?mode=quiz](https://kavinpro1989-blip.github.io/tn-grid-master-new/?mode=quiz)
+- 💾 **100% Offline Standalone Bundle**: Open `standalone_simulation.html` directly in any web browser without needing servers, node modules, or an internet connection.
 
-### Option 2: Modular Source
-Serve this directory with any local static HTTP server:
+---
+
+## 🎯 Key Highlights & Architecture
+
+### 1. Cyber-Physical Digital Twin Engine (`engine.js`)
+- **Physics-Accurate Telemetry**: Dynamically calculates Indian National Grid frequency ($50.00\text{ Hz}$ target lock), $230\text{V AC}$ distribution voltages, and line loading.
+- **Joule Heating Line Losses**: Simulates $I^2R$ power dissipation over transmission cables with particle evaporation effects.
+- **485 MWh Battery Energy Storage System (BESS)**: Sub-second ($20\text{ms}$) synthetic response rate to absorb peak solar generation and offset the sunset "duck curve".
+- **Dynamic 60 FPS HTML5 Canvas**: Real-time rendering of catenary power lines, glowing electron flow, rotational wind turbines, chimney particulate plumes, and day/night illumination.
+
+### 2. Zero-Asset Procedural Web Audio (`ui.js`)
+- Synthetic audio engine using native browser Web Audio oscillators and envelopes.
+- No external audio files required:
+  - **Two-Tone Sine Chime**: High-efficiency solar packet flows.
+  - **Low-Pass Sawtooth Tone**: Brownouts, frequency drop, and load shedding alerts.
+  - **Triangle Wave Surge**: Battery rapid dispatch and high-voltage transmission.
+  - **4-Note Brass Fanfare**: 30-second challenge victory and quiz completion.
+
+### 3. Dual Experience Modes
+- 🔬 **Pro Grid Sim Mode**: Full manual dispatcher authority with 8 master levers (Sunshine, BESS Storage, Coal Boilers, Electrostatic Scrubbers, Town Demand, Agricultural Irrigation Pumps, Substation Voltage Tap, and Grid Tie Diversion).
+- 🎮 **Grid Hero Challenge (Mobile & In-Booth)**: 4 fast-paced dilemma rounds tailored for exhibition visitors on phones and tablets with dynamic scoring, rank certificates, and instant booth redemption.
+
+---
+
+## 👥 The Exhibition Team
+
+- 💻 **Kavin** — *Software Architecture & Physical Twin Simulation*
+- 🔌 **Faaris** — *Sensory Hardware Bench & Arduino Control*
+- 🎙️ **Mithran** — *Story Anchor & Exhibition Presentation*
+
+---
+
+## 🚀 Running Locally
+
 ```bash
+# Clone the repository
+git clone https://github.com/kavinpro1989-blip/tn-grid-master-new.git
+cd tn-grid-master-new
+
+# Option A: Zero-install direct run
+xdg-open standalone_simulation.html  # On Linux
+# or open standalone_simulation.html in Chrome, Edge, or Safari
+
+# Option B: Run via local web server
 python3 -m http.server 8000
-# Then open http://localhost:8000/index.html in your browser
+# Visit http://localhost:8000/ in your browser
 ```
 
 ---
 
-## 🌟 Key Features & Mechanics
+## 🧪 Automated Testing & Verification
 
-1. **The Interactive Time Slider (00:00 – 23:59)**:
-   - **Daytime Solar Peak (12:00 Noon)**: Bright sunny skies, solar panels tilt to the sun, glowing neon-green packets travel smoothly with 95% transmission efficiency and 0 emissions.
-   - **Evening Coal Peak (19:30)**: Stacks billow dark smoke, reddish-grey packets splutter along transmission lines, suffering >30% line loss ($I^2R$ heat loss) evaporating in mid-air, causing brownouts across town.
+Comprehensive 5-tier test suite verifying all physics calculations, boundary conditions, audio synthesis, and adversarial inputs:
 
-2. **Connected Cooling Fan Station (Load)**:
-   - Direct real-time feedback from power flow.
-   - Spins at **3,600 RPM** during Solar Peak.
-   - Stutters and stalls down to **900 RPM** during Coal Peak due to voltage sag.
+```bash
+# Run full E2E test runner
+node tests/runner.js
 
-3. **Interactive Hardware Layer Inspector**:
-   - Click **"🔍 Inspect Tech"** to examine:
-     - **Solar Tab**: TOPCon silicon photovoltaic layers (Silver grid, ARC, N-type silicon wafer, Tunnel oxide layer).
-     - **Coal Tab**: Coal pulverizer, boiler, steam turbine, and flue gas stack.
-
-4. **Gamified Classroom Features**:
-   - **Town Mood & Air Quality Meters**: Watch town happiness drop from 100% to 40% when brownouts hit.
-   - **Interactive Building Clicking**: Click any house (School, Clinic, Farm, Homes) to turn appliances ON/OFF or restore backup power for $+50$ Eco Points.
-   - **Click Solar Panels**: Trigger a Solar Boost for $+100$ bonus Eco points.
-   - **30-Second Challenge Mode**: Can you balance grid demand and keep the air pure?
-   - **Web Audio Sound Effects**: Clean melodic chimes during solar generation; industrial rumbles and electrical pops during coal mode.
+# Rebuild single-file standalone distribution
+python3 build_standalone.py
+```
 
 ---
-
-## 📁 Repository Structure
-
-- `standalone_simulation.html`: Single-file bundle containing the entire game, styles, and engine.
-- `index.html`: Main HTML5 document.
-- `styles.css`: Spacious, kid-friendly stylesheet with dynamic day/night CSS variables and animations.
-- `engine.ts` / `engine.js`: 60 FPS HTML5 Canvas engine rendering catenary cables, electron packets, particles, and buildings.
-- `ui.js`: DOM controller, Web Audio sound generator, challenge mode timer, and event listeners.
-- `GridSimulator.java`: Standalone Java backend simulation and mathematical verification module.
-
----
-
-## 🎓 Educational Learning Objectives
-- **Transmission Loss Formula**: Demonstrates Joule heating $P_{\text{loss}} = I^2 R$.
-- **Clean Energy Metrics**: Demonstrates $0.00\text{ tons CO}_2$ from solar generation versus $0.92\text{ tons CO}_2/\text{MWh}$ from thermal coal.
-- **Grid Reliability & Voltage Sag**: Visually explains brownouts when line load exceeds local transformer capacity.
-
----
-Created for Tamil Nadu School Science & Physics Exhibitions.
+*Created for Tamil Nadu School Science & Physics Exhibitions.*
